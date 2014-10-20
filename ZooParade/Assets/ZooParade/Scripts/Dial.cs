@@ -1,14 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraSetup : MonoBehaviour {
-
-	public static int cameraZ = -10;
-
-	void Awake()
-	{
-
-	}
+public class Dial : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
