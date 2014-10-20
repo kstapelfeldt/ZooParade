@@ -1,4 +1,4 @@
-zoo-parade
+ZooParade
 ==========
 
 2014-2015 Workstudy Project
