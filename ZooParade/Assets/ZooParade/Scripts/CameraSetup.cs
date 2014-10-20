@@ -7,16 +7,19 @@ public class CameraSetup : MonoBehaviour {
 
 	void Awake()
 	{
-
+		Screen.fullScreen = true;
+		transform.Translate(new Vector3(0, 0, cameraZ));
 	}
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 	
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 	
 	}
 }

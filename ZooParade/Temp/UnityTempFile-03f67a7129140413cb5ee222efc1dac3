@@ -37,7 +37,8 @@
 -define:ENABLE_PROFILER
 -define:UNITY_EDITOR
 -define:UNITY_EDITOR_OSX
-'Assets/ZooParade/Scripts/Camera.cs'
+'Assets/ZooParade/Scripts/CameraSetup.cs'
+'Assets/ZooParade/Scripts/Circle.cs'
 'Assets/ZooParade/Scripts/Dial.cs'
 'Assets/ZooParade/Scripts/Game.cs'
 'Assets/ZooParade/Scripts/Spinner.cs'
