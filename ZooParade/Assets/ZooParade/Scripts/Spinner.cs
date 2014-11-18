@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class Spinner : MonoBehaviour {
+	Circle dialCircle;
 	public float rot; // amount rotated
 	public float rotSpeed; // sets speed of rotation
 	public float startx; // variables to hold strting mouse position
@@ -9,6 +10,7 @@ public class Spinner : MonoBehaviour {
 	public float degree; // degree to rotate for completion
 	public bool rotating = false; // rotating or not
 	public float minRotation; //minimum degree to rotate
+	public bool hidden = false;
 
 	// Use this for initialization
 	void Start () {
@@ -17,6 +19,14 @@ public class Spinner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		if (dialCircle == null) 
+		{
+			dialCircle = new Circle ("DialCircle", new Vector3 (0, 0, 0), Screen.height / 2, Color.white);
+		}
+
+		Hide ();
+
 		if (!rotating)
 		{
 			// taking line from mouse click to mouse release is
@@ -74,10 +84,11 @@ public class Spinner : MonoBehaviour {
 
 	public float GetDegree (float xlength, float ylength)
 	{
-		float coEfficient = 0.942f;
+		float coEfficient = 0.9142f;
 		int rotDirection = 1;
-		//break into 4 quadrants to simplify problem
-		//hard code
+		// break into 4 quadrants to simplify problem
+		// brute force
+		// only need to deal with 1 dimension (x or y) because of 4 quadrant divide
 		if (GetCurrentRot () < 90) 
 		{
 			if (ylength < 0) 
@@ -86,15 +97,23 @@ public class Spinner : MonoBehaviour {
 			}
 		} else if (GetCurrentRot () < 180)
 		{
-
 			if (xlength > 0)
-				rotDirection = -1*rotDirection;
 			{
+				rotDirection = -1*rotDirection;
 			}
-		} else if (GetCurrentRot () < 270) //180 to 270 to do
+		} else if (GetCurrentRot () < 270)
 		{
-		} else //270 to 360 (or 0) to do
+			if (ylength > 0) 
+			{
+				rotDirection = -1*rotDirection;
+			}
+		} else
 		{
+			if (ylength < 0)
+			{
+				rotDirection = -1*rotDirection;
+			}
+
 		}
 		// coefficient can be anything wanted
 		return Mathf.Sqrt (xlength * xlength + ylength * ylength) * rotDirection * coEfficient;
@@ -151,5 +170,133 @@ public class Spinner : MonoBehaviour {
 	public void setSpeed(float speed)
 	{
 		rotSpeed = speed;
+	}
+
+
+	public int AngleToValue(float degree, bool outer)
+	{
+		// 25-335 degree is 5 (special) or 2
+		// 25-75 is 6 or 1
+		// 75 to 105 is 3 or 4
+		// 105 to 155 is 4 or 3
+		// 155 to 205 is 5 or 2
+		// 205 to 255 is 4 or 3
+		// 255 to 285 is 3 or 4
+		// 285 to 335 is 6 or 1
+		if (degree >= 0 && degree < 25) 
+		{
+			if (!outer)
+			{
+				return 5;
+			}
+			else
+			{
+				return 2;
+			}
+		}
+		if (degree >= 25 && degree < 75) 
+		{
+			if (!outer)
+			{
+				return 6;
+			}
+			else
+			{
+				return 1;
+			}
+		}
+		//////
+		if (degree >= 75 && degree < 105) 
+		{
+			if (!outer)
+			{
+				return 3;
+			}
+			else
+			{
+				return 4;
+			}
+		}
+		if (degree >= 105 && degree < 155) 
+		{
+			if (!outer)
+			{
+				return 4;
+			}
+			else
+			{
+				return 3;
+			}
+		}
+		if (degree >= 155 && degree < 205) 
+		{
+			if (!outer)
+			{
+				return 5;
+			}
+			else
+			{
+				return 2;
+			}
+		}
+		if (degree >= 205 && degree < 255) 
+		{
+			if (!outer)
+			{
+				return 4;
+			}
+			else
+			{
+				return 3;
+			}
+		}
+		if (degree >= 255 && degree < 285) 
+		{
+			if (!outer)
+			{
+				return 3;
+			}
+			else
+			{
+				return 4;
+			}
+		}
+		if (degree >= 285 && degree < 335) 
+		{
+			if (!outer)
+			{
+				return 6;
+			}
+			else
+			{
+				return 1;
+			}
+		}
+		//////
+		if (degree < 360 && degree > 355) 
+		{
+			if (!outer)
+			{
+				return 5;
+			}
+			else
+			{
+				return 2;
+			}
+		}
+	}
+
+	public void Hide()
+	{
+		transform.Translate (new Vector3 (0, 0, 5));
+		dialCircle.obj.transform.Translate (new Vector3 (0, 0, 5));
+		hidden = true;
+	}
+
+	public void Show()
+	{
+		transform.Translate (new Vector3 (0, 0, 0));
+		dialCircle.obj.transform.Translate (new Vector3 (0, 0, 0));
+		hidden = false;
 	}
 }
