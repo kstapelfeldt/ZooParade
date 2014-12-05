@@ -1,15 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Dial : MonoBehaviour {
-<<<<<<< HEAD
 
-	public Dictionary<int, string> AnswerDial = new Dictionary<int, string>;
-
-
+	Dictionary<int,string> AnswerDial = new Dictionary<int, string>();
 	Circle dialCircle;
-=======
->>>>>>> origin/master
 
 	// Use this for initialization
 	void Awake () 
@@ -60,14 +56,10 @@ public class Dial : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
-<<<<<<< HEAD
 		if (dialCircle == null) 
 		{
 			dialCircle = new Circle ("DialCircle", new Vector3 (0, 0, 0), Screen.height / 2, Color.white);
 		}
 		//
-=======
-
->>>>>>> origin/master
 	}
 }

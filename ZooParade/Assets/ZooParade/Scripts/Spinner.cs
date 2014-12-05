@@ -1,8 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//
+
 public class Spinner : MonoBehaviour {
 	Circle dialCircle;
+	public float arrowx; //holds position to draw arrow to
+	public float arrowy;
 	public float rot; // amount rotated
 	public float rotSpeed; // sets speed of rotation
 	public float startx; // variables to hold strting mouse position
@@ -11,6 +15,7 @@ public class Spinner : MonoBehaviour {
 	public bool rotating = false; // rotating or not
 	public float minRotation; //minimum degree to rotate
 	public bool hidden = false;
+	public float hideTranslation = 1000;
 
 	// Use this for initialization
 	void Start () {
@@ -24,8 +29,6 @@ public class Spinner : MonoBehaviour {
 		{
 			dialCircle = new Circle ("DialCircle", new Vector3 (0, 0, 0), Screen.height / 2, Color.white);
 		}
-
-		Hide ();
 
 		if (!rotating)
 		{
@@ -65,11 +68,7 @@ public class Spinner : MonoBehaviour {
 
 		if (rotating)
 		{
-			RotateByDegree (degree);
-			if (rot == degree)
-			{
-				rotating = false;
-			}
+			StartCoroutine (RotateByDegree (degree));
 		}
 	}
 
@@ -121,6 +120,7 @@ public class Spinner : MonoBehaviour {
 	
 	public IEnumerator Rotate(float angle)
 	{
+
 		float step = rotSpeed;
 		while(rot != angle)
 		{
@@ -137,6 +137,7 @@ public class Spinner : MonoBehaviour {
 					rot -= step;
 					yield return new WaitForSeconds(0f);
 				}
+
 			}else //incase less than step, we add remaining so it meets angle
 			{
 				if (angle>rot)
@@ -155,19 +156,27 @@ public class Spinner : MonoBehaviour {
 		}
 	}
 
-	public void RotateByDegree(float angle)
+	public IEnumerator RotateByDegree(float angle)
 	{
-		StartCoroutine (Rotate(angle));
+		yield return StartCoroutine (Rotate(angle));
+
+		if (rot == degree)
+		{
+			rotating = false;
+		}
 	}
 
-	public void RotateByDegree(float angle, float speed)
+	public IEnumerator RotateByDegree(float angle, float speed)
 	{
-		setSpeed (speed);
-		StartCoroutine (Rotate(angle));
-
+		SetSpeed (speed);
+		yield return StartCoroutine (Rotate(angle));
+		if (rot == degree)
+		{
+			rotating = false;
+		}
 	}
 	
-	public void setSpeed(float speed)
+	public void SetSpeed(float speed)
 	{
 		rotSpeed = speed;
 	}
@@ -272,31 +281,35 @@ public class Spinner : MonoBehaviour {
 				return 1;
 			}
 		}
-		//////
-		if (degree < 360 && degree > 355) 
+
+		// 335 -> 360
+		if (!outer)
 		{
-			if (!outer)
-			{
-				return 5;
-			}
-			else
-			{
-				return 2;
-			}
+			return 5;
 		}
+		else
+		{
+			return 2;
+		}
+		
 	}
 
 	public void Hide()
 	{
-		transform.Translate (new Vector3 (0, 0, 5));
-		dialCircle.obj.transform.Translate (new Vector3 (0, 0, 5));
-		hidden = true;
+		if (!hidden) {
+			transform.Translate (new Vector3 (0, 0, hideTranslation));
+			dialCircle.obj.transform.Translate (new Vector3 (0, 0, hideTranslation));
+			hidden = true;
+		}
 	}
 
 	public void Show()
 	{
-		transform.Translate (new Vector3 (0, 0, 0));
-		dialCircle.obj.transform.Translate (new Vector3 (0, 0, 0));
-		hidden = false;
+		if (hidden) 
+		{
+			transform.Translate (new Vector3 (0, 0, -1*hideTranslation));
+			dialCircle.obj.transform.Translate (new Vector3 (0, 0, -1*hideTranslation));
+			hidden = false;
+		}
 	}
 }
