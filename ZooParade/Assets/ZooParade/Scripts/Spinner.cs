@@ -4,18 +4,20 @@ using System.Collections;
 //
 
 public class Spinner : MonoBehaviour {
-	Circle dialCircle;
-	public float arrowx; //holds position to draw arrow to
-	public float arrowy;
+
+	float arrowx; //holds position to draw arrow to
+	float arrowy;
 	public float rot; // amount rotated
 	public float rotSpeed; // sets speed of rotation
-	public float startx; // variables to hold strting mouse position
-	public float starty;
+	float startx; // variables to hold strting mouse position
+	float starty;
 	public float degree; // degree to rotate for completion
-	public bool rotating = false; // rotating or not
+	bool rotating = false; // rotating or not
 	public float minRotation; //minimum degree to rotate
 	public bool hidden = false;
-	public float hideTranslation = 1000;
+	float hideTranslation = 1000;
+	public float spinnerValue;
+	public bool innerCircle;
 
 	// Use this for initialization
 	void Start () {
@@ -24,11 +26,6 @@ public class Spinner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-		if (dialCircle == null) 
-		{
-			dialCircle = new Circle ("DialCircle", new Vector3 (0, 0, 0), Screen.height / 2, Color.white);
-		}
 
 		if (!rotating)
 		{
@@ -68,7 +65,7 @@ public class Spinner : MonoBehaviour {
 
 		if (rotating)
 		{
-			StartCoroutine (RotateByDegree (degree));
+			spinnerValue = RotateByDegree (degree, innerCircle);
 		}
 	}
 
@@ -156,13 +153,27 @@ public class Spinner : MonoBehaviour {
 		}
 	}
 
-	public IEnumerator RotateByDegree(float angle)
+	public int RotateByDegree(float angle, bool inner)
+	/*
+	 * This function takes an angle and a boolean variable
+	 * that is used to differentiate between whether we are
+	 * rotating around the inner or outer spinner.
+	 * 
+	 * It then rotates by 'angle' degrees and returns the value
+	 * of the spinner it lands on.
+	 */
 	{
-		yield return StartCoroutine (Rotate(angle));
+		StartCoroutine (Rotate(angle));
 
 		if (rot == degree)
 		{
 			rotating = false;
+			// Returns angle
+			return AngleToValue (GetCurrentRot (), inner);
+		}
+		else
+		{
+			return -1;
 		}
 	}
 
@@ -182,30 +193,31 @@ public class Spinner : MonoBehaviour {
 	}
 
 
-	public int AngleToValue(float degree, bool outer)
+	public int AngleToValue(float degree, bool inner)
 	{
-		// 25-335 degree is 5 (special) or 2
-		// 25-75 is 6 or 1
-		// 75 to 105 is 3 or 4
-		// 105 to 155 is 4 or 3
-		// 155 to 205 is 5 or 2
-		// 205 to 255 is 4 or 3
-		// 255 to 285 is 3 or 4
-		// 285 to 335 is 6 or 1
-		if (degree >= 0 && degree < 25) 
+		// inner or outer
+		// 0-12/349.5-360 degree is 3 or 4
+		// 12-63 is 6 or 1
+		// 63 to 114.5 is 5 or 2
+		// 114.5 to 167.5 is 6 or 1
+		// 167.5 to 190.5 is 3 or 4
+		// 190.5 to 245 is 4 or 3
+		// 245 to 297.5 is 5 or 2
+		// 297.5 to 349.5 is 4 or 3
+		if (degree >= 0 && degree < 12)
 		{
-			if (!outer)
+			if (inner)
 			{
-				return 5;
+				return 3;
 			}
 			else
 			{
-				return 2;
+				return 4;
 			}
 		}
-		if (degree >= 25 && degree < 75) 
+		else if (degree >= 12 && degree < 63) 
 		{
-			if (!outer)
+			if (inner)
 			{
 				return 6;
 			}
@@ -214,32 +226,9 @@ public class Spinner : MonoBehaviour {
 				return 1;
 			}
 		}
-		//////
-		if (degree >= 75 && degree < 105) 
+		else if (degree >= 63 && degree < 114.5) 
 		{
-			if (!outer)
-			{
-				return 3;
-			}
-			else
-			{
-				return 4;
-			}
-		}
-		if (degree >= 105 && degree < 155) 
-		{
-			if (!outer)
-			{
-				return 4;
-			}
-			else
-			{
-				return 3;
-			}
-		}
-		if (degree >= 155 && degree < 205) 
-		{
-			if (!outer)
+			if (inner)
 			{
 				return 5;
 			}
@@ -248,31 +237,9 @@ public class Spinner : MonoBehaviour {
 				return 2;
 			}
 		}
-		if (degree >= 205 && degree < 255) 
+		else if (degree >= 114.5 && degree < 167.5) 
 		{
-			if (!outer)
-			{
-				return 4;
-			}
-			else
-			{
-				return 3;
-			}
-		}
-		if (degree >= 255 && degree < 285) 
-		{
-			if (!outer)
-			{
-				return 3;
-			}
-			else
-			{
-				return 4;
-			}
-		}
-		if (degree >= 285 && degree < 335) 
-		{
-			if (!outer)
+			if (inner)
 			{
 				return 6;
 			}
@@ -281,15 +248,61 @@ public class Spinner : MonoBehaviour {
 				return 1;
 			}
 		}
-
+		else if (degree >= 167.5 && degree < 190.5) 
+		{
+			if (inner)
+			{
+				return 3;
+			}
+			else
+			{
+				return 4;
+			}
+		}
+		else if (degree >= 190.5 && degree < 245) 
+		{
+			if (inner)
+			{
+				return 4;
+			}
+			else
+			{
+				return 3;
+			}
+		}
+		else if (degree >= 245 && degree < 297.5) 
+		{
+			if (inner)
+			{
+				return 5;
+			}
+			else
+			{
+				return 2;
+			}
+		}
+		else if (degree >= 297.5 && degree < 349.5) 
+		{
+			if (inner)
+			{
+				return 4;
+			}
+			else
+			{
+				return 3;
+			}
+		}
 		// 335 -> 360
-		if (!outer)
-		{
-			return 5;
-		}
 		else
 		{
-			return 2;
+			if (inner)
+			{
+				return 3;
+			}
+			else
+			{
+				return 4;
+			}
 		}
 		
 	}
@@ -298,7 +311,6 @@ public class Spinner : MonoBehaviour {
 	{
 		if (!hidden) {
 			transform.Translate (new Vector3 (0, 0, hideTranslation));
-			dialCircle.obj.transform.Translate (new Vector3 (0, 0, hideTranslation));
 			hidden = true;
 		}
 	}
@@ -308,7 +320,6 @@ public class Spinner : MonoBehaviour {
 		if (hidden) 
 		{
 			transform.Translate (new Vector3 (0, 0, -1*hideTranslation));
-			dialCircle.obj.transform.Translate (new Vector3 (0, 0, -1*hideTranslation));
 			hidden = false;
 		}
 	}
