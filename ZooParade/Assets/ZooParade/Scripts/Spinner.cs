@@ -317,7 +317,7 @@ public class Spinner : MonoBehaviour {
 
 	public void Show()
 	{
-		if (hidden) 
+		if (hidden)
 		{
 			transform.Translate (new Vector3 (0, 0, -1*hideTranslation));
 			hidden = false;

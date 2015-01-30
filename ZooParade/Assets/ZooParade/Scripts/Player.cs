@@ -6,7 +6,7 @@ public class Player
 {
 	public string name;
 	public Map map;
-	public List<Checkpoint> checkpoints = new List<Checkpoint> ();
+	public List<Checkpoint> visitedCheckpoints = new List<Checkpoint> ();
 	public List<Animal> animalsCaptured = new List<Animal> ();
 
 	public Checkpoint currentCheckpoint;

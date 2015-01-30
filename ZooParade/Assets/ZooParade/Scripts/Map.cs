@@ -21,15 +21,15 @@ public class Map
 		this.player = player;
 	}
 
-	public Checkpoint GetNextCheckPoint()
+	public List <Checkpoint> GetNextCheckpoint ()
 	{
-		// Player has the current checkpoint
-		return new Checkpoint (0, 0, true, false, false, new Checkpoint[]{});
+		return player.currentCheckpoint.GetNext ();
 	}
 
-	public void MovePlayer()
+	public void MovePlayer(Checkpoint checkpoint)
 	{
 		// Use GetNextCheckPoint to get the next checkpoint
 		// Move the Player to the next Checkpoint using MovePlayer()
+		player.MovePlayer (checkpoint);
 	}
 }
