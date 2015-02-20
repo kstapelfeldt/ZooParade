@@ -16,8 +16,9 @@ public class Spinner : MonoBehaviour {
 	public float minRotation; //minimum degree to rotate
 	public bool hidden = false;
 	float hideTranslation = 1000;
-	public float spinnerValue;
+	public int spinnerValue;
 	public bool innerCircle;
+	public bool enabled;
 
 	// Use this for initialization
 	void Start () {
@@ -27,45 +28,52 @@ public class Spinner : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (!rotating)
-		{
-			// taking line from mouse click to mouse release is
-			// too simplistic and fails for anything other than
-			// line inputs
-
-			// can fix by repeat calling mousebuttondown and rotating so
-			// so that needle follows mouse
-			// and then using mousebuttonup on last occurence of
-			// startx/starty
-
-			// or just force user to input lines
-
-			if (Input.GetMouseButtonDown (0)) 
-			{
-				// starting position when mouse button down
-				startx = Input.mousePosition.x;
-				starty = Input.mousePosition.y;
-				rot = 0; //make sure rot is 0
-			}
-			if (Input.GetMouseButtonUp (0))
-			{
-				// ending position
-				float endx = Input.mousePosition.x;
-				float endy = Input.mousePosition.y;
-				// calculate degree to rotate and set
-				degree = GetDegree (endx - startx, endy - starty);
-				// threshhold must be passed
-				// for spin to be valid
-				if (Mathf.Abs(degree) > minRotation)
-				{
-					rotating = true; //start rotating
-				}
-			}
+		if (hidden) {
+			Hide ();
 		}
 
-		if (rotating)
+		if (enabled)
 		{
-			spinnerValue = RotateByDegree (degree, innerCircle);
+			if (!rotating)
+			{
+				// taking line from mouse click to mouse release is
+				// too simplistic and fails for anything other than
+				// line inputs
+
+				// can fix by repeat calling mousebuttondown and rotating so
+				// so that needle follows mouse
+				// and then using mousebuttonup on last occurence of
+				// startx/starty
+
+				// or just force user to input lines
+
+				if (Input.GetMouseButtonDown (0)) 
+				{
+					// starting position when mouse button down
+					startx = Input.mousePosition.x;
+					starty = Input.mousePosition.y;
+					rot = 0; //make sure rot is 0
+				}
+				if (Input.GetMouseButtonUp (0))
+				{
+					// ending position
+					float endx = Input.mousePosition.x;
+					float endy = Input.mousePosition.y;
+					// calculate degree to rotate and set
+					degree = GetDegree (endx - startx, endy - starty);
+					// threshhold must be passed
+					// for spin to be valid
+					if (Mathf.Abs(degree) > minRotation)
+					{
+						rotating = true; //start rotating
+					}
+				}
+			}
+
+			if (rotating)
+			{
+				spinnerValue = RotateByDegree (degree, innerCircle);
+			}
 		}
 	}
 
@@ -312,7 +320,9 @@ public class Spinner : MonoBehaviour {
 		if (!hidden) {
 			transform.Translate (new Vector3 (0, 0, hideTranslation));
 			hidden = true;
+
 		}
+		enabled = false;
 	}
 
 	public void Show()
@@ -321,6 +331,8 @@ public class Spinner : MonoBehaviour {
 		{
 			transform.Translate (new Vector3 (0, 0, -1*hideTranslation));
 			hidden = false;
+
 		}
+		enabled = true;
 	}
 }

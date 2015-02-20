@@ -32,4 +32,6 @@ public class Map
 		// Move the Player to the next Checkpoint using MovePlayer()
 		player.MovePlayer (checkpoint);
 	}
+
+
 }
