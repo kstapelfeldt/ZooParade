@@ -47,6 +47,8 @@ public class Dial : MonoBehaviour {
 		AnswerDial.Add (34, "WRONG - Back 1");
 		AnswerDial.Add (35, "WRONG - No move. Answer correctly next turn.");
 		AnswerDial.Add (36, "RIGHT - Move Peg to Animal in Zoo");
+
+
 	}
 
 	void Start ()

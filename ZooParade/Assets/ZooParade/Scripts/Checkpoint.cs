@@ -30,11 +30,19 @@ public class Checkpoint{
 		this.forward = forward;
 	}
 	public List <Checkpoint> GetNext()
+	/* 
+	 * Returns a list of checkpoints that follow this checkpoint.
+	 */
 	{
 		return forward;
 	}
 
 	public string GetCheckpointType ()
+	/*
+	 * Returns the type of checkpoint.
+	 * The valid types of checkpoint are capturepoint, greenpoint,
+	 * redpoint, hospitalpoint and generic point.
+	 */
 	{
 		if (capturePoint)
 		{
@@ -58,71 +66,6 @@ public class Checkpoint{
 		}
 	}
 
-
-	// Edit:
-	// This is bad. Better to use a function OnClick for the Spheres
-
-	public Checkpoint GetPointClick(List <Checkpoint> checkpoints)
-	{
-		float capturePointScale = 0.4f;
-		float hospitalPointScale = 0.4f;
-		float greenPointScale = 0.35f;
-		float redPointScale = 0.35f;
-		float genericPointScale = 0.25f;
-		// using scale, establish radius
-		
-		foreach (Checkpoint chk in checkpoints)
-		{
-			float mousex = Input.mousePosition.x;
-			float mousey = Input.mousePosition.y;
-			float checkpointx = chk.centreX;
-			float checkpointy = chk.centreY;
-			
-			if (chk.GetCheckpointType() == "capturePoint")
-			{
-				if (Mathf.Sqrt ((mousex-checkpointx) * (mousex-checkpointx) + (mousey-checkpointy) * (mousey-checkpointy)) < capturePointScale)
-				{
-					return chk;
-				}
-			}
-			
-			else if (chk.GetCheckpointType() == "greenPoint")
-			{
-				if (Mathf.Sqrt ((mousex-checkpointx) * (mousex-checkpointx) + (mousey-checkpointy) * (mousey-checkpointy)) < greenPointScale)
-				{
-					return chk;
-				}
-			}
-			
-			else if (chk.GetCheckpointType() == "redPoint")
-			{
-				if (Mathf.Sqrt ((mousex-checkpointx) * (mousex-checkpointx) + (mousey-checkpointy) * (mousey-checkpointy)) < redPointScale)
-				{
-					return chk;
-				}
-			}
-			
-			else if (chk.GetCheckpointType() == "hospitalPoint")
-			{
-				if (Mathf.Sqrt ((mousex-checkpointx) * (mousex-checkpointx) + (mousey-checkpointy) * (mousey-checkpointy)) < hospitalPointScale)
-				{
-					return chk;
-				}
-			}
-			
-			else
-			{
-				if (Mathf.Sqrt ((mousex-checkpointx) * (mousex-checkpointx) + (mousey-checkpointy) * (mousey-checkpointy)) < genericPointScale)
-				{
-					return chk;
-				}
-			}
-			
-		}
-		
-		return new Checkpoint (-1, -1, false, false, false, false);
-	}
-
 	public float GetCentreX(){
 		return centreX;
 		}
@@ -132,15 +75,31 @@ public class Checkpoint{
 	}
 
 	public List <Checkpoint> GetPossibleMoves(int steps, Player player)
+	/* 
+	 * Given n number of steps and the player that is currently being moved,
+	 * this function returns a list of checkpoints that are valid moves.
+	 */
 	{
-		List <Checkpoint> queue = GetNext ();
+		List <Checkpoint> queue = new List<Checkpoint>();
+		if (steps > 0) {
+			queue = this.GetNext();
+		}
+		else{
+			queue.Add(this);
+		}
 		List <Checkpoint> visited = player.visitedCheckpoints;
 		List <Checkpoint> temp = new List <Checkpoint>();
+		// queue set to next
+		// which means we already went 1 step forward
 		for (int i = 1; i < steps; i++) {
 			while (queue.Count > 0)
 			{
+				// take first checkpoint in queue
 				Checkpoint chk = queue[0];
+				// get next
 				List <Checkpoint> newCheckPoints = chk.GetNext ();
+				// add all points in next if not contained
+				// and not visited
 				foreach (Checkpoint newChk in newCheckPoints)
 				{
 					if (!(queue.Contains(newChk)))
@@ -148,15 +107,21 @@ public class Checkpoint{
 						temp.Add (newChk);
 					}
 				}
-				visited.Add (chk);
 				queue.Remove (chk);
 			}
-			foreach (Checkpoint add in temp){
-				queue.Add (add);
+
+			foreach (Checkpoint toAdd in temp){
+				queue.Add (toAdd);
 			}
-			temp.Clear ();
+
+			temp.Clear();
 		}
 		return queue;
+	}
+
+	public string toString()
+	{
+		return "Checkpoint with centre: (" + centreX + "," + centreY + ")";
 	}
 
 }

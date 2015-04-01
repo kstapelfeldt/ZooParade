@@ -19,6 +19,10 @@ public class Player
 	}
 
 	public void MovePlayer(Checkpoint checkpoint)
+	/*
+	 * Takes a checkpoint 
+	 * Moves the player to the checkpoint.
+	 */
 	{
 		currentCheckpoint = checkpoint;
 		// icon.transform.position.Set(checkpoint.centreX, checkpoint.centreY, 0);

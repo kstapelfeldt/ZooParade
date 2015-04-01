@@ -4,15 +4,13 @@ using System.Collections;
 //
 
 public class Spinner : MonoBehaviour {
-
-	float arrowx; //holds position to draw arrow to
-	float arrowy;
+	
 	public float rot; // amount rotated
 	public float rotSpeed; // sets speed of rotation
 	float startx; // variables to hold strting mouse position
 	float starty;
 	public float degree; // degree to rotate for completion
-	bool rotating = false; // rotating or not
+	public bool rotating = false; // rotating or not
 	public float minRotation; //minimum degree to rotate
 	public bool hidden = false;
 	float hideTranslation = 1000;
@@ -177,7 +175,9 @@ public class Spinner : MonoBehaviour {
 		{
 			rotating = false;
 			// Returns angle
-			return AngleToValue (GetCurrentRot (), inner);
+			int a = AngleToValue (GetCurrentRot (), inner);
+			Debug.Log (a);
+			return a;
 		}
 		else
 		{
@@ -314,13 +314,17 @@ public class Spinner : MonoBehaviour {
 		}
 		
 	}
-
+	
 	public void Hide()
 	{
 		if (!hidden) {
 			transform.Translate (new Vector3 (0, 0, hideTranslation));
 			hidden = true;
-
+			rot = 0;
+			degree = 0;
+			rotating = false;
+			startx = 0;
+			starty = 0;
 		}
 		enabled = false;
 	}
@@ -329,9 +333,23 @@ public class Spinner : MonoBehaviour {
 	{
 		if (hidden)
 		{
+			// show
 			transform.Translate (new Vector3 (0, 0, -1*hideTranslation));
+			// spinner is not hidden
 			hidden = false;
-
+			// set amount rotated to 0
+			rot = 0;
+			// set current degree 0
+			degree = 0;
+			// stop rotating
+			rotating = false;
+			// reset startx co-ordinates
+			startx = 0;
+			starty = 0;
+			// reset rotation.z to 0
+			var rotationVector = transform.rotation.eulerAngles;
+			rotationVector.z = 0;
+			transform.rotation = Quaternion.Euler(rotationVector);
 		}
 		enabled = true;
 	}

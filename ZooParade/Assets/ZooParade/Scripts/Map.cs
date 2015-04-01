@@ -5,11 +5,11 @@ using System.Collections.Generic;
 public class Map
 {
 	public string name;
-	public List<Animal> animals = new List<Animal> ();
-	public List <Checkpoint> checkpoints;
+	public Animal[] animals;
+	public Checkpoint[] checkpoints;
 	public Player player;
 
-	public Map(string name, List<Animal> animals, List<Checkpoint> checkpoints)
+	public Map(string name, Animal[] animals, Checkpoint[] checkpoints)
 	{
 		this.name = name;
 		this.animals = animals;
@@ -27,8 +27,10 @@ public class Map
 	}
 
 	public void MovePlayer(Checkpoint checkpoint)
+	/*
+	 * Moves the player assigned to this map to the specified checkpoint.
+	 */
 	{
-		// Use GetNextCheckPoint to get the next checkpoint
 		// Move the Player to the next Checkpoint using MovePlayer()
 		player.MovePlayer (checkpoint);
 	}
