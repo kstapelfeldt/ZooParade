@@ -1,0 +1,23 @@
+Zoo Parade Documentation
+========================
+
+Authour: Fatehpaul Dhaliwal
+GitHub: fatehdhaliwal
+email: paul.dhaliwal@mail.utoronto.ca OR fateh012@gmail.com
+
+Group Members: Me, Brendan Zhang, Roleen Nunes
+Project Manager: Roleen Nunes
+------------------------
+
+COMPLETED:
+	- Map image is done. Source file (psd) has been provided if further edits are required.
+	- Code for spinner is complete.
+TO BE DONE:
+	- Actual gameplay and answer dial still need to be finished.
+	How you want to finish it is up to you, the reader, however our original plan (primarily due to lack of time to find a better solution)
+	was to hard code locations for the player to travel to. This is currently how we've set our work up but you're free to change it as needed.
+	Either way you'll need to create objects(spheres ideally) in unity for each circle.
+
+	- Rules also need to be clarified. The current ones are vague and don't cover every situation. There also doesn't seem to be any indication as to who starts. Our team just decided to randomly choose a player to start but we haven't implemented it yet so you're free to find some other way if you wish. Perhaps roll a die if you think it'll give a more interactive experience. I could explain all the issues but really, it's easier for you to understand once you've tried playing the game yourself.
+	
+	If you need further help, contact me (Fatehpaul Dhaliwal) for info on images/map or further clarifications on rules and contact Brendan or Roleen for help on the Unity portions of it.
