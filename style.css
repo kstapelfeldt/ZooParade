@@ -1,3 +1,17 @@
 body{
 	background-color: #FFFF66;
 }
+
+#leftMap{
+	background-color: red;
+	width: 35%;
+	height: 70%;
+	float: left;
+}
+
+#rightMap{
+	background-color: blue;
+	width: 35%;
+	height: 70%;
+	float: right;
+}
