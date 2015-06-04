@@ -6,13 +6,19 @@ var initialWindowHeight = $(window).height();
 var leftMap = SVG('leftMap');
 
 var circle = leftMap.circle("6%").attr({ fill: 'green' });
-
-circle.translate(GetMapWidth() * 0.5, GetMapHeight() * 0.5);
+circle.cx(GetMapWidth() * 0.5);
+circle.cy(GetMapHeight() * 0.5);
+//circle.translate(GetMapWidth() * 0.5, GetMapHeight() * 0.5);
 
 var circle2 = leftMap.circle("6%").attr({ fill: 'green' });
+circle2.cx(GetMapWidth() * 0.4);
+circle2.cy(GetMapHeight() * 0.4);
 
-circle2.translate(GetMapWidth() * 0.4, GetMapHeight() * 0.4);
+//circle2.translate(GetMapWidth() * 0.4, GetMapHeight() * 0.4);
 
+//var polyline = draw.polyline([[circle.cx(),circle.cy()], [circle2.cx(),circle2.cy()]).fill('green').stroke({ width: 1 })
+
+var line = leftMap.line(circle.cx(), circle.cy(), circle2.cx() + 1, circle2.cy() + 1).stroke({ width: 10, color:'green' });
 
 function GetMapWidth(){
 	return documentWidth * 0.35;
