@@ -1,17 +1,25 @@
 body{
-	background-color: #FFFF66;
+	background-color: #8DE670;
 }
 
 #leftMap{
-	background-color: red;
+	background-color: #FFFF66;
 	width: 35%;
 	height: 70%;
-	float: left;
+	border-radius: 5%;
+}
+
+#center{
+	background-color: blue;
+	width: 25%;
+	height: 70%;
+	margin-left: 2%;
+	margin-right: 2%;
 }
 
 #rightMap{
-	background-color: blue;
+	background-color: #FFFF66;
 	width: 35%;
 	height: 70%;
-	float: right;
+	border-radius: 5%;
 }
