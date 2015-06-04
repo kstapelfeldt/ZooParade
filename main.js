@@ -29,5 +29,6 @@ function GetMapHeight(){
  * Make an array of the relative position of coordinates
  * Function to create circles at the coordinates and draw rectangles between two centers
  * Populate checkpoints at the same time
- * 
+ * [[0, 0], [1, 0], 
+ [1.5, 1], [2.5, 1], [3.5, 1], [4.5, 1]]
  */
