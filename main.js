@@ -4,8 +4,7 @@ var initialWindowWidth = $(window).width();
 var initialWindowHeight = $(window).height();
 
 var mapScale = 0.097;			// Scale the maps
-var moveLeftMap = 0;			// Move the left map horizontally
-var moveRightMap = 0;			// Move the right map horizontally
+var moveHorizontal = 0;			// Move the maps horizontally
 var moveVertical = 0;			// Move the maps vertically
 
 // Relative position of all the checkpoints
@@ -57,6 +56,14 @@ var pathEdges = [[0 ,1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7],
 				[33, 28], [28, 25], [25, 20], [20, 21], [21, 16], [37, 34], [34, 29], 
 				[29, 30], [30, 31], [31, 32]];
 
+var checkpointSize = "4.5%";		// Size of normal checkpoints
+var specialCheckpointSize = "5.5%";	// Size of special checkpoints
+
+// Animal capture points indices
+var animal1Checkpoints = [5, 20];
+var animal2Checkpoints = [18, 26];
+var animal3Checkpoints = [12, 38];
+
 // SVG objects for Left map
 var leftMap = SVG('leftMap');
 var leftPath = leftMap.nested();
@@ -76,6 +83,27 @@ CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints, hazardP
 LinkCheckpoints(pathEdges, rightPath, true);
 
 
+var continent1Name = 'North America';
+var continent1Animals = [new Animal('Moose', continent1Name, 'Resources/SVG/Moose.svg'), 
+						new Animal('Grizzly Bear', continent1Name, 'Resources/SVG/Grizzly.svg'), 
+						new Animal('Big Horn', continent1Name, 'Resources/SVG/bighorn.svg')];
+
+//document.write(continent1Animals[0].imgsrc);
+
+var continent2Name = 'Asia';
+var continent2Animals = [new Animal('Indian Rhinoceros', continent1Name, 'Resources/SVG/Rhinoceros.svg'), 
+						new Animal('Indian Elephant', continent1Name, 'Resources/SVG/Elephant.svg'), 
+						new Animal('Bengal Tiger', continent1Name, 'Resources/SVG/Tiger.svg')];
+
+
+var continent1 = new Continent(continent1Name, continent1Animals, leftCheckpoints);
+var continent2 = new Continent(continent2Name, continent2Animals, rightCheckpoints);
+
+//document.write(continent1.animals[0].imgsrc);
+
+PositionAnimals(continent1Animals, false);
+PositionAnimals(continent2Animals, true);
+
 
 /* Creates the checkpoints for a map at the given positions and sets the status of capture point,
  * green S point, red S point and hazard point for each checkpoint for the given map
@@ -84,26 +112,33 @@ LinkCheckpoints(pathEdges, rightPath, true);
  */
 function CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints, hazardPoints, map, right){
 	for (i = 0; i < positions.length; i++){
+		var cpSize = checkpointSize;
+
 		if (right){
-			x = (GetMapWidth() - (GetMapWidth() * positions[i][0] * mapScale)) + (GetMapWidth() * moveRightMap);
+			x = (GetMapWidth() - (GetMapWidth() * positions[i][0] * mapScale)) - (GetMapWidth() * moveHorizontal);
 		} else{
-			x = (GetMapWidth() * positions[i][0] * mapScale) + (GetMapWidth() * moveLeftMap);
+			x = (GetMapWidth() * positions[i][0] * mapScale) + (GetMapWidth() * moveHorizontal);
 		}
 		
 		y = (GetMapHeight() * positions[i][1] * mapScale) + (GetMapHeight() * moveVertical);
 
 		var pointColor = 'green';
 		if (capturePoints[i]){
-			pointColor = 'black'
+			pointColor = 'black';
+			cpSize = specialCheckpointSize;
 		} else if (greenSPoints[i]){
 			pointColor = '#193C19';
+			cpSize = specialCheckpointSize;
 		} else if (redSPoints[i]){
 			pointColor = 'red';
+			cpSize = specialCheckpointSize;
 		} else if (hazardPoints[i]){
 			pointColor = 'blue';
+			cpSize = specialCheckpointSize;
 		}
 
-		map.circle("4.5%").attr({ fill: pointColor , cx: x, cy: y });
+
+		map.circle(cpSize).attr({ fill: pointColor , cx: x, cy: y });
 		var checkpoint = new Checkpoint(x, y, capturePoints[i], greenSPoints[i], redSPoints[i], hazardPoints[i]);
 		if (right){
 			rightCheckpoints.push(checkpoint);
@@ -139,6 +174,79 @@ function LinkCheckpoints(edges, map, right){
 }
 
 
+/* Positions animal svgs at the right position for the animals
+ * Parameter types: (list of Animal, boolean)
+ */
+function PositionAnimals(animals, right){
+	var a1C1XDeviation = 0.019;
+	var a1C1YDeviation = 0.05;
+
+	var a1C2XDeviation = - 0.04;
+	var a1C2YDeviation = - 0.05;
+
+	var a2C1XDeviation = 0.05;
+	var a2C1YDeviation = -0.07;
+
+	var a2C2XDeviation = -0.06;
+	var a2C2YDeviation = -0.06;
+
+	var a3C1XDeviation = 0.01;
+	var a3C1YDeviation = -0.065;
+
+	var a3C2XDeviation = 0.01;
+	var a3C2YDeviation = -0.065;
+
+	if (right){
+		var image = rightPath.image(animals[0].imgsrc, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
+		image.cx(rightCheckpoints[animal1Checkpoints[0]].x - GetMapWidth() * a1C1XDeviation);
+		image.cy(rightCheckpoints[animal1Checkpoints[0]].y + GetMapHeight() * a1C1YDeviation);
+
+		var image = rightPath.image(animals[0].imgsrc, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
+		image.cx(rightCheckpoints[animal1Checkpoints[1]].x - GetMapWidth() * a1C2XDeviation);
+		image.cy(rightCheckpoints[animal1Checkpoints[1]].y + GetMapHeight() * a1C2YDeviation);
+
+		var image = rightPath.image(animals[1].imgsrc, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
+		image.cx(rightCheckpoints[animal2Checkpoints[0]].x - GetMapWidth() * a2C1XDeviation);
+		image.cy(rightCheckpoints[animal2Checkpoints[0]].y + GetMapHeight() * a2C1YDeviation);
+
+		var image = rightPath.image(animals[1].imgsrc, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
+		image.cx(rightCheckpoints[animal2Checkpoints[1]].x - GetMapWidth() * a2C2XDeviation);
+		image.cy(rightCheckpoints[animal2Checkpoints[1]].y + GetMapHeight() * a2C2YDeviation);
+
+		var image = rightPath.image(animals[2].imgsrc, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
+		image.cx(rightCheckpoints[animal3Checkpoints[0]].x - GetMapWidth() * a3C1XDeviation);
+		image.cy(rightCheckpoints[animal3Checkpoints[0]].y + GetMapHeight() * a3C1YDeviation);
+
+		var image = rightPath.image(animals[2].imgsrc, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
+		image.cx(rightCheckpoints[animal3Checkpoints[1]].x - GetMapWidth() * a3C2XDeviation);
+		image.cy(rightCheckpoints[animal3Checkpoints[1]].y + GetMapHeight() * a3C2YDeviation);
+	} else {
+		var image = leftPath.image(animals[0].imgsrc, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
+		image.cx(leftCheckpoints[animal1Checkpoints[0]].x + GetMapWidth() * a1C1XDeviation);
+		image.cy(leftCheckpoints[animal1Checkpoints[0]].y + GetMapHeight() * a1C1YDeviation);
+
+		var image = leftPath.image(animals[0].imgsrc, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
+		image.cx(leftCheckpoints[animal1Checkpoints[1]].x + GetMapWidth() * a1C2XDeviation);
+		image.cy(leftCheckpoints[animal1Checkpoints[1]].y + GetMapHeight() * a1C2YDeviation);
+
+		var image = leftPath.image(animals[1].imgsrc, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
+		image.cx(leftCheckpoints[animal2Checkpoints[0]].x + GetMapWidth() * a2C1XDeviation);
+		image.cy(leftCheckpoints[animal2Checkpoints[0]].y + GetMapHeight() * a2C1YDeviation);
+
+		var image = leftPath.image(animals[1].imgsrc, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
+		image.cx(leftCheckpoints[animal2Checkpoints[1]].x + GetMapWidth() * a2C2XDeviation);
+		image.cy(leftCheckpoints[animal2Checkpoints[1]].y + GetMapHeight() * a2C2YDeviation);
+
+		var image = leftPath.image(animals[2].imgsrc, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
+		image.cx(leftCheckpoints[animal3Checkpoints[0]].x + GetMapWidth() * a3C1XDeviation);
+		image.cy(leftCheckpoints[animal3Checkpoints[0]].y + GetMapHeight() * a3C1YDeviation);
+
+		var image = leftPath.image(animals[2].imgsrc, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
+		image.cx(leftCheckpoints[animal3Checkpoints[1]].x + GetMapWidth() * a3C2XDeviation);
+		image.cy(leftCheckpoints[animal3Checkpoints[1]].y + GetMapHeight() * a3C2YDeviation);
+	}
+}
+
 /* Returns the width of a map */
 function GetMapWidth(){
 	return documentWidth * 0.35;
@@ -148,3 +256,42 @@ function GetMapWidth(){
 function GetMapHeight(){
 	return documentHeight * 0.70;
 }
+
+/* Reads the text of the file at the given path 
+ * Parameter type: (string)
+ */
+function ReadFile(path) 
+{
+	var txtFile = new XMLHttpRequest();
+	txtFile.open("GET", path, false);
+	txtFile.send(null);
+	return txtFile.responseText;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

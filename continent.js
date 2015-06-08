@@ -1,7 +1,7 @@
-/* Initialzer for a Map object
+/* Initialzer for a Continent object
  * Parameter types : (string, list of Animal, list of Checkpoint)
  */
-function Map(name, animals, checkpoints){
+function Continent(name, animals, checkpoints){
 	this.name = name;
 	this.animals = animals;
 	this.checkpoints = checkpoints;
@@ -13,7 +13,7 @@ function Map(name, animals, checkpoints){
  * returns an array of checkpoints
  * Parameter types : (Map)
  */
-function GetPossibleMoves(map){
+function GetPossibleMoves(continent){
 	// To be implemented
 }
 
@@ -21,6 +21,6 @@ function GetPossibleMoves(map){
 /* Assigns player to map
  * Parameter types : (Map, Player)
  */
-function AssignPlayer(map, player){
+function AssignPlayer(continent, player){
 	map.player = player;
 }
