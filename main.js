@@ -74,6 +74,9 @@ var rightMap = SVG('rightMap');
 var rightPath = rightMap.nested();
 var rightCheckpoints = new Array();
 
+// SVG object for the middle section of the board
+var middleSection = SVG('center');
+
 // Creates Left Map
 CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints, hazardPoints, leftMap, false);
 LinkCheckpoints(pathEdges, leftPath, false);
@@ -111,6 +114,9 @@ AddAnimalImages(continent1Animals, false);
 AddAnimalImages(continent2Animals, true);
 
 
+var image = middleSection.image('Resources/spinner.png', GetMiddleWidth() / 1.5, GetMiddleWidth() / 1.5);
+image.cx(GetMiddleWidth() / 2);
+image.cy(GetMapHeight() - GetMiddleWidth() / 3);
 
 
 /* Creates the checkpoints for a map at the given positions and sets the status of capture point,
@@ -309,6 +315,11 @@ function AddAnimalImages(animals, right){
 		var image = leftPath.image(animals[2].pngPath, imgWidth, imgHeight);
 		image.cy(imgYposition);
 	}	
+}
+
+/* Returns the width of the middle section of the board */
+function GetMiddleWidth(){
+	return documentWidth * 0.25;
 }
 
 /* Returns the width of a map */

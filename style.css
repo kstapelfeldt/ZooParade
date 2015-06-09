@@ -10,11 +10,14 @@ body{
 }
 
 #center{
-	background-color: blue;
+	background-color: #45B120;
 	width: 25%;
 	height: 70%;
 	margin-left: 2%;
 	margin-right: 2%;
+	border-radius: 5%;
+	border-style: solid;
+    border-color: #000;
 }
 
 #rightMap{
