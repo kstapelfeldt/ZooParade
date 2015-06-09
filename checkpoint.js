@@ -11,5 +11,7 @@ function Checkpoint(x, y, capture, greenS, redS, hazard){
 	this.redS = redS;
 	this.hazard = hazard;
 	this.visited = false;
+
+	this.circle = null;
 	this.nextCheckpoints = new Array();
 }

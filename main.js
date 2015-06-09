@@ -1,8 +1,3 @@
-var documentWidth = $(document).width();
-var documentHeight = $(document).height();
-var initialWindowWidth = $(window).width();
-var initialWindowHeight = $(window).height();
-
 var mapScale = 0.097;			// Scale the maps
 var moveHorizontal = 0;			// Move the maps horizontally
 var moveVertical = 0;			// Move the maps vertically
@@ -66,6 +61,7 @@ var animal3Checkpoints = [12, 38];
 
 // SVG objects for Left map
 var leftMap = SVG('leftMap');
+//leftMap.rebuild(false);
 var leftPath = leftMap.nested();
 var leftCheckpoints = new Array();
 
@@ -74,49 +70,85 @@ var rightMap = SVG('rightMap');
 var rightPath = rightMap.nested();
 var rightCheckpoints = new Array();
 
+// SVG lines connecting checkpoints
+var svgObjects = new Array();
+
 // SVG object for the middle section of the board
 var middleSection = SVG('center');
 
-// Creates Left Map
-CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints, hazardPoints, leftMap, false);
-LinkCheckpoints(pathEdges, leftPath, false);
-
-// Creates Right Map
-CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints, hazardPoints, rightMap, true);
-LinkCheckpoints(pathEdges, rightPath, true);
+var created = false;
 
 
-// Set continent names and continent animals
-var continent1Name = 'North America';
-var continent1Animals = [new Animal('Moose', continent1Name, 'Moose'), 
-						new Animal('Grizzly Bear', continent1Name, 'Grizzly'), 
-						new Animal('Big Horn', continent1Name, 'Bighorn')];
+Setup();
 
-var continent2Name = 'Asia';
-var continent2Animals = [new Animal('Indian Rhinoceros', continent1Name, 'Rhinoceros'), 
-						new Animal('Indian Elephant', continent1Name, 'Elephant'), 
-						new Animal('Bengal Tiger', continent1Name, 'Tiger')];
+//window.addEventListener("resize", Setup);
 
-// Create two Continent objects
-var continent1 = new Continent(continent1Name, continent1Animals, leftCheckpoints);
-var continent2 = new Continent(continent2Name, continent2Animals, rightCheckpoints);
+$(window).resize(function(){
+	//document.write("in");
+	//alert("resizing");
+	Destroy();
+    Setup();
+});
 
-// Add names of continents to the maps
-AddContinentName(continent1Name, false);
-AddContinentName(continent2Name, true);
+/* Sets up the game graphics */
+function Setup(){
 
-// Add the svg images of animals to the map
-PositionAnimals(continent1Animals, false);
-PositionAnimals(continent2Animals, true);
+	//alert("setup");
+	// Creates Left Map
+	CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints, hazardPoints, leftMap, false);
+	LinkCheckpoints(pathEdges, leftPath, false);
 
-// Add the pictures on the edges of the board
-AddAnimalImages(continent1Animals, false);
-AddAnimalImages(continent2Animals, true);
+	// Creates Right Map
+	CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints, hazardPoints, rightMap, true);
+	LinkCheckpoints(pathEdges, rightPath, true);
 
 
-var image = middleSection.image('Resources/spinner.png', GetMiddleWidth() / 1.5, GetMiddleWidth() / 1.5);
-image.cx(GetMiddleWidth() / 2);
-image.cy(GetMapHeight() - GetMiddleWidth() / 3);
+	// Set continent names and continent animals
+	var continent1Name = 'North America';
+	var continent1Animals = [new Animal('Moose', continent1Name, 'Moose'), 
+							new Animal('Grizzly Bear', continent1Name, 'Grizzly'), 
+							new Animal('Big Horn', continent1Name, 'Bighorn')];
+
+	var continent2Name = 'Asia';
+	var continent2Animals = [new Animal('Indian Rhinoceros', continent1Name, 'Rhinoceros'), 
+							new Animal('Indian Elephant', continent1Name, 'Elephant'), 
+							new Animal('Bengal Tiger', continent1Name, 'Tiger')];
+
+	// Create two Continent objects
+	var continent1 = new Continent(continent1Name, continent1Animals, leftCheckpoints);
+	var continent2 = new Continent(continent2Name, continent2Animals, rightCheckpoints);
+
+	// Add names of continents to the maps
+	AddContinentName(continent1Name, false);
+	AddContinentName(continent2Name, true);
+
+	// Add the svg images of animals to the map
+	PositionAnimals(continent1Animals, false);
+	PositionAnimals(continent2Animals, true);
+
+	// Add the pictures on the edges of the board
+	AddAnimalImages(continent1Animals, false);
+	AddAnimalImages(continent2Animals, true);
+
+
+	var image = middleSection.image('Resources/spinner.png', GetMiddleWidth() / 1.5, GetMiddleWidth() / 1.5);
+	image.cx(GetMiddleWidth() / 2);
+	image.cy(GetMapHeight() - GetMiddleWidth() / 3);
+	svgObjects.push(image);
+
+	created = true;
+}
+
+
+function Destroy(){
+
+	for(i = 0; i < svgObjects.length; i++){
+		svgObjects[i].parent.removeElement(svgObjects[i]);
+	}
+	svgObjects = new Array();
+
+
+}
 
 
 /* Creates the checkpoints for a map at the given positions and sets the status of capture point,
@@ -125,6 +157,7 @@ image.cy(GetMapHeight() - GetMiddleWidth() / 3);
  *                   list of boolean, Map, boolean)
  */
 function CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints, hazardPoints, map, right){
+
 	for (i = 0; i < positions.length; i++){
 		var cpSize = checkpointSize;
 
@@ -150,14 +183,34 @@ function CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints
 			pointColor = 'blue';
 			cpSize = specialCheckpointSize;
 		}
+		
 
-
-		map.circle(cpSize).attr({ fill: pointColor , cx: x, cy: y });
-		var checkpoint = new Checkpoint(x, y, capturePoints[i], greenSPoints[i], redSPoints[i], hazardPoints[i]);
 		if (right){
-			rightCheckpoints.push(checkpoint);
-		} else{
-			leftCheckpoints.push(checkpoint);
+			if (created) {
+				rightCheckpoints[i].x = x;
+				rightCheckpoints[i].y = y;
+				rightCheckpoints[i].circle = map.circle(cpSize).attr({ fill: pointColor , cx: x, cy: y });
+				svgObjects.push(rightCheckpoints[i].circle);
+			} else {
+				var checkpoint = new Checkpoint(x, y, capturePoints[i], greenSPoints[i], redSPoints[i], hazardPoints[i]);
+				checkpoint.circle = map.circle(cpSize).attr({ fill: pointColor , cx: x, cy: y });
+				rightCheckpoints.push(checkpoint);
+				svgObjects.push(checkpoint.circle);
+			}
+			
+		} else {
+			if (created) {
+				leftCheckpoints[i].x = x;
+				leftCheckpoints[i].y = y;
+				leftCheckpoints[i].circle = map.circle(cpSize).attr({ fill: pointColor , cx: x, cy: y });
+				svgObjects.push(leftCheckpoints[i].circle);
+			} else {
+				var checkpoint = new Checkpoint(x, y, capturePoints[i], greenSPoints[i], redSPoints[i], hazardPoints[i]);
+				checkpoint.circle = map.circle(cpSize).attr({ fill: pointColor , cx: x, cy: y });
+				leftCheckpoints.push(checkpoint);
+				svgObjects.push(checkpoint.circle);
+			}
+			
 		}
 	}
 }
@@ -167,23 +220,33 @@ function CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints
  * Parameter types: (list of list, Map, boolean)
  */
 function LinkCheckpoints(edges, map, right){
+
 	for (i = 0; i < edges.length; i++){
 		index1 = edges[i][0];
 		index2 = edges[i][1];
 
+		var line;
+
 		if (right){
-			var line = map.line(rightCheckpoints[index1].x, rightCheckpoints[index1].y, rightCheckpoints[index2].x, 
+			line = map.line(rightCheckpoints[index1].x, rightCheckpoints[index1].y, rightCheckpoints[index2].x, 
 			rightCheckpoints[index2].y).stroke({ width: "1.5%", color:'green' });
 
-			rightCheckpoints[index1].nextCheckpoints.push(rightCheckpoints[index2]);
-			rightCheckpoints[index2].nextCheckpoints.push(rightCheckpoints[index1]);
+			if (!created){
+				rightCheckpoints[index1].nextCheckpoints.push(rightCheckpoints[index2]);
+				rightCheckpoints[index2].nextCheckpoints.push(rightCheckpoints[index1]);
+			}
+			
+
 		} else{
-			var line = map.line(leftCheckpoints[index1].x, leftCheckpoints[index1].y, leftCheckpoints[index2].x, 
+			line = map.line(leftCheckpoints[index1].x, leftCheckpoints[index1].y, leftCheckpoints[index2].x, 
 			leftCheckpoints[index2].y).stroke({ width: "1.5%", color:'green' });
 
-			leftCheckpoints[index1].nextCheckpoints.push(leftCheckpoints[index2]);
-			leftCheckpoints[index2].nextCheckpoints.push(leftCheckpoints[index1]);
+			if (!created){
+				leftCheckpoints[index1].nextCheckpoints.push(leftCheckpoints[index2]);
+				leftCheckpoints[index2].nextCheckpoints.push(leftCheckpoints[index1]);
+			}
 		}
+		svgObjects.push(line);
 	}
 }
 
@@ -196,14 +259,17 @@ function AddContinentName(continentName, right){
 	var y = GetMapHeight() * 0.01;
 	var fontSize = GetMapWidth() * mapScale * 0.7;
 
+	var text;
 	if (right){
-		var text = rightMap.text(continentName.toUpperCase()).move(GetMapWidth() - x, y);
+		text = rightMap.text(continentName.toUpperCase()).move(GetMapWidth() - x, y);
 	} else {
-		var text = leftMap.text(continentName.toUpperCase()).move(x, y);
+		text = leftMap.text(continentName.toUpperCase()).move(x, y);
 	}
 
 	text.font({ family: 'Courier', size: fontSize, anchor: 'middle', fill: 'red', 
 		'font-weight' :'bold' });
+
+	svgObjects.push(text);
 }
 
 
@@ -233,50 +299,62 @@ function PositionAnimals(animals, right){
 		var image = rightPath.image(animals[0].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
 		image.cx(rightCheckpoints[animal1Checkpoints[0]].x - GetMapWidth() * a1C1XDeviation);
 		image.cy(rightCheckpoints[animal1Checkpoints[0]].y + GetMapHeight() * a1C1YDeviation);
+		svgObjects.push(image);
 
 		var image = rightPath.image(animals[0].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
 		image.cx(rightCheckpoints[animal1Checkpoints[1]].x - GetMapWidth() * a1C2XDeviation);
 		image.cy(rightCheckpoints[animal1Checkpoints[1]].y + GetMapHeight() * a1C2YDeviation);
+		svgObjects.push(image);
 
 		var image = rightPath.image(animals[1].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
 		image.cx(rightCheckpoints[animal2Checkpoints[0]].x - GetMapWidth() * a2C1XDeviation);
 		image.cy(rightCheckpoints[animal2Checkpoints[0]].y + GetMapHeight() * a2C1YDeviation);
+		svgObjects.push(image);
 
 		var image = rightPath.image(animals[1].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
 		image.cx(rightCheckpoints[animal2Checkpoints[1]].x - GetMapWidth() * a2C2XDeviation);
 		image.cy(rightCheckpoints[animal2Checkpoints[1]].y + GetMapHeight() * a2C2YDeviation);
+		svgObjects.push(image);
 
 		var image = rightPath.image(animals[2].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
 		image.cx(rightCheckpoints[animal3Checkpoints[0]].x - GetMapWidth() * a3C1XDeviation);
 		image.cy(rightCheckpoints[animal3Checkpoints[0]].y + GetMapHeight() * a3C1YDeviation);
+		svgObjects.push(image);
 
 		var image = rightPath.image(animals[2].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
 		image.cx(rightCheckpoints[animal3Checkpoints[1]].x - GetMapWidth() * a3C2XDeviation);
 		image.cy(rightCheckpoints[animal3Checkpoints[1]].y + GetMapHeight() * a3C2YDeviation);
+		svgObjects.push(image);
 	} else {
 		var image = leftPath.image(animals[0].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
 		image.cx(leftCheckpoints[animal1Checkpoints[0]].x + GetMapWidth() * a1C1XDeviation);
 		image.cy(leftCheckpoints[animal1Checkpoints[0]].y + GetMapHeight() * a1C1YDeviation);
+		svgObjects.push(image);
 
 		var image = leftPath.image(animals[0].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
 		image.cx(leftCheckpoints[animal1Checkpoints[1]].x + GetMapWidth() * a1C2XDeviation);
 		image.cy(leftCheckpoints[animal1Checkpoints[1]].y + GetMapHeight() * a1C2YDeviation);
+		svgObjects.push(image);
 
 		var image = leftPath.image(animals[1].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
 		image.cx(leftCheckpoints[animal2Checkpoints[0]].x + GetMapWidth() * a2C1XDeviation);
 		image.cy(leftCheckpoints[animal2Checkpoints[0]].y + GetMapHeight() * a2C1YDeviation);
+		svgObjects.push(image);
 
 		var image = leftPath.image(animals[1].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
 		image.cx(leftCheckpoints[animal2Checkpoints[1]].x + GetMapWidth() * a2C2XDeviation);
 		image.cy(leftCheckpoints[animal2Checkpoints[1]].y + GetMapHeight() * a2C2YDeviation);
+		svgObjects.push(image);
 
 		var image = leftPath.image(animals[2].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
 		image.cx(leftCheckpoints[animal3Checkpoints[0]].x + GetMapWidth() * a3C1XDeviation);
 		image.cy(leftCheckpoints[animal3Checkpoints[0]].y + GetMapHeight() * a3C1YDeviation);
+		svgObjects.push(image);
 
 		var image = leftPath.image(animals[2].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
 		image.cx(leftCheckpoints[animal3Checkpoints[1]].x + GetMapWidth() * a3C2XDeviation);
 		image.cy(leftCheckpoints[animal3Checkpoints[1]].y + GetMapHeight() * a3C2YDeviation);
+		svgObjects.push(image);
 	}
 }
 
@@ -294,42 +372,48 @@ function AddAnimalImages(animals, right){
 		image.cx(GetMapWidth() - imgWidth / 2);
 		image.cy(imgYposition);
 		imgYposition += imgHeight;
+		svgObjects.push(image);
 
 		var image = rightPath.image(animals[1].pngPath, imgWidth, imgHeight);
 		image.cx(GetMapWidth() - imgWidth / 2);
 		image.cy(imgYposition);
 		imgYposition += imgHeight;
+		svgObjects.push(image);
 
 		var image = rightPath.image(animals[2].pngPath, imgWidth, imgHeight);
 		image.cx(GetMapWidth() - imgWidth / 2);
 		image.cy(imgYposition);
+		svgObjects.push(image);
 	} else {
 		var image = leftPath.image(animals[0].pngPath, imgWidth, imgHeight);
 		image.cy(imgYposition);
 		imgYposition += imgHeight;
+		svgObjects.push(image);
 
 		var image = leftPath.image(animals[1].pngPath, imgWidth, imgHeight);
 		image.cy(imgYposition);
 		imgYposition += imgHeight;
+		svgObjects.push(image);
 
 		var image = leftPath.image(animals[2].pngPath, imgWidth, imgHeight);
 		image.cy(imgYposition);
+		svgObjects.push(image);
 	}	
 }
 
 /* Returns the width of the middle section of the board */
 function GetMiddleWidth(){
-	return documentWidth * 0.25;
+	return $(document).width() * 0.25;
 }
 
 /* Returns the width of a map */
 function GetMapWidth(){
-	return documentWidth * 0.35;
+	return $(document).width() * 0.35;
 }
 
 /* Returns the height of a map */
 function GetMapHeight(){
-	return documentHeight * 0.70;
+	return $(document).height() * 0.70;
 }
 
 /* Reads the text of the file at the given path 
