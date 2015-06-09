@@ -1,67 +1,5 @@
-var mapScale = 0.097;			// Scale the maps
-var moveHorizontal = 0;			// Move the maps horizontally
-var moveVertical = 0;			// Move the maps vertically
-
-// Relative position of all the checkpoints
-var positions = [[2, 1.2], [3, 1.2], 
-			[4, 2], [5, 2], [6, 2], [7, 2], [8, 2], [9, 2.5],
-			[4, 3], [4.7, 3.2], [9.5, 3.3],
-			[4, 4], [5.4, 3.7], [6.5, 4], [7.3, 3.7], [8.2, 3.8], [9.5, 4.2],
-			[5.7, 4.5],
-			[4, 5.3], [5.3, 5.5], [7.3, 5.5], [8.2, 5.1], [9.5, 5.3],
-			[4.2, 6.6], [5, 6.8], [6.1, 6.8], [9.5, 6.5],
-			[4.3, 7.6], [5.1, 7.7], [6.2, 7.9], [7.3, 7.2], [8.3, 7.1],[9.5, 7.5],
-			[4.4, 8.4], [5.3, 8.6], [9.4, 8.4],
-			[4, 9.5], [5, 9.5], [6, 9.5], [7, 9.5], [8, 9.5], [9, 9]];
-
-// Booleans representing the capture point status of every checkpoint
-var capturePoints = [false, false, false, false, false, true, false, false, false, false, 
-					false, false, true, false, false, false, false, false, true, false, 
-					true, false, false, false, false, false, true, false, false, false, 
-					false, false, false, false, false, false, false, false, true, false, 
-					false, false];
-
-// Booleans representing the greenS point status of every checkpoint
-var greenSPoints = [false, false, false, false, false, false, false, false, false, false, 
-					true, false, false, false, true, false, false, false, false, false, 
-					false, false, false, false, true, false, false, false, false, true, 
-					false, false, false, true, false, false, false, false, false, false, 
-					false, true];
-
-// Booleans representing the redS point status of every checkpoint
-var redSPoints = 	[false, false, true, false, false, false, false, false, false, false, 
-					false, false, false, false, false, true, false, false, false, false, 
-					false, false, false, false, false, false, false, false, false, false, 
-					false, false, false, false, false, false, false, false, false, false, 
-					false, false];
-
-// Booleans representing the hazard point status of every checkpoint
-var hazardPoints = [false, false, false, false, false, false, false, false, false, false, 
-					false, false, false, false, false, false, false, false, false, true, 
-					false, false, false, false, false, false, false, false, false, false, 
-					true, false, false, false, false, false, false, false, false, false, 
-					false, false];
-
-// All the edges in the maps
-var pathEdges = [[0 ,1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7],
-				[7, 10], [10, 16], [16, 22], [22, 26], [26, 32], [32, 35], [35, 41],
-				[41, 40], [40, 39], [39, 38], [38, 37], [37, 36], [36, 33], [33, 27],
-				[27, 23], [23, 18], [18, 11], [11, 8], [8, 2], [8, 9], [9, 12], [12, 17],
-				[17, 13], [13, 14], [14, 15], [15, 16], [27, 24], [24, 19], [19, 17], 
-				[33, 28], [28, 25], [25, 20], [20, 21], [21, 16], [37, 34], [34, 29], 
-				[29, 30], [30, 31], [31, 32]];
-
-var checkpointSize = "4.5%";		// Size of normal checkpoints
-var specialCheckpointSize = "5.5%";	// Size of special checkpoints
-
-// Animal capture points indices
-var animal1Checkpoints = [5, 20];
-var animal2Checkpoints = [18, 26];
-var animal3Checkpoints = [12, 38];
-
 // SVG objects for Left map
 var leftMap = SVG('leftMap');
-//leftMap.rebuild(false);
 var leftPath = leftMap.nested();
 var leftCheckpoints = new Array();
 
@@ -70,22 +8,19 @@ var rightMap = SVG('rightMap');
 var rightPath = rightMap.nested();
 var rightCheckpoints = new Array();
 
-// SVG lines connecting checkpoints
-var svgObjects = new Array();
+var svgObjects = new Array();		// Array of all svg objects in the game
 
-// SVG object for the middle section of the board
-var middleSection = SVG('center');
+var middleSection = SVG('center');	// SVG object for the middle section of the board
 
-var created = false;
+var spinnerSection = SVG('spinner');
 
+// Set the min screen width and height
+document.getElementById("body").style.minWidth = screen.width * minScreenWidth;
+document.getElementById("body").style.minHeight = screen.height * minScreenHeight;
 
 Setup();
 
-//window.addEventListener("resize", Setup);
-
 $(window).resize(function(){
-	//document.write("in");
-	//alert("resizing");
 	Destroy();
     Setup();
 });
@@ -102,52 +37,46 @@ function Setup(){
 	CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints, hazardPoints, rightMap, true);
 	LinkCheckpoints(pathEdges, rightPath, true);
 
-
 	// Set continent names and continent animals
-	var continent1Name = 'North America';
-	var continent1Animals = [new Animal('Moose', continent1Name, 'Moose'), 
+	var continent0Name = 'North America';
+	var continent0Animals = [new Animal('Moose', continent1Name, 'Moose'), 
 							new Animal('Grizzly Bear', continent1Name, 'Grizzly'), 
 							new Animal('Big Horn', continent1Name, 'Bighorn')];
 
-	var continent2Name = 'Asia';
-	var continent2Animals = [new Animal('Indian Rhinoceros', continent1Name, 'Rhinoceros'), 
+	var continent1Name = 'Asia';
+	var continent1Animals = [new Animal('Indian Rhinoceros', continent1Name, 'Rhinoceros'), 
 							new Animal('Indian Elephant', continent1Name, 'Elephant'), 
 							new Animal('Bengal Tiger', continent1Name, 'Tiger')];
 
 	// Create two Continent objects
-	var continent1 = new Continent(continent1Name, continent1Animals, leftCheckpoints);
-	var continent2 = new Continent(continent2Name, continent2Animals, rightCheckpoints);
+	var continent0 = new Continent(continent0Name, continent0Animals, leftCheckpoints);
+	var continent1 = new Continent(continent1Name, continent1Animals, rightCheckpoints);
 
 	// Add names of continents to the maps
-	AddContinentName(continent1Name, false);
-	AddContinentName(continent2Name, true);
+	AddContinentName(continent0Name, false);
+	AddContinentName(continent1Name, true);
 
 	// Add the svg images of animals to the map
-	PositionAnimals(continent1Animals, false);
-	PositionAnimals(continent2Animals, true);
+	PositionAnimals(continent0Animals, false);
+	PositionAnimals(continent1Animals, true);
 
 	// Add the pictures on the edges of the board
-	AddAnimalImages(continent1Animals, false);
-	AddAnimalImages(continent2Animals, true);
+	AddAnimalImages(continent0Animals, false);
+	AddAnimalImages(continent1Animals, true);
 
+	CreateSpinner();
 
-	var image = middleSection.image('Resources/spinner.png', GetMiddleWidth() / 1.5, GetMiddleWidth() / 1.5);
-	image.cx(GetMiddleWidth() / 2);
-	image.cy(GetMapHeight() - GetMiddleWidth() / 3);
-	svgObjects.push(image);
 
 	created = true;
 }
 
-
+/* Destroys the svg objects of the game */
 function Destroy(){
 
 	for(i = 0; i < svgObjects.length; i++){
 		svgObjects[i].parent.removeElement(svgObjects[i]);
 	}
 	svgObjects = new Array();
-
-
 }
 
 
@@ -183,7 +112,6 @@ function CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints
 			pointColor = 'blue';
 			cpSize = specialCheckpointSize;
 		}
-		
 
 		if (right){
 			if (created) {
@@ -197,7 +125,7 @@ function CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints
 				rightCheckpoints.push(checkpoint);
 				svgObjects.push(checkpoint.circle);
 			}
-			
+
 		} else {
 			if (created) {
 				leftCheckpoints[i].x = x;
@@ -210,7 +138,6 @@ function CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints
 				leftCheckpoints.push(checkpoint);
 				svgObjects.push(checkpoint.circle);
 			}
-			
 		}
 	}
 }
@@ -235,9 +162,7 @@ function LinkCheckpoints(edges, map, right){
 				rightCheckpoints[index1].nextCheckpoints.push(rightCheckpoints[index2]);
 				rightCheckpoints[index2].nextCheckpoints.push(rightCheckpoints[index1]);
 			}
-			
-
-		} else{
+		} else {
 			line = map.line(leftCheckpoints[index1].x, leftCheckpoints[index1].y, leftCheckpoints[index2].x, 
 			leftCheckpoints[index2].y).stroke({ width: "1.5%", color:'green' });
 
@@ -277,85 +202,35 @@ function AddContinentName(continentName, right){
  * Parameter types: (list of Animal, boolean)
  */
 function PositionAnimals(animals, right){
-	var a1C1XDeviation = 0.019;
-	var a1C1YDeviation = 0.05;
+	
+	PositionAnimal(animals[0], animal0Checkpoints[0], a0C0XDeviation, a0C0YDeviation, right);
+	PositionAnimal(animals[0], animal0Checkpoints[1], a0C1XDeviation, a0C1YDeviation, right);
 
-	var a1C2XDeviation = - 0.04;
-	var a1C2YDeviation = - 0.05;
+	PositionAnimal(animals[1], animal1Checkpoints[0], a1C0XDeviation, a1C0YDeviation, right);
+	PositionAnimal(animals[1], animal1Checkpoints[1], a1C1XDeviation, a1C1YDeviation, right);
 
-	var a2C1XDeviation = 0.05;
-	var a2C1YDeviation = -0.07;
+	PositionAnimal(animals[2], animal2Checkpoints[0], a2C1XDeviation, a2C1YDeviation, right);
+	PositionAnimal(animals[2], animal2Checkpoints[1], a2C1XDeviation, a2C1YDeviation, right);
+}
 
-	var a2C2XDeviation = -0.06;
-	var a2C2YDeviation = -0.06;
 
-	var a3C1XDeviation = 0.01;
-	var a3C1YDeviation = -0.065;
-
-	var a3C2XDeviation = 0.01;
-	var a3C2YDeviation = -0.065;
-
+/* Position a single animal at the checkpoint at checkpointIndex and apply 
+ * the x and y deviations 
+ * Parameter types: (Animal, int, float, float, boolean)
+ */
+function PositionAnimal(animal, checkpointIndex, xDeviation, yDeviation, right) {
+	
+	var image;
 	if (right){
-		var image = rightPath.image(animals[0].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
-		image.cx(rightCheckpoints[animal1Checkpoints[0]].x - GetMapWidth() * a1C1XDeviation);
-		image.cy(rightCheckpoints[animal1Checkpoints[0]].y + GetMapHeight() * a1C1YDeviation);
-		svgObjects.push(image);
-
-		var image = rightPath.image(animals[0].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
-		image.cx(rightCheckpoints[animal1Checkpoints[1]].x - GetMapWidth() * a1C2XDeviation);
-		image.cy(rightCheckpoints[animal1Checkpoints[1]].y + GetMapHeight() * a1C2YDeviation);
-		svgObjects.push(image);
-
-		var image = rightPath.image(animals[1].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
-		image.cx(rightCheckpoints[animal2Checkpoints[0]].x - GetMapWidth() * a2C1XDeviation);
-		image.cy(rightCheckpoints[animal2Checkpoints[0]].y + GetMapHeight() * a2C1YDeviation);
-		svgObjects.push(image);
-
-		var image = rightPath.image(animals[1].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
-		image.cx(rightCheckpoints[animal2Checkpoints[1]].x - GetMapWidth() * a2C2XDeviation);
-		image.cy(rightCheckpoints[animal2Checkpoints[1]].y + GetMapHeight() * a2C2YDeviation);
-		svgObjects.push(image);
-
-		var image = rightPath.image(animals[2].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
-		image.cx(rightCheckpoints[animal3Checkpoints[0]].x - GetMapWidth() * a3C1XDeviation);
-		image.cy(rightCheckpoints[animal3Checkpoints[0]].y + GetMapHeight() * a3C1YDeviation);
-		svgObjects.push(image);
-
-		var image = rightPath.image(animals[2].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
-		image.cx(rightCheckpoints[animal3Checkpoints[1]].x - GetMapWidth() * a3C2XDeviation);
-		image.cy(rightCheckpoints[animal3Checkpoints[1]].y + GetMapHeight() * a3C2YDeviation);
-		svgObjects.push(image);
+		image = rightPath.image(animal.svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
+		image.cx(rightCheckpoints[checkpointIndex].x - GetMapWidth() * xDeviation);
+		image.cy(rightCheckpoints[checkpointIndex].y + GetMapHeight() * yDeviation);
 	} else {
-		var image = leftPath.image(animals[0].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
-		image.cx(leftCheckpoints[animal1Checkpoints[0]].x + GetMapWidth() * a1C1XDeviation);
-		image.cy(leftCheckpoints[animal1Checkpoints[0]].y + GetMapHeight() * a1C1YDeviation);
-		svgObjects.push(image);
-
-		var image = leftPath.image(animals[0].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
-		image.cx(leftCheckpoints[animal1Checkpoints[1]].x + GetMapWidth() * a1C2XDeviation);
-		image.cy(leftCheckpoints[animal1Checkpoints[1]].y + GetMapHeight() * a1C2YDeviation);
-		svgObjects.push(image);
-
-		var image = leftPath.image(animals[1].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
-		image.cx(leftCheckpoints[animal2Checkpoints[0]].x + GetMapWidth() * a2C1XDeviation);
-		image.cy(leftCheckpoints[animal2Checkpoints[0]].y + GetMapHeight() * a2C1YDeviation);
-		svgObjects.push(image);
-
-		var image = leftPath.image(animals[1].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
-		image.cx(leftCheckpoints[animal2Checkpoints[1]].x + GetMapWidth() * a2C2XDeviation);
-		image.cy(leftCheckpoints[animal2Checkpoints[1]].y + GetMapHeight() * a2C2YDeviation);
-		svgObjects.push(image);
-
-		var image = leftPath.image(animals[2].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
-		image.cx(leftCheckpoints[animal3Checkpoints[0]].x + GetMapWidth() * a3C1XDeviation);
-		image.cy(leftCheckpoints[animal3Checkpoints[0]].y + GetMapHeight() * a3C1YDeviation);
-		svgObjects.push(image);
-
-		var image = leftPath.image(animals[2].svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
-		image.cx(leftCheckpoints[animal3Checkpoints[1]].x + GetMapWidth() * a3C2XDeviation);
-		image.cy(leftCheckpoints[animal3Checkpoints[1]].y + GetMapHeight() * a3C2YDeviation);
-		svgObjects.push(image);
+		image = leftPath.image(animal.svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
+		image.cx(leftCheckpoints[checkpointIndex].x + GetMapWidth() * xDeviation);
+		image.cy(leftCheckpoints[checkpointIndex].y + GetMapHeight() * yDeviation);
 	}
+	svgObjects.push(image);
 }
 
 /* Adds Animal pictures at the edges of the board 
@@ -367,7 +242,7 @@ function AddAnimalImages(animals, right){
 
 	var imgYposition = GetMapHeight() * mapScale * 3.5;
 
-	if (right){
+	if (right) {
 		var image = rightPath.image(animals[0].pngPath, imgWidth, imgHeight);
 		image.cx(GetMapWidth() - imgWidth / 2);
 		image.cy(imgYposition);
@@ -398,26 +273,51 @@ function AddAnimalImages(animals, right){
 		var image = leftPath.image(animals[2].pngPath, imgWidth, imgHeight);
 		image.cy(imgYposition);
 		svgObjects.push(image);
-	}	
+	}
+}
+
+
+function CreateSpinner(){
+
+	var spinner = spinnerSection.group();
+
+	var image = spinnerSection.image('Resources/spinner.png', GetPanelHeight() * 0.9, GetPanelHeight() * 0.9);
+	image.cx(image.cx() + GetPanelHeight() * 0.05);
+	image.cy(image.cy() + GetPanelHeight() * 0.05);
+	svgObjects.push(image);
+	spinner.add(image);
+
+	var image = spinnerSection.image('Resources/pin.png', GetPanelHeight() * 0.5, GetPanelHeight() * 0.5);
+	image.cx(image.cx() + GetPanelHeight() * pinCXDeviation);
+	image.cy(image.cy() + GetPanelHeight() * pinCYDeviation);
+	svgObjects.push(image);
+	spinner.add(image);
 }
 
 /* Returns the width of the middle section of the board */
-function GetMiddleWidth(){
-	return $(document).width() * 0.25;
+function GetMiddleWidth() {
+	return $(document).width() * middleSectionWidthScale;
 }
 
 /* Returns the width of a map */
-function GetMapWidth(){
-	return $(document).width() * 0.35;
+function GetMapWidth() {
+	return $(document).width() * mapWidthScale;
 }
 
 /* Returns the height of a map */
-function GetMapHeight(){
-	return $(document).height() * 0.70;
+function GetMapHeight() {
+	return $(document).height() * mapHeightScale;
 }
 
-/* Reads the text of the file at the given path 
+/* Returns the height of the lower panels */
+function GetPanelHeight(){
+	return $(document).height() * panelHeightScale;
+}
+
+/* Reads the text of the file at the given path and returns
+ * the contents of the file
  * Parameter type: (string)
+ * Return type: string
  */
 function ReadFile(path) 
 {
