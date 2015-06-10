@@ -5,7 +5,6 @@
 
 
 	<script src="jquery.js"></script>
-	<!--<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>-->
 	<script src="svg.js"></script>
 	<script src="qA.js"></script>
 	<script src="animal.js"></script>
@@ -21,7 +20,18 @@
 	<svg id="center"></svg>
 	<svg id="rightMap"></svg>
 	<svg id="question"></svg>
-	<svg id="spinner"></svg>
+
+	<svg id="spinner">
+
+		<g class="button" cursor="pointer"
+		   onmouseup="buttonClick(evt)">
+		  <rect id="spinButton" x="20" y="1" rx="5" ry="5"
+		        width="52" height="22"/>
+		  <text id="spinButtonText" x="25" y="16">SPIN</text>
+		</g>
+
+	</svg>
+
 	<svg id="answer"></svg>
 
 	<script src="main.js"></script>

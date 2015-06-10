@@ -57,3 +57,7 @@ body{
 	margin-bottom: 0.86%;
 	border-radius: 9%;
 }
+
+g.button:hover{
+    opacity: 0.75;
+}

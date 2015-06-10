@@ -92,3 +92,8 @@ var created = false;	// Boolean representing the map created
 // Spinner's pin deviation
 var pinCXDeviation = 0.27;
 var pinCYDeviation = 0.29;
+
+// Continent name variables
+var continentNameSize = 0.7;
+var continentNameX = 0.6;
+var continentNameY = 0.01;

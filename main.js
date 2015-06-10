@@ -14,21 +14,17 @@ var middleSection = SVG('center');	// SVG object for the middle section of the b
 
 var spinnerSection = SVG('spinner');
 
+
+
 // Set the min screen width and height
 document.getElementById("body").style.minWidth = screen.width * minScreenWidth;
 document.getElementById("body").style.minHeight = screen.height * minScreenHeight;
 
 Setup();
 
-$(window).resize(function(){
-	Destroy();
-    Setup();
-});
-
 /* Sets up the game graphics */
 function Setup(){
-
-	//alert("setup");
+	
 	// Creates Left Map
 	CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints, hazardPoints, leftMap, false);
 	LinkCheckpoints(pathEdges, leftPath, false);
@@ -65,7 +61,6 @@ function Setup(){
 	AddAnimalImages(continent1Animals, true);
 
 	CreateSpinner();
-
 
 	created = true;
 }
@@ -180,9 +175,9 @@ function LinkCheckpoints(edges, map, right){
  * Parameter types: (string, boolean)
  */
 function AddContinentName(continentName, right){
-	var x = GetMapWidth() * 0.6;
-	var y = GetMapHeight() * 0.01;
-	var fontSize = GetMapWidth() * mapScale * 0.7;
+	var x = GetMapWidth() * continentNameX;
+	var y = GetMapHeight() * continentNameY;
+	var fontSize = GetMapWidth() * mapScale * continentNameSize
 
 	var text;
 	if (right){
@@ -274,24 +269,6 @@ function AddAnimalImages(animals, right){
 		image.cy(imgYposition);
 		svgObjects.push(image);
 	}
-}
-
-
-function CreateSpinner(){
-
-	var spinner = spinnerSection.group();
-
-	var image = spinnerSection.image('Resources/spinner.png', GetPanelHeight() * 0.9, GetPanelHeight() * 0.9);
-	image.cx(image.cx() + GetPanelHeight() * 0.05);
-	image.cy(image.cy() + GetPanelHeight() * 0.05);
-	svgObjects.push(image);
-	spinner.add(image);
-
-	var image = spinnerSection.image('Resources/pin.png', GetPanelHeight() * 0.5, GetPanelHeight() * 0.5);
-	image.cx(image.cx() + GetPanelHeight() * pinCXDeviation);
-	image.cy(image.cy() + GetPanelHeight() * pinCYDeviation);
-	svgObjects.push(image);
-	spinner.add(image);
 }
 
 /* Returns the width of the middle section of the board */
