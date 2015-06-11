@@ -22,9 +22,15 @@ document.getElementById("body").style.minHeight = screen.height * minScreenHeigh
 
 Setup();
 
+$(window).resize(function(){
+	Destroy();
+    Setup();
+});
+
+
 /* Sets up the game graphics */
 function Setup(){
-	
+
 	// Creates Left Map
 	CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints, hazardPoints, leftMap, false);
 	LinkCheckpoints(pathEdges, leftPath, false);

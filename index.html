@@ -6,13 +6,15 @@
 
 	<script src="jquery.js"></script>
 	<script src="svg.js"></script>
+	<script src="papaparse.js"></script>
+	<script src="config.js"></script>
 	<script src="qA.js"></script>
 	<script src="animal.js"></script>
 	<script src="player.js"></script>
 	<script src="checkpoint.js"></script>
 	<script src="continent.js"></script>
 	<script src="spinner.js"></script>
-	<script src="config.js"></script>
+	
 </head>
 
 <body id="body">
@@ -24,9 +26,8 @@
 	<svg id="spinner">
 
 		<g class="button" cursor="pointer"
-		   onmouseup="buttonClick(evt)">
-		  <rect id="spinButton" x="20" y="1" rx="5" ry="5"
-		        width="52" height="22"/>
+		   onclick="Spin()">
+		  <rect id="spinButton" rx="5" ry="5" />
 		  <text id="spinButtonText" x="25" y="16">SPIN</text>
 		</g>
 

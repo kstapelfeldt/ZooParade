@@ -97,3 +97,8 @@ var pinCYDeviation = 0.29;
 var continentNameSize = 0.7;
 var continentNameX = 0.6;
 var continentNameY = 0.01;
+
+// Spinner variables
+var prevAngle = -147;
+var pinAngleDeviation = -147;
+var angles = [0, 0, 0, 180, 180, 180, 54, 54, 54, 234, 234, 234, 90, 270];
