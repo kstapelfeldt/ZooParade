@@ -14,6 +14,14 @@ var middleSection = SVG('center');		// SVG object for the middle section of the 
 
 var spinnerSection = SVG('spinner');
 
+var continent0;
+var continent1;
+var player0;
+var player1;
+
+var questionSection = SVG('question');
+var answerSection = SVG('answer');
+
 
 
 // Set the min screen width and height
@@ -51,8 +59,8 @@ function Setup(){
 							new Animal('Bengal Tiger', continent1Name, 'Tiger')];
 
 	// Create two Continent objects
-	var continent0 = new Continent(continent0Name, continent0Animals, leftCheckpoints);
-	var continent1 = new Continent(continent1Name, continent1Animals, rightCheckpoints);
+	continent0 = new Continent(continent0Name, continent0Animals, leftCheckpoints);
+	continent1 = new Continent(continent1Name, continent1Animals, rightCheckpoints);
 
 	// Add names of continents to the maps
 	AddContinentName(continent0Name, false);
@@ -68,7 +76,24 @@ function Setup(){
 
 	CreateSpinner();
 
-	AddPlayerIcons();
+
+
+	/*********************** Start Here ***************************/
+	player0 = new Player("Player0", continent0);
+	player1 = new Player("Player1", continent1);
+	AddPlayerPlaceHolders();
+
+
+
+	var text = questionSection.text('Question').move(GetMapWidth() / 2, GetPanelHeight()/20);;
+	var fontSize = GetMapWidth() * mapScale * 0.5;
+	text.font({ family: 'Courier', size: fontSize, anchor: 'middle', fill: '#FFFF66', 
+		'font-weight' :'bold' });
+
+	var text = answerSection.text('Answer').move(GetMapWidth() / 2, GetPanelHeight()/20);;
+	var fontSize = GetMapWidth() * mapScale * 0.5;
+	text.font({ family: 'Courier', size: fontSize, anchor: 'middle', fill: '#FFFF66', 
+		'font-weight' :'bold' });
 
 	created = true;
 }

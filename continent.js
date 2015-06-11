@@ -32,7 +32,7 @@ function AssignPlayer(continent, player){
 function AddContinentName(continentName, right){
 	var x = GetMapWidth() * continentNameX;
 	var y = GetMapHeight() * continentNameY;
-	var fontSize = GetMapWidth() * mapScale * continentNameSize
+	var fontSize = GetMapWidth() * mapScale * continentNameSize;
 
 	var text;
 	if (right){
