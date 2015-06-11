@@ -44,3 +44,7 @@ function ChangeCurrentCheckpoint(player, checkpoint){
 function AddAnimalsCaptured(player, animal){
 	player.animalsCaptured.push(animal);
 }
+
+function AddPlayerIcons(){
+	
+}
