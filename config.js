@@ -1,3 +1,7 @@
+var minScreenWidthScale = 0.9;		// Restrict horizontal scaling
+var minScreenHeightScale = 0.8;		// Restrict vertical scaling
+
+
 // Map Scales
 var mapScale = 0.097;
 var mapWidthScale = 0.34;
@@ -34,9 +38,6 @@ var playerPlaceHolderYScale = -0.01;
 
 var moveHorizontal = 0;			// Move the maps horizontally
 var moveVertical = 0;			// Move the maps vertically
-
-var minScreenWidth = 0.9;		// Restrict horizontal scaling
-var minScreenHeight = 0.8;		// Restrict vertical scaling
 
 // Relative position of all the checkpoints
 var positions = [[2, 1.2], [3, 1.2], 

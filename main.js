@@ -12,33 +12,39 @@ var svgObjects = new Array();			// Array of all svg objects in the game
 
 var middleSection = SVG('center');		// SVG object for the middle section of the board
 
-var spinnerSection = SVG('spinner');
+var spinnerSection = SVG('spinner');	// SVG object for the Spinner section
 
 var continent0;
 var continent1;
 var player0;
 var player1;
 
-var questionSection = SVG('question');
-var answerSection = SVG('answer');
-
-
+// Minimum Screen width and height to see the full game
+var minScreenWidth = screen.width * minScreenWidthScale;
+var minScreenHeight = screen.height * minScreenHeightScale;
 
 // Set the min screen width and height
-document.getElementById("body").style.minWidth = screen.width * minScreenWidth;
-document.getElementById("body").style.minHeight = screen.height * minScreenHeight;
+document.getElementById("body").style.minWidth = minScreenWidth;
+document.getElementById("body").style.minHeight = minScreenHeight;
 
 Setup();
 
+// Adjust all the objects on window resize
 $(window).resize(function(){
 	Destroy();
-    Setup();
+	Setup();
 });
 
 
 /* Sets up the game graphics */
 function Setup(){
 
+	if (window.innerHeight < minScreenHeight){
+		document.getElementById("body").style.overflowY = "auto";
+	} else{
+		document.getElementById("body").style.overflowY = "hidden";
+	}
+	
 	// Creates Left Map
 	CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints, hazardPoints, leftMap, false);
 	LinkCheckpoints(pathEdges, leftPath, false);
@@ -83,10 +89,8 @@ function Setup(){
 	player1 = new Player("Player1", continent1);
 	AddPlayerPlaceHolders();
 
-	AddQuestionText();
-
-	AddAnswerText();
-
+	AddQuestionText('Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today?');
+	AddAnswerText('I am good! Life is awesome! I am doing what I am not doing. I am good! Life is awesome! I am doing what I am not doing. I am good! Life is awesome! I am doing what I am not doing. <a href="http://www.google.com">Click here</a> to go to the mysterious website.');
 	created = true;
 }
 
@@ -99,40 +103,40 @@ function Destroy(){
 	svgObjects = new Array();
 }
 
-function AddQuestionText(){
-	var text = questionSection.text('Question').move(GetMapWidth() / 2, GetPanelHeight()/20);;
-	var fontSize = GetMapWidth() * mapScale * 0.5;
-	text.font({ family: fontFamily, size: fontSize, anchor: 'middle', fill: mapBackgroundColor, 
-		'font-weight' :'bold' });
-	svgObjects.push(text);
+/* Adds the question in the question section of the game 
+ * Parameter types: (string)
+ */
+function AddQuestionText(question){
+	var div = document.getElementById('questionContent');
+	div.innerHTML = question;
 }
 
-function AddAnswerText(){
-	var text = answerSection.text('Answer').move(GetMapWidth() / 2, GetPanelHeight()/20);;
-	var fontSize = GetMapWidth() * mapScale * 0.5;
-	text.font({ family: fontFamily, size: fontSize, anchor: 'middle', fill: mapBackgroundColor, 
-		'font-weight' :'bold' });
-	svgObjects.push(text);
+/* Adds the answer in the answer section of the game 
+ * Parameter types: (string)
+ */
+function AddAnswerText(answer){
+	var div = document.getElementById('answerContent');
+	div.innerHTML = answer;
 }
 
 /* Returns the width of the middle section of the board */
 function GetMiddleWidth() {
-	return $(document).width() * middleSectionWidthScale;
+	return Math.max(minScreenWidth, window.innerWidth) * middleSectionWidthScale;
 }
 
 /* Returns the width of a map */
 function GetMapWidth() {
-	return $(document).width() * mapWidthScale;
+	return Math.max(minScreenWidth, window.innerWidth) * mapWidthScale;
 }
 
 /* Returns the height of a map */
 function GetMapHeight() {
-	return $(document).height() * mapHeightScale;
+	return Math.max(minScreenHeight, window.innerHeight) * mapHeightScale;
 }
 
 /* Returns the height of the lower panels */
 function GetPanelHeight(){
-	return $(document).height() * panelHeightScale;
+	return Math.max(minScreenHeight, window.innerHeight) * panelHeightScale;
 }
 
 /* Reads the text of the file at the given path and returns
@@ -147,12 +151,6 @@ function ReadFile(path)
 	txtFile.send(null);
 	return txtFile.responseText;
 }
-
-
-
-
-
-
 
 
 
