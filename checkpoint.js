@@ -34,18 +34,18 @@ function CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints
 		
 		y = (GetMapHeight() * positions[i][1] * mapScale) + (GetMapHeight() * moveVertical);
 
-		var pointColor = 'green';
+		var pointColor = checkpointColor;
 		if (capturePoints[i]){
-			pointColor = 'black';
+			pointColor = capturePointColor;
 			cpSize = specialCheckpointSize;
 		} else if (greenSPoints[i]){
-			pointColor = '#193C19';
+			pointColor = greenSPointColor;
 			cpSize = specialCheckpointSize;
 		} else if (redSPoints[i]){
-			pointColor = 'red';
+			pointColor = redSPointColor;
 			cpSize = specialCheckpointSize;
 		} else if (hazardPoints[i]){
-			pointColor = 'blue';
+			pointColor = hazardPointColor;
 			cpSize = specialCheckpointSize;
 		}
 
@@ -92,7 +92,7 @@ function LinkCheckpoints(edges, map, right){
 
 		if (right){
 			line = map.line(rightCheckpoints[index1].x, rightCheckpoints[index1].y, rightCheckpoints[index2].x, 
-			rightCheckpoints[index2].y).stroke({ width: "1.5%", color:'green' });
+			rightCheckpoints[index2].y).stroke({ width: edgeWidth, color: checkpointColor });
 
 			if (!created){
 				rightCheckpoints[index1].nextCheckpoints.push(rightCheckpoints[index2]);
@@ -100,7 +100,7 @@ function LinkCheckpoints(edges, map, right){
 			}
 		} else {
 			line = map.line(leftCheckpoints[index1].x, leftCheckpoints[index1].y, leftCheckpoints[index2].x, 
-			leftCheckpoints[index2].y).stroke({ width: "1.5%", color:'green' });
+			leftCheckpoints[index2].y).stroke({ width: edgeWidth, color: checkpointColor });
 
 			if (!created){
 				leftCheckpoints[index1].nextCheckpoints.push(leftCheckpoints[index2]);

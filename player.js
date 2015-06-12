@@ -48,13 +48,17 @@ function AddAnimalsCaptured(player, animal){
 
 /* Adds placeholders for both the players */
 function AddPlayerPlaceHolders(){
-	player0.placeHolder = leftMap.image('Resources/Player0.png', GetMapWidth() * mapScale * 0.7, GetMapHeight() * mapScale * 0.7);
-	player0.placeHolder.cx(leftCheckpoints[0].x + (-GetMapWidth() * 0.002));
-	player0.placeHolder.cy(leftCheckpoints[0].y + (-GetMapHeight() * 0.01));
+	player0.placeHolder = leftMap.image('Resources/Player0.png', GetMapWidth() * mapScale * playerPlaceHolderScale, 
+							GetMapHeight() * mapScale * playerPlaceHolderScale);
+	player0.placeHolder.cx(leftCheckpoints[0].x + GetMapWidth() * playerPlaceHolderXScale);
+	player0.placeHolder.cy(leftCheckpoints[0].y + GetMapHeight() * playerPlaceHolderYScale);
+	svgObjects.push(player0.placeHolder);
 
-	player1.placeHolder = rightMap.image('Resources/Player1.png', GetMapWidth() * mapScale * 0.7, GetMapHeight() * mapScale * 0.7);
-	player1.placeHolder.cx(rightCheckpoints[0].x + (GetMapWidth() * 0.002));
-	player1.placeHolder.cy(rightCheckpoints[0].y + (-GetMapHeight() * 0.01));
+	player1.placeHolder = rightMap.image('Resources/Player1.png', GetMapWidth() * mapScale * playerPlaceHolderScale, 
+							GetMapHeight() * mapScale * playerPlaceHolderScale);
+	player1.placeHolder.cx(rightCheckpoints[0].x - GetMapWidth() * playerPlaceHolderXScale);
+	player1.placeHolder.cy(rightCheckpoints[0].y + GetMapHeight() * playerPlaceHolderYScale);
+	svgObjects.push(player1.placeHolder);
 }
 
 

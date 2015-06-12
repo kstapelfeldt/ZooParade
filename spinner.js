@@ -4,12 +4,13 @@ var spinnerBoard;
 /* Creates the Spinner object */
 function CreateSpinner(){
 
-	spinnerBoard = spinnerSection.image('Resources/spinner.png', GetPanelHeight() * 0.9, GetPanelHeight() * 0.9);
+	spinnerBoard = spinnerSection.image('Resources/spinner.png', GetPanelHeight() * spinnerBoardWidthScale, 
+					GetPanelHeight() * spinnerBoardHeightScale);
 	FixSpinnerBoardPosition();
 	svgObjects.push(spinnerBoard);
 
 
-	pin = spinnerSection.image('Resources/pin.png', GetPanelHeight() * 0.5, GetPanelHeight() * 0.5);
+	pin = spinnerSection.image('Resources/pin.png', GetPanelHeight() * pinWidthScale, GetPanelHeight() * pinHeightScale);
 	pin.cx(pin.cx() + GetPanelHeight() * pinCXDeviation);
 	pin.cy(pin.cy() + GetPanelHeight() * pinCYDeviation);
 	svgObjects.push(pin);
@@ -28,17 +29,17 @@ function CreateSpinButton(){
 	var spinButton = document.getElementById("spinButton");
 	spinButton.setAttributeNS(null, 'x', buttonPosition.x);
 	spinButton.setAttributeNS(null, 'y', buttonPosition.y);
-	spinButton.setAttributeNS(null, 'rx', GetPanelHeight() * 0.1);
-	spinButton.setAttributeNS(null, 'ry', GetPanelHeight() * 0.1);
-	spinButton.setAttributeNS(null, 'width', GetPanelHeight() * 0.35);
-	spinButton.setAttributeNS(null, 'height', GetPanelHeight() * 0.2);
-	spinButton.setAttributeNS(null, 'fill', '#4A2500');
+	spinButton.setAttributeNS(null, 'rx', GetPanelHeight() * spinButtonRXScale);
+	spinButton.setAttributeNS(null, 'ry', GetPanelHeight() * spinButtonRYScale);
+	spinButton.setAttributeNS(null, 'width', GetPanelHeight() * spinButtonWidthScale);
+	spinButton.setAttributeNS(null, 'height', GetPanelHeight() * spinButtonHeightScale);
+	spinButton.setAttributeNS(null, 'fill', darkBackgroundColor);
 	
 	var buttonTextPosition = GetButtonTextPosition();
 	var spinButtonText = document.getElementById("spinButtonText");
 	spinButtonText.setAttribute('x', buttonTextPosition.x);
 	spinButtonText.setAttribute('y', buttonTextPosition.y);
-	spinButtonText.setAttribute('font-family', "Courier");
+	spinButtonText.setAttribute('font-family', fontFamily);
 }
 
 /* Spins the Spinner pin */
@@ -68,30 +69,30 @@ function GetSpinnerBoardCenter(){
  */
 function GetPinCenter(){
 	var center = GetSpinnerBoardCenter();
-	return ({'x': center.x + GetPanelHeight() * 0.008, 'y': center.y + GetPanelHeight() * 0.005});
+	return ({'x': center.x + GetPanelHeight() * pinCenterXScale, 'y': center.y + GetPanelHeight() * pinCenterYScale});
 }
 
 /* Returns the position coordinates of the position of the spin button
  * Return type: dictionary
  */
 function GetButtonPosition(){
-	return ({'x': GetPanelHeight() * 1.1, 'y': GetPanelHeight() * 0.25});
+	return ({'x': GetPanelHeight() * spinButtonXScale, 'y': GetPanelHeight() * spinButtonYScale});
 }
 
 /* Returns the coordinates of the text in the spin button
  * Return type: dictionary
  */
 function GetButtonTextPosition(){
-	var buttonTextXDeviation = GetPanelHeight() * 0.09;
-	var buttonTextYDeviation = GetPanelHeight() * 0.12;
+	var buttonTextXDeviation = GetPanelHeight() * spinButtonTextXScale;
+	var buttonTextYDeviation = GetPanelHeight() * spinButtonTextYScale;
 	var position = GetButtonPosition();
 	return ({'x': position.x + buttonTextXDeviation, 'y': position.y + buttonTextYDeviation});
 }
 
 /* Fixes the position of the spinner board */
 function FixSpinnerBoardPosition(){
-	var x = spinnerBoard.cx() + GetPanelHeight() * 0.05;
-	var y = spinnerBoard.cy() + GetPanelHeight() * 0.05;
+	var x = spinnerBoard.cx() + GetPanelHeight() * spinnerBoardXScale;
+	var y = spinnerBoard.cy() + GetPanelHeight() * spinnerBoardYScale;
 	spinnerBoard.cx(x);
 	spinnerBoard.cy(y);
 }

@@ -83,17 +83,9 @@ function Setup(){
 	player1 = new Player("Player1", continent1);
 	AddPlayerPlaceHolders();
 
+	AddQuestionText();
 
-
-	var text = questionSection.text('Question').move(GetMapWidth() / 2, GetPanelHeight()/20);;
-	var fontSize = GetMapWidth() * mapScale * 0.5;
-	text.font({ family: 'Courier', size: fontSize, anchor: 'middle', fill: '#FFFF66', 
-		'font-weight' :'bold' });
-
-	var text = answerSection.text('Answer').move(GetMapWidth() / 2, GetPanelHeight()/20);;
-	var fontSize = GetMapWidth() * mapScale * 0.5;
-	text.font({ family: 'Courier', size: fontSize, anchor: 'middle', fill: '#FFFF66', 
-		'font-weight' :'bold' });
+	AddAnswerText();
 
 	created = true;
 }
@@ -107,6 +99,21 @@ function Destroy(){
 	svgObjects = new Array();
 }
 
+function AddQuestionText(){
+	var text = questionSection.text('Question').move(GetMapWidth() / 2, GetPanelHeight()/20);;
+	var fontSize = GetMapWidth() * mapScale * 0.5;
+	text.font({ family: fontFamily, size: fontSize, anchor: 'middle', fill: mapBackgroundColor, 
+		'font-weight' :'bold' });
+	svgObjects.push(text);
+}
+
+function AddAnswerText(){
+	var text = answerSection.text('Answer').move(GetMapWidth() / 2, GetPanelHeight()/20);;
+	var fontSize = GetMapWidth() * mapScale * 0.5;
+	text.font({ family: fontFamily, size: fontSize, anchor: 'middle', fill: mapBackgroundColor, 
+		'font-weight' :'bold' });
+	svgObjects.push(text);
+}
 
 /* Returns the width of the middle section of the board */
 function GetMiddleWidth() {

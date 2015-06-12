@@ -5,6 +5,33 @@ var mapHeightScale = 0.65;
 var middleSectionWidthScale = 0.25;
 var panelHeightScale = 0.27;
 
+// Spinner Board Scales
+var spinnerBoardWidthScale = 0.9;
+var spinnerBoardHeightScale = 0.9;
+var spinnerBoardXScale = 0.05;
+var spinnerBoardYScale = 0.05;
+
+// Spinner Pin Scales
+var pinWidthScale = 0.5;
+var pinHeightScale = 0.5;
+var pinCenterXScale = 0.008;
+var pinCenterYScale = 0.005;
+
+// Spinner Button Scales
+var spinButtonXScale = 1.1;
+var spinButtonYScale = 0.25;
+var spinButtonTextXScale = 0.09;
+var spinButtonTextYScale = 0.12;
+var spinButtonRXScale = 0.1;
+var spinButtonRYScale = 0.1;
+var spinButtonWidthScale = 0.35;
+var spinButtonHeightScale = 0.2;
+
+// Player Placeholder Scales
+var playerPlaceHolderScale = 0.7;
+var playerPlaceHolderXScale = -0.002;
+var playerPlaceHolderYScale = -0.01;
+
 var moveHorizontal = 0;			// Move the maps horizontally
 var moveVertical = 0;			// Move the maps vertically
 
@@ -62,6 +89,7 @@ var pathEdges = [[0 ,1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7],
 
 var checkpointSize = "4.5%";		// Size of normal checkpoints
 var specialCheckpointSize = "5.5%";	// Size of special checkpoints
+var edgeWidth = "1.5%";				// Width of the lines joining checkpoints
 
 // Animal capture points indices
 var animal0Checkpoints = [5, 20];
@@ -102,3 +130,16 @@ var continentNameY = 0.01;
 var prevAngle = -147;
 var pinAngleDeviation = -147;
 var angles = [0, 0, 0, 180, 180, 180, 54, 54, 54, 234, 234, 234, 90, 270];
+
+// Text variables
+var fontFamily = 'Courier';
+
+// Color variables
+var mapBackgroundColor = '#FFFF66';
+var continentNameColor = 'red';
+var checkpointColor = 'green';
+var redSPointColor = 'red';
+var greenSPointColor = '#193C19';
+var capturePointColor = 'black';
+var hazardPointColor = 'blue';
+var darkBackgroundColor = '#4A2500';

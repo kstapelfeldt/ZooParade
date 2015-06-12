@@ -41,7 +41,7 @@ function AddContinentName(continentName, right){
 		text = leftMap.text(continentName.toUpperCase()).move(x, y);
 	}
 
-	text.font({ family: 'Courier', size: fontSize, anchor: 'middle', fill: 'red', 
+	text.font({ family: fontFamily, size: fontSize, anchor: 'middle', fill: continentNameColor, 
 		'font-weight' :'bold' });
 
 	svgObjects.push(text);
