@@ -19,6 +19,7 @@ var continent1;
 var player0;
 var player1;
 
+
 // Minimum Screen width and height to see the full game
 var minScreenWidth = screen.width * minScreenWidthScale;
 var minScreenHeight = screen.height * minScreenHeightScale;
@@ -43,6 +44,12 @@ function Setup(){
 		document.getElementById("body").style.overflowY = "auto";
 	} else{
 		document.getElementById("body").style.overflowY = "hidden";
+	}
+
+	if (window.innerWidth < minScreenWidth){
+		document.getElementById("body").style.overflowX = "auto";
+	} else {
+		document.getElementById("body").style.overflowX = "hidden";
 	}
 	
 	// Creates Left Map
@@ -97,7 +104,7 @@ function Setup(){
 /* Destroys the svg objects of the game */
 function Destroy(){
 
-	for(i = 0; i < svgObjects.length; i++){
+	for(var i = 0; i < svgObjects.length; i++){
 		svgObjects[i].parent.removeElement(svgObjects[i]);
 	}
 	svgObjects = new Array();
@@ -150,6 +157,18 @@ function ReadFile(path)
 	txtFile.open("GET", path, false);
 	txtFile.send(null);
 	return txtFile.responseText;
+}
+
+/* Removes the element from the list
+ * Parameter types: (list of object, object)
+ * Return type: object
+ */
+function Remove(list, element){
+	var index = list.indexOf(element);
+	if (index > -1){
+		list.splice(index, 1);
+	}
+	return element;
 }
 
 

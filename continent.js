@@ -9,15 +9,6 @@ function Continent(name, animals, checkpoints){
 }
 
 
-/* Get all possible moves steps 'steps' away from checkpoint and 
- * returns an array of checkpoints
- * Parameter types : (Map)
- */
-function GetPossibleMoves(continent){
-	// To be implemented
-}
-
-
 /* Assigns player to map
  * Parameter types : (Map, Player)
  */

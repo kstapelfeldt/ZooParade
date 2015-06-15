@@ -24,12 +24,12 @@ var pinCenterYScale = 0.005;
 // Spinner Button Scales
 var spinButtonXScale = 1.1;
 var spinButtonYScale = 0.25;
-var spinButtonTextXScale = 0.09;
-var spinButtonTextYScale = 0.12;
 var spinButtonRXScale = 0.1;
 var spinButtonRYScale = 0.1;
 var spinButtonWidthScale = 0.35;
 var spinButtonHeightScale = 0.2;
+var spinButtonTextXScale = 0.5;
+var spinButtonTextYScale = 0.6;
 
 // Player Placeholder Scales
 var playerPlaceHolderScale = 0.7;
@@ -88,9 +88,9 @@ var pathEdges = [[0 ,1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7],
 				[33, 28], [28, 25], [25, 20], [20, 21], [21, 16], [37, 34], [34, 29], 
 				[29, 30], [30, 31], [31, 32]];
 
-var checkpointSize = "4.5%";		// Size of normal checkpoints
-var specialCheckpointSize = "5.5%";	// Size of special checkpoints
-var edgeWidth = "1.5%";				// Width of the lines joining checkpoints
+var checkpointSize = 0.045;		// Size of normal checkpoints
+var specialCheckpointSize = 0.055;	// Size of special checkpoints
+var edgeWidth = 0.013;				// Width of the lines joining checkpoints
 
 // Animal capture points indices
 var animal0Checkpoints = [5, 20];
@@ -130,7 +130,9 @@ var continentNameY = 0.01;
 // Spinner variables
 var prevAngle = -147;
 var pinAngleDeviation = -147;
-var angles = [0, 0, 0, 180, 180, 180, 54, 54, 54, 234, 234, 234, 90, 270];
+var angles = [0, 0, 54, 54, 90, 126, 126, 180, 180, 234, 234,306, 306, 270];
+var redNumbers = [5, 5, 6, 6, 3, 4, 4, 5, 5, 4, 4, 3, 6, 6];
+var greenNumbers = [2, 2, 1, 1, 4, 3, 3, 2, 2, 3, 3, 4, 1, 1];
 
 // Text variables
 var fontFamily = 'Courier';

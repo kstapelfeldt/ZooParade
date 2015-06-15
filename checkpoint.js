@@ -23,8 +23,8 @@ function Checkpoint(x, y, capture, greenS, redS, hazard){
  */
 function CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints, hazardPoints, map, right){
 
-	for (i = 0; i < positions.length; i++){
-		var cpSize = checkpointSize;
+	for (var i = 0; i < positions.length; i++){
+		var cpSize = GetMapWidth() * checkpointSize;
 
 		if (right){
 			x = (GetMapWidth() - (GetMapWidth() * positions[i][0] * mapScale)) - (GetMapWidth() * moveHorizontal);
@@ -37,16 +37,16 @@ function CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints
 		var pointColor = checkpointColor;
 		if (capturePoints[i]){
 			pointColor = capturePointColor;
-			cpSize = specialCheckpointSize;
+			cpSize = GetMapWidth() * specialCheckpointSize;
 		} else if (greenSPoints[i]){
 			pointColor = greenSPointColor;
-			cpSize = specialCheckpointSize;
+			cpSize = GetMapWidth() * specialCheckpointSize;
 		} else if (redSPoints[i]){
 			pointColor = redSPointColor;
-			cpSize = specialCheckpointSize;
+			cpSize = GetMapWidth() * specialCheckpointSize;
 		} else if (hazardPoints[i]){
 			pointColor = hazardPointColor;
-			cpSize = specialCheckpointSize;
+			cpSize = GetMapWidth() * specialCheckpointSize;
 		}
 
 		if (right){
@@ -84,15 +84,16 @@ function CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints
  */
 function LinkCheckpoints(edges, map, right){
 
-	for (i = 0; i < edges.length; i++){
+	for (var i = 0; i < edges.length; i++){
 		index1 = edges[i][0];
 		index2 = edges[i][1];
 
+		var eWidth = GetMapWidth() * edgeWidth;
 		var line;
 
 		if (right){
 			line = map.line(rightCheckpoints[index1].x, rightCheckpoints[index1].y, rightCheckpoints[index2].x, 
-			rightCheckpoints[index2].y).stroke({ width: edgeWidth, color: checkpointColor });
+			rightCheckpoints[index2].y).stroke({ width: eWidth, color: checkpointColor });
 
 			if (!created){
 				rightCheckpoints[index1].nextCheckpoints.push(rightCheckpoints[index2]);
@@ -100,7 +101,7 @@ function LinkCheckpoints(edges, map, right){
 			}
 		} else {
 			line = map.line(leftCheckpoints[index1].x, leftCheckpoints[index1].y, leftCheckpoints[index2].x, 
-			leftCheckpoints[index2].y).stroke({ width: edgeWidth, color: checkpointColor });
+			leftCheckpoints[index2].y).stroke({ width: eWidth, color: checkpointColor });
 
 			if (!created){
 				leftCheckpoints[index1].nextCheckpoints.push(leftCheckpoints[index2]);

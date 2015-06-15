@@ -24,37 +24,70 @@ function CreateSpinner(){
 
 /* Creates the spin button for the spinner */
 function CreateSpinButton(){
-	
+	var buttonWidth = GetPanelHeight() * spinButtonWidthScale;
+	var buttonHeight = GetPanelHeight() * spinButtonHeightScale;
+
 	var buttonPosition = GetButtonPosition();
 	var spinButton = document.getElementById("spinButton");
 	spinButton.setAttributeNS(null, 'x', buttonPosition.x);
 	spinButton.setAttributeNS(null, 'y', buttonPosition.y);
 	spinButton.setAttributeNS(null, 'rx', GetPanelHeight() * spinButtonRXScale);
 	spinButton.setAttributeNS(null, 'ry', GetPanelHeight() * spinButtonRYScale);
-	spinButton.setAttributeNS(null, 'width', GetPanelHeight() * spinButtonWidthScale);
-	spinButton.setAttributeNS(null, 'height', GetPanelHeight() * spinButtonHeightScale);
+	spinButton.setAttributeNS(null, 'width', buttonWidth);
+	spinButton.setAttributeNS(null, 'height', buttonHeight);
 	spinButton.setAttributeNS(null, 'fill', darkBackgroundColor);
 	
 	var buttonTextPosition = GetButtonTextPosition();
 	var spinButtonText = document.getElementById("spinButtonText");
-	spinButtonText.setAttribute('x', buttonTextPosition.x);
-	spinButtonText.setAttribute('y', buttonTextPosition.y);
+	spinButtonText.setAttribute('text-anchor', "middle");
+	spinButtonText.setAttribute('x', buttonPosition.x + buttonWidth * spinButtonTextXScale);
+	spinButtonText.setAttribute('y', buttonPosition.y + buttonHeight * spinButtonTextYScale);
 	spinButtonText.setAttribute('font-family', fontFamily);
 }
+
+
+var firstMove = true;
+var secondMove = true;
 
 /* Spins the Spinner pin */
 function Spin(){
 	var center = GetSpinnerBoardCenter();
-
 	pin.transform({rotation: prevAngle, cx: center.x, cy: center.y});
 
-	var angle = angles[Math.floor(Math.random() * angles.length)];
-
+	index = Math.floor(Math.random() * angles.length);
+	var angle = angles[index];
 	var magnitude = 360 * (Math.floor(Math.random() * 7) + 3);
 	var direction = [1, -1][Math.floor(Math.random() * 2)];
-	
 	pin.animate(2000).rotate(magnitude * direction + angle + pinAngleDeviation, center.x , center.y);
 	prevAngle = angle + pinAngleDeviation;
+
+
+
+	/*********************Testing Code: to be replaced *************************************/
+	if (firstMove){
+		MovePlayer(player0, leftCheckpoints[0]);
+		firstMove = false;
+	} else if (secondMove){
+		MovePlayer(player0, leftCheckpoints[1]);
+		player0.visitedCheckpoints.push(leftCheckpoints[0]);
+		secondMove = false;
+	} else{
+		var rand = Math.floor(Math.random() * 2);
+		if (rand == 0){
+			steps = 1;//redNumbers[index];
+		} else{
+			steps = 1;//greenNumbers[index];
+		}
+
+		var moves = GetPossibleMoves(player0, steps);
+		var possibleMoves = moves[0];
+		var previousMoves = moves[1];
+
+		var moveIndex = Math.floor(Math.random() * possibleMoves.length);
+		MovePlayer(player0, possibleMoves[moveIndex]);
+		player0.visitedCheckpoints.push(previousMoves[moveIndex]);
+	}
+	/***************************************************************************************/
 }
 
 /* Returns the coordinates of the center of the spinner image
