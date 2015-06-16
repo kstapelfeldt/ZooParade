@@ -22,47 +22,53 @@ function GetNextCheckpoint(player, steps){
 	return moves[Math.floor(Math.random() * moves.length)];
 }
 
-/* Get all possible moves steps 'steps' away from checkpoint and 
- * returns an array of arrays in which the first element is the
- * array of possible moves and the second element is an array of
- * previous moves for the elements in the first array
- * Parameter types : (Player, int)
- * Return type : list of list of Checkpoint
+
+/* Gets all possible paths that the player can take in steps number of steps
+ * Parameter type: (Player, int)
+ * Return type: list of list of Checkpoint
  */
-function GetPossibleMoves(player, steps){
-	var possibleMoves = new Array();
-	var prevMoves = new Array();
-
-	var pCp = Remove(player.currentCheckpoint.nextCheckpoints, player.visitedCheckpoints[player.visitedCheckpoints.length - 1]);
-
-	for (var i = 0; i < player.currentCheckpoint.nextCheckpoints.length; i++){
-		var previousCheckpoint = Remove(player.currentCheckpoint.nextCheckpoints[i].nextCheckpoints, player.currentCheckpoint);
-		PopulatePossibleMoves(player.currentCheckpoint.nextCheckpoints[i], previousCheckpoint,
-								steps - 1, possibleMoves, prevMoves);
-		player.currentCheckpoint.nextCheckpoints[i].nextCheckpoints.push(previousCheckpoint);
-	}
-
-	player.currentCheckpoint.nextCheckpoints.push(pCp);
-	return [possibleMoves, prevMoves];
+function GetPossiblePaths(player, steps){
+	
+	var prev = Remove(player.currentCheckpoint.nextCheckpoints, player.visitedCheckpoints[player.visitedCheckpoints.length - 1]);
+	var allPaths = GetPaths([[player.currentCheckpoint]], steps);
+	player.currentCheckpoint.nextCheckpoints.push(prev);
+	return allPaths;
 }
 
-/* Populates the given list possibleMoves with the checkpoints
- * in steps number of steps recursively and poplulates the list
- * previousMoves with correspoinding previous moves
- * Parameter types : (Checkpoint, Checkpoint, int, list of Checkpoint, list of Checkpoint)
+
+/* Recursively finds all possible paths from the given path list 
+ * steps steps away
+ * Parameter type: (list of list of Checkpoint, int)
+ * Return type: list of list
  */
-function PopulatePossibleMoves(checkpoint, prevCheckpoint, steps, possibleMoves, previousMoves){
+function GetPaths(pathList, steps){
+
 	if (steps == 0){
-		possibleMoves.push(checkpoint);
-		previousMoves.push(prevCheckpoint);
-	} else{
-		for(var j = 0; j < checkpoint.nextCheckpoints.length; j++){
-			var prev = Remove(checkpoint.nextCheckpoints[j].nextCheckpoints, checkpoint);
-			PopulatePossibleMoves(checkpoint.nextCheckpoints[j], checkpoint, steps - 1, possibleMoves, previousMoves);
-			checkpoint.nextCheckpoints[j].nextCheckpoints.push(checkpoint);
+		return pathList;
+	}
+	var newPathList = new Array();
+
+	for (var i = 0; i < pathList.length; i++){
+		var lastCp = pathList[i][pathList[i].length - 1];
+		var previousCp = null;
+
+		if (pathList[i].length > 1){
+			previousCp = Remove(lastCp.nextCheckpoints, pathList[i][pathList[i].length - 2]);
+		}
+
+		for (var j = 0; j < lastCp.nextCheckpoints.length; j++){
+			var path = pathList[i].slice();
+			path.push(lastCp.nextCheckpoints[j]);
+			newPathList.push(path);
+		}
+
+		if (previousCp != null){
+			lastCp.nextCheckpoints.push(previousCp);
 		}
 	}
+	return GetPaths(newPathList, steps - 1);
 }
+
 
 /* Add the checkpoint to the visited checkpoints of the player 
  * Parameter types : (Player, Checkpoint)

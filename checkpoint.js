@@ -16,6 +16,13 @@ function Checkpoint(x, y, capture, greenS, redS, hazard){
 	this.nextCheckpoints = new Array();
 }
 
+/* This function is called when a checkpoint is clicked
+ * Parameter types : Checkpoint
+ */
+function CheckpointClicked(checkpoint){
+	alert(checkpoint.x + ", " + checkpoint.y);
+}
+
 /* Creates the checkpoints for a map at the given positions and sets the status of capture point,
  * green S point, red S point and hazard point for each checkpoint for the given map
  * Parameter types: (list of list, list of boolean, list of boolean, list of boolean, 
@@ -35,18 +42,29 @@ function CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints
 		y = (GetMapHeight() * positions[i][1] * mapScale) + (GetMapHeight() * moveVertical);
 
 		var pointColor = checkpointColor;
+		var letter = null;
+		var letterColor = "white";
 		if (capturePoints[i]){
 			pointColor = capturePointColor;
 			cpSize = GetMapWidth() * specialCheckpointSize;
+			letter = "C";
 		} else if (greenSPoints[i]){
 			pointColor = greenSPointColor;
 			cpSize = GetMapWidth() * specialCheckpointSize;
+			letter = "S";
 		} else if (redSPoints[i]){
 			pointColor = redSPointColor;
 			cpSize = GetMapWidth() * specialCheckpointSize;
+			letter = "S";
+			letterColor = "yellow";
 		} else if (hazardPoints[i]){
 			pointColor = hazardPointColor;
 			cpSize = GetMapWidth() * specialCheckpointSize;
+			letter = "H";
+		}
+
+		if (i < 2){
+			letter = (i + 2).toString();
 		}
 
 		if (right){
@@ -62,6 +80,18 @@ function CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints
 				svgObjects.push(checkpoint.circle);
 			}
 
+			if (letter != null){
+				var text = map.text(letter).move(x, y + cpSize * checkpointTextYScale);
+				text.font({ family: "Tahoma", size: cpSize * specialCheckpointTextSize, anchor: 'middle', fill: letterColor });
+				svgObjects.push(text);
+			}
+			var checkpoint = rightCheckpoints[i];
+			var rect = map.rect(cpSize, cpSize).attr({x: x - cpSize * 0.5, y: y - cpSize * 0.5, opacity: 0 });
+			rect.click(function(checkpoint){
+				CheckpointClicked(checkpoint);
+			});
+			svgObjects.push(rect);
+
 		} else {
 			if (created) {
 				leftCheckpoints[i].x = x;
@@ -74,10 +104,20 @@ function CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints
 				leftCheckpoints.push(checkpoint);
 				svgObjects.push(checkpoint.circle);
 			}
+			if (letter != null){
+				var text = map.text(letter).move(x, y + cpSize * checkpointTextYScale);
+				text.font({ family: "Verdana", size: cpSize * specialCheckpointTextSize, anchor: 'middle', fill: letterColor });
+				svgObjects.push(text);
+			}
+			var checkpoint = leftCheckpoints[i];
+			var rect = map.rect(cpSize, cpSize).attr({x: x - cpSize * 0.5, y: y - cpSize * 0.5, opacity: 0 });
+			rect.click(function(checkpoint){
+				CheckpointClicked(checkpoint);
+			});
+			svgObjects.push(rect);
 		}
 	}
 }
-
 
 /* Links all the checkpoints in the give map based on the edges for the given map
  * Parameter types: (list of list, Map, boolean)

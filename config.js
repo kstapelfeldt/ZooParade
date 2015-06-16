@@ -22,7 +22,7 @@ var pinCenterXScale = 0.008;
 var pinCenterYScale = 0.005;
 
 // Spinner Button Scales
-var spinButtonXScale = 1.1;
+var spinButtonXScale = 0.97;
 var spinButtonYScale = 0.25;
 var spinButtonRXScale = 0.1;
 var spinButtonRYScale = 0.1;
@@ -88,9 +88,11 @@ var pathEdges = [[0 ,1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7],
 				[33, 28], [28, 25], [25, 20], [20, 21], [21, 16], [37, 34], [34, 29], 
 				[29, 30], [30, 31], [31, 32]];
 
-var checkpointSize = 0.045;		// Size of normal checkpoints
-var specialCheckpointSize = 0.055;	// Size of special checkpoints
-var edgeWidth = 0.013;				// Width of the lines joining checkpoints
+var checkpointSize = 0.045;				// Size of normal checkpoints
+var specialCheckpointSize = 0.06;		// Size of special checkpoints
+var checkpointTextYScale = -0.45;		// Y scale of special checkpoints text
+var specialCheckpointTextSize = 0.7;	// Size of special checkpoints text 
+var edgeWidth = 0.013;					// Width of the lines joining checkpoints
 
 // Animal capture points indices
 var animal0Checkpoints = [5, 20];
@@ -142,7 +144,7 @@ var mapBackgroundColor = '#FFFF66';
 var continentNameColor = 'red';
 var checkpointColor = 'green';
 var redSPointColor = 'red';
-var greenSPointColor = '#193C19';
-var capturePointColor = 'black';
+var greenSPointColor = 'green';
+var capturePointColor = 'red';
 var hazardPointColor = 'blue';
 var darkBackgroundColor = '#4A2500';
