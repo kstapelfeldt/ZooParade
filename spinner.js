@@ -61,8 +61,6 @@ function Spin(){
 	pin.animate(2000).rotate(magnitude * direction + angle + pinAngleDeviation, center.x , center.y);
 	prevAngle = angle + pinAngleDeviation;
 
-
-
 	/*********************Testing Code: to be replaced *************************************/
 	if (firstMove){
 		MovePlayer(player0, leftCheckpoints[0]);
@@ -72,20 +70,12 @@ function Spin(){
 		player0.visitedCheckpoints.push(leftCheckpoints[0]);
 		secondMove = false;
 	} else{
-		var rand = Math.floor(Math.random() * 2);
-		if (rand == 0){
-			steps = 1;//redNumbers[index];
-		} else{
-			steps = 1;//greenNumbers[index];
+
+		var allPaths = GetPossiblePaths(player0, 6);
+		alert("Paths: " + allPaths.length);
+		for (var i = 0; i < allPaths.length; i++){
+			allPaths[i][allPaths[i].length - 1].circle.attr({fill: 'grey'});
 		}
-
-		var moves = GetPossibleMoves(player0, steps);
-		var possibleMoves = moves[0];
-		var previousMoves = moves[1];
-
-		var moveIndex = Math.floor(Math.random() * possibleMoves.length);
-		MovePlayer(player0, possibleMoves[moveIndex]);
-		player0.visitedCheckpoints.push(previousMoves[moveIndex]);
 	}
 	/***************************************************************************************/
 }

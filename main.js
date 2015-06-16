@@ -96,7 +96,7 @@ function Setup(){
 	player1 = new Player("Player1", continent1);
 	AddPlayerPlaceHolders();
 
-	AddQuestionText('Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today?');
+	AddQuestionText('<a href="http://www.github.com/roleen">Hello!</a> How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today?');
 	AddAnswerText('I am good! Life is awesome! I am doing what I am not doing. I am good! Life is awesome! I am doing what I am not doing. I am good! Life is awesome! I am doing what I am not doing. <a href="http://www.google.com">Click here</a> to go to the mysterious website.');
 	created = true;
 }
