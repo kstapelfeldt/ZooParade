@@ -53,12 +53,12 @@ function Setup(){
 	}
 	
 	// Creates Left Map
-	CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints, hazardPoints, leftMap, false);
-	LinkCheckpoints(pathEdges, leftPath, false);
+	CreateMapCheckpoints(leftMap, leftCheckpoints,false);
+	LinkCheckpoints(leftPath, leftCheckpoints);
 
 	// Creates Right Map
-	CreateMapCheckpoints(positions, capturePoints, greenSPoints, redSPoints, hazardPoints, rightMap, true);
-	LinkCheckpoints(pathEdges, rightPath, true);
+	CreateMapCheckpoints(rightMap, rightCheckpoints, true);
+	LinkCheckpoints(rightPath, rightCheckpoints);
 
 	// Set continent names and continent animals
 	var continent0Name = 'North America';
@@ -80,12 +80,12 @@ function Setup(){
 	AddContinentName(continent1Name, true);
 
 	// Add the svg images of animals to the map
-	PositionAnimals(continent0Animals, false);
-	PositionAnimals(continent1Animals, true);
+	PositionAnimals(continent0Animals, leftPath, leftCheckpoints, false);
+	PositionAnimals(continent1Animals, rightPath, rightCheckpoints, true);
 
 	// Add the pictures on the edges of the board
-	AddAnimalImages(continent0Animals, false);
-	AddAnimalImages(continent1Animals, true);
+	AddAnimalImages(continent0Animals, leftPath, false);
+	AddAnimalImages(continent1Animals, rightPath, true);
 
 	CreateSpinner();
 
