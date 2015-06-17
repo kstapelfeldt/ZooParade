@@ -1,4 +1,5 @@
-Binary Question,QuestionType,Question,Answer
-TRUE,1,What colour is it?,Blue;red;green
-FALSE,2,How old are you?,20
-FALSE,3,when is it?,now
+BinaryQuestion,QuestionType,Question,Answer
+TRUE,1,what are you?,yo
+FALSE,1,how are you?,no
+TRUE,2,why are you?,mo
+TRUE,1,sup?,po
