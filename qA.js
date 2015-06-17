@@ -27,7 +27,7 @@ function GetNextQuestionAnswer(QuestionType, player){
 	//isEmpty(player);
 	if(player){
 		for(count = 0; count < playerQuestions.data.length-1; count++){
-			alert(playerQuestions.data[count]["Question"]);
+			//alert(playerQuestions.data[count]["Question"]);
 			/*if(playerQuestions.data[count]["QuestionType"] == QuestionType){
 				/*for i in playerUsed.data{
 					if(playerQuestions.data[count] == i){
@@ -46,7 +46,7 @@ function GetNextQuestionAnswer(QuestionType, player){
 			}*/
 			//alert(playerQuestions.data[count]["Question"]+ "after");
 		}	
-		alert(playerQuestions.data.length);
+		//alert(playerQuestions.data.length);
 		//alert(result.length);
 		playerUsed.push(result[Math.floor(Math.random() * result.length)]);
 		//alert(playerUsed[0]["Question"]);
