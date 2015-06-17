@@ -148,3 +148,7 @@ var greenSPointColor = 'green';
 var capturePointColor = 'red';
 var hazardPointColor = 'blue';
 var darkBackgroundColor = '#4A2500';
+
+var checkpointMouseoverColor = '#004000';
+var redSPointMouseoverColor = '#A30000';
+var hazardPointMouseoverColor = '#0000B2';

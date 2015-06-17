@@ -2,11 +2,13 @@
 var leftMap = SVG('leftMap');
 var leftPath = leftMap.nested();
 var leftCheckpoints = new Array();
+var leftRects = new Array();
 
 // SVG objects for Right map
 var rightMap = SVG('rightMap');
 var rightPath = rightMap.nested();
 var rightCheckpoints = new Array();
+var rightRects = new Array();
 
 var svgObjects = new Array();			// Array of all svg objects in the game
 
@@ -37,6 +39,107 @@ $(window).resize(function(){
 });
 
 
+var right = false;
+var player0Steps = 1;
+var player1Steps = 1;
+
+var player0PossiblePaths;
+var player1PossiblePaths;
+
+player0.currentCheckpoint = leftCheckpoints[0];
+player1.currentCheckpoint = rightCheckpoints[0];
+
+MovePlayer(player0, leftCheckpoints[1]);
+player0.visitedCheckpoints.push(leftCheckpoints[0]);
+
+MovePlayer(player1, rightCheckpoints[1]);
+player1.visitedCheckpoints.push(rightCheckpoints[0]);
+
+/*
+if (firstMove){
+	MovePlayer(player0, leftCheckpoints[0]);
+	firstMove = false;
+} else if (secondMove){
+	MovePlayer(player0, leftCheckpoints[1]);
+	player0.visitedCheckpoints.push(leftCheckpoints[0]);
+	secondMove = false;
+} else{
+
+	var allPaths = GetPossiblePaths(player0, 6);
+	alert("Paths: " + allPaths.length);
+	for (var i = 0; i < allPaths.length; i++){
+		allPaths[i][allPaths[i].length - 1].circle.attr({fill: 'grey'});
+	}
+}*/
+
+
+
+/* This function is called when a checkpoint is clicked
+ * Parameter types : Checkpoint
+ */
+function GamePlay(index){
+
+	if (!right){
+		if (leftCheckpoints[index] == player0.currentCheckpoint){
+			player0PossiblePaths = GetPossiblePaths(player0, player0Steps);
+			for (var i = 0; i < player0PossiblePaths.length; i++){
+				MakeNextPossibleCheckpoint(player0PossiblePaths[i][player0PossiblePaths[i].length - 1], leftRects);
+			}
+		} else if (leftRects[index].attr('id').slice(0, 1) == 'P'){
+			MakeMove(player0, index, player0PossiblePaths, leftCheckpoints, leftRects);
+		}
+	} else{
+		if (rightCheckpoints[index] == player1.currentCheckpoint){
+			player1PossiblePaths = GetPossiblePaths(player1, player1Steps);
+			for (var i = 0; i < player1PossiblePaths.length; i++){
+				MakeNextPossibleCheckpoint(player1PossiblePaths[i][player1PossiblePaths[i].length - 1], rightRects);
+			}
+		} else if (rightRects[index].attr('id').slice(0, 1) == 'P'){
+			MakeMove(player1, index, player1PossiblePaths, rightCheckpoints, rightRects);
+		}
+	}
+}
+
+function MakeMove(player, index, playerPossiblePaths, checkpoints, rectsList){
+	var nextCheckpoint = checkpoints[index];
+	var pathIndex;
+
+	for (var i = 0; i < playerPossiblePaths.length; i++){
+
+		var lastCp = playerPossiblePaths[i][playerPossiblePaths[i].length - 1];
+
+		if (lastCp == nextCheckpoint) pathIndex = i;
+
+		var pointColor = checkpointColor;
+		if (redSPoints[lastCp.index] || capturePoints[lastCp.index]) pointColor = redSPointColor;
+		if (hazardPoints[lastCp.index]) pointColor = hazardPointColor;
+
+		lastCp.circle.attr('fill', pointColor);
+		var id = 'N';
+		if (redSPoints[lastCp.index] || capturePoints[lastCp.index]) id = 'R';
+		if (hazardPoints[lastCp.index]) id = 'H';
+
+		id = id + rectsList[lastCp.index].attr('id').slice(1);
+		rectsList[lastCp.index].attr('id', id);
+	}
+
+	player.visitedCheckpoints.push(player.currentCheckpoint);
+	for (var i = 0; i < playerPossiblePaths[pathIndex]; i++){
+
+		player.visitedCheckpoints.push(playerPossiblePaths[pathIndex][i]);
+	}
+
+	MovePlayer(player, checkpoints[index]);
+	right = !right;
+}
+
+function MakeNextPossibleCheckpoint(checkpoint, rectsList){
+	checkpoint.circle.attr('fill', 'grey');
+	id = rightRects[checkpoint.index].attr('id');
+	id = 'P' + id.slice(1);
+	rectsList[checkpoint.index].attr('id', id);
+}
+
 /* Sets up the game graphics */
 function Setup(){
 
@@ -53,11 +156,11 @@ function Setup(){
 	}
 	
 	// Creates Left Map
-	CreateMapCheckpoints(leftMap, leftCheckpoints,false);
+	CreateMapCheckpoints(leftMap, leftCheckpoints,leftRects, false);
 	LinkCheckpoints(leftPath, leftCheckpoints);
 
 	// Creates Right Map
-	CreateMapCheckpoints(rightMap, rightCheckpoints, true);
+	CreateMapCheckpoints(rightMap, rightCheckpoints, rightRects, true);
 	LinkCheckpoints(rightPath, rightCheckpoints);
 
 	// Set continent names and continent animals

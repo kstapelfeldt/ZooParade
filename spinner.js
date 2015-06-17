@@ -46,9 +46,6 @@ function CreateSpinButton(){
 }
 
 
-var firstMove = true;
-var secondMove = true;
-
 /* Spins the Spinner pin */
 function Spin(){
 	var center = GetSpinnerBoardCenter();
@@ -60,24 +57,6 @@ function Spin(){
 	var direction = [1, -1][Math.floor(Math.random() * 2)];
 	pin.animate(2000).rotate(magnitude * direction + angle + pinAngleDeviation, center.x , center.y);
 	prevAngle = angle + pinAngleDeviation;
-
-	/*********************Testing Code: to be replaced *************************************/
-	if (firstMove){
-		MovePlayer(player0, leftCheckpoints[0]);
-		firstMove = false;
-	} else if (secondMove){
-		MovePlayer(player0, leftCheckpoints[1]);
-		player0.visitedCheckpoints.push(leftCheckpoints[0]);
-		secondMove = false;
-	} else{
-
-		var allPaths = GetPossiblePaths(player0, 6);
-		alert("Paths: " + allPaths.length);
-		for (var i = 0; i < allPaths.length; i++){
-			allPaths[i][allPaths[i].length - 1].circle.attr({fill: 'grey'});
-		}
-	}
-	/***************************************************************************************/
 }
 
 /* Returns the coordinates of the center of the spinner image
