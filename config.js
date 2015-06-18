@@ -31,11 +31,6 @@ var spinButtonHeightScale = 0.2;
 var spinButtonTextXScale = 0.5;
 var spinButtonTextYScale = 0.6;
 
-// Player Placeholder Scales
-var playerPlaceHolderScale = 0.7;
-var playerPlaceHolderXScale = -0.002;
-var playerPlaceHolderYScale = -0.01;
-
 var moveHorizontal = 0;			// Move the maps horizontally
 var moveVertical = 0;			// Move the maps vertically
 
@@ -101,10 +96,10 @@ var animal2Checkpoints = [12, 38];
 
 // Deviation of Animals from Capture Checkpoints
 var a0C0XDeviation = 0.019;
-var a0C0YDeviation = 0.05;
+var a0C0YDeviation = 0.056;
 
 var a0C1XDeviation = - 0.04;
-var a0C1YDeviation = - 0.05;
+var a0C1YDeviation = - 0.055;
 
 var a1C0XDeviation = 0.05;
 var a1C0YDeviation = -0.07;
@@ -133,22 +128,33 @@ var continentNameY = 0.01;
 var prevAngle = -147;
 var pinAngleDeviation = -147;
 var angles = [0, 0, 54, 54, 90, 126, 126, 180, 180, 234, 234,306, 306, 270];
-var redNumbers = [5, 5, 6, 6, 3, 4, 4, 5, 5, 4, 4, 3, 6, 6];
-var greenNumbers = [2, 2, 1, 1, 4, 3, 3, 2, 2, 3, 3, 4, 1, 1];
+var redNumbers = [5, 5, 6, 6, 3, 4, 4, 5, 5, 4, 4, 6, 6, 3];
+var greenNumbers = [2, 2, 1, 1, 4, 3, 3, 2, 2, 3, 3, 1, 1, 4];
 
 // Text variables
 var fontFamily = 'Courier';
 
 // Color variables
 var mapBackgroundColor = '#FFFF66';
+var darkBackgroundColor = '#4A2500';
 var continentNameColor = 'red';
 var checkpointColor = 'green';
 var redSPointColor = 'red';
 var greenSPointColor = 'green';
 var capturePointColor = 'red';
 var hazardPointColor = 'blue';
-var darkBackgroundColor = '#4A2500';
+var checkpointLetterColor = "white";
 
-var checkpointMouseoverColor = '#004000';
-var redSPointMouseoverColor = '#A30000';
-var hazardPointMouseoverColor = '#0000B2';
+
+// Player Placeholder Variables
+var playerPlaceHolderScale = 0.7;
+var playerPlaceHolderXScale = -0.002;
+var playerPlaceHolderYScale = -0.01;
+var playerMoveSpeed = 1500;
+var playerPlaceholderXDeviation = -0.035;
+var playerPlaceholderYDeviation = -0.045;
+
+
+
+
+

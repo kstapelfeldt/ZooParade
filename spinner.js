@@ -48,15 +48,29 @@ function CreateSpinButton(){
 
 /* Spins the Spinner pin */
 function Spin(){
-	var center = GetSpinnerBoardCenter();
-	pin.transform({rotation: prevAngle, cx: center.x, cy: center.y});
+	if ((!right && player0.spin) || (right && player1.spin)){
+		var center = GetSpinnerBoardCenter();
+		pin.transform({rotation: prevAngle, cx: center.x, cy: center.y});
 
-	index = Math.floor(Math.random() * angles.length);
-	var angle = angles[index];
-	var magnitude = 360 * (Math.floor(Math.random() * 7) + 3);
-	var direction = [1, -1][Math.floor(Math.random() * 2)];
-	pin.animate(2000).rotate(magnitude * direction + angle + pinAngleDeviation, center.x , center.y);
-	prevAngle = angle + pinAngleDeviation;
+		var index = Math.floor(Math.random() * angles.length);
+		var angle = angles[index];
+		var magnitude = 360 * (Math.floor(Math.random() * 7) + 3);
+		var direction = [1, -1][Math.floor(Math.random() * 2)];
+		pin.animate(2000).rotate(magnitude * direction + angle + pinAngleDeviation, center.x , center.y);
+		prevAngle = angle + pinAngleDeviation;
+
+		if (right){
+			player1.steps = greenNumbers[index];
+			if (player1.currentCheckpoint.redS) player1.steps = redNumbers[index];
+			player1.spin = false;
+		} else {
+			player0.steps = greenNumbers[index];
+			if (player0.currentCheckpoint.redS) player0.steps = redNumbers[index];
+			player0.spin = false;
+		}
+	} else {
+		alert("You can use the spinner only at a Spin checkpoint.");
+	}	
 }
 
 /* Returns the coordinates of the center of the spinner image

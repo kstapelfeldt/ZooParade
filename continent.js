@@ -10,7 +10,7 @@ function Continent(name, animals, checkpoints){
 
 
 /* Assigns player to map
- * Parameter types : (Map, Player)
+ * Parameter types : (Continent, Player)
  */
 function AssignPlayer(continent, player){
 	map.player = player;

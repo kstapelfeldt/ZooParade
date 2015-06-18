@@ -3,17 +3,20 @@
 /* Initializer for Checkpoint object
  * Parameter types : (float, float, bool, bool, bool, bool)
  */
-function Checkpoint(x, y, capture, greenS, redS, hazard, index){
+function Checkpoint(x, y, capture, greenS, redS, hazard, index, right){
 	this.x = x;
 	this.y = y;
 	this.capture = capture;
 	this.greenS = greenS;
 	this.redS = redS;
 	this.hazard = hazard;
-	this.visited = false;
 	this.index = index;
+	this.right = right;
 
+	this.visited = false;
+	this.selected = false;
 	this.circle = null;
+	this.clickCircle = null;
 	this.nextCheckpoints = new Array();
 }
 
@@ -21,115 +24,39 @@ function Checkpoint(x, y, capture, greenS, redS, hazard, index){
  * green S point, red S point and hazard point for each checkpoint for the given map
  * Parameter types: (SVG, list of Checkpoint, list of SVG, boolean)
  */
-function CreateMapCheckpoints(map, checkpointsList, rectsList, right){
-
-	//var redPoints = redSPoints;
+function CreateMapCheckpoints(map, checkpointsList, right){
 
 	for (var i = 0; i < positions.length; i++){
+
 		var cpSize = GetMapWidth() * checkpointSize;
-
-		var x = (GetMapWidth() * positions[i][0] * mapScale) + (GetMapWidth() * moveHorizontal);
-
-		if (right){
-			x = (GetMapWidth() - (GetMapWidth() * positions[i][0] * mapScale)) - (GetMapWidth() * moveHorizontal);
-		}
+		if (hazardPoints[i] || greenSPoints[i] || redSPoints[i] || capturePoints[i]) cpSize = GetMapWidth() * specialCheckpointSize;
 		
+		var x = (GetMapWidth() * positions[i][0] * mapScale) + (GetMapWidth() * moveHorizontal);
+		if (right) x = (GetMapWidth() - (GetMapWidth() * positions[i][0] * mapScale)) - (GetMapWidth() * moveHorizontal);
 		var y = (GetMapHeight() * positions[i][1] * mapScale) + (GetMapHeight() * moveVertical);
-
-		var pointColor = checkpointColor;
-		var letter = null;
-		var letterColor = "white";
-		if (capturePoints[i]){
-			pointColor = capturePointColor;
-			cpSize = GetMapWidth() * specialCheckpointSize;
-			letter = "C";
-		} else if (greenSPoints[i]){
-			pointColor = greenSPointColor;
-			cpSize = GetMapWidth() * specialCheckpointSize;
-			letter = "S";
-		} else if (redSPoints[i]){
-			pointColor = redSPointColor;
-			cpSize = GetMapWidth() * specialCheckpointSize;
-			letter = "S";
-			letterColor = "yellow";
-		} else if (hazardPoints[i]){
-			pointColor = hazardPointColor;
-			cpSize = GetMapWidth() * specialCheckpointSize;
-			letter = "H";
-		}
-
-		if (i < 2){
-			letter = (i + 2).toString();
-		}
 
 		if (created) {
 			checkpointsList[i].x = x;
 			checkpointsList[i].y = y;
-			checkpointsList[i].circle = map.circle(cpSize).attr({ fill: pointColor , cx: x, cy: y });
-			svgObjects.push(checkpointsList[i].circle);
 		} else {
-			var checkpoint = new Checkpoint(x, y, capturePoints[i], greenSPoints[i], redSPoints[i], hazardPoints[i], i);
-			checkpoint.circle = map.circle(cpSize).attr({ fill: pointColor , cx: x, cy: y });
+			var checkpoint = new Checkpoint(x, y, capturePoints[i], greenSPoints[i], redSPoints[i], hazardPoints[i], i, right);
 			checkpointsList.push(checkpoint);
-			svgObjects.push(checkpoint.circle);
 		}
 
-		if (letter != null){
-			var text = map.text(letter).move(x, y + cpSize * checkpointTextYScale);
-			text.font({ family: "Tahoma", size: cpSize * specialCheckpointTextSize, anchor: 'middle', fill: letterColor });
-			svgObjects.push(text);
-		}
+		checkpointsList[i].circle = map.circle(cpSize).attr({ cx: x, cy: y });
+		svgObjects.push(checkpointsList[i].circle);
+		
+		SetCheckpointColor(checkpointsList[i]);
+		SetCheckpointLetter(checkpointsList[i], map, cpSize);
 
-		var id = 'N';
-		if (redSPoints[i] || capturePoints[i]) id = 'R';
-		if (hazardPoints[i]) id = 'H';
+		checkpointsList[i].clickCircle = map.circle(cpSize).attr({ cx: x, cy: y, opacity: 0 });
+		svgObjects.push(checkpointsList[i].clickCircle);
 
+		SetCheckpointClickCircleId(checkpointsList[i]);
 
-		id = id + i.toString();
-
-		var rect = map.rect(cpSize, cpSize).attr({x: x - cpSize * 0.5, y: y - cpSize * 0.5, opacity: 0, id: id });
-		if (created){rectsList[i] = rect} else {rectsList.push(rect)}
-		var checkpoint = checkpointsList[i];
-
-		rect.click(function(){
-			var id = this.attr('id');
-			var type = id.slice(0, 1);
-			var index = id.slice(1);
-			var checkpoint = leftCheckpoints[parseInt(index)];
-			if (right) checkpoint = rightCheckpoints[parseInt(index)];
-			GamePlay(parseInt(index));
-		});
-
-		rect.mouseover(function(){
-			var id = this.attr('id');
-			var type = id.slice(0, 1);
-			var index = id.slice(1);
-			var circle = leftCheckpoints[parseInt(index)].circle;
-			if (right) circle = rightCheckpoints[parseInt(index)].circle;
-			if (type == 'N'){
-				circle.attr('fill', checkpointMouseoverColor);
-			} else if (type == 'R'){
-				circle.attr('fill', redSPointMouseoverColor);
-			} else if (type == 'H'){
-				circle.attr('fill', hazardPointMouseoverColor);
-			}
-		});
-
-		rect.mouseout(function(){
-			var id = this.attr('id');
-			var type = id.slice(0, 1);
-			var index = id.slice(1);
-			var circle = leftCheckpoints[parseInt(index)].circle;
-			if (right) circle = rightCheckpoints[parseInt(index)].circle;
-			if (type == 'N'){
-				circle.attr('fill', greenSPointColor);
-			} else if (type == 'R'){
-				circle.attr('fill', redSPointColor);
-			} else if (type == 'H'){
-				circle.attr('fill', hazardPointColor);
-			}
-		});
-		svgObjects.push(rect);
+		SetCheckpointClick(checkpointsList[i]);
+		SetCheckpointMouseover(checkpointsList[i]);
+		SetCheckpointMouseout(checkpointsList[i]);
 	}
 }
 
@@ -154,3 +81,135 @@ function LinkCheckpoints(path, checkpointsList){
 		svgObjects.push(line);
 	}
 }
+
+/* Selects the given checkpoint 
+ * Parameter types: (Checkpoint) 
+ */
+function SelectCheckpoint(checkpoint){
+	checkpoint.clickCircle.attr({ id: 'P' + checkpoint.index.toString()});
+	checkpoint.clickCircle.attr({ fill: 'white', opacity: 0.4 });
+	checkpoint.selected = true;
+}
+
+/* Deselects the given checkpoint
+ * Parameter types: (Checkpoint)
+ */
+function DeselectCheckpoint(checkpoint){
+	checkpoint.clickCircle.attr({ fill: 'black', opacity: 0 });
+	SetCheckpointColor(checkpoint);
+	SetCheckpointClickCircleId(checkpoint);
+	checkpoint.selected = false;
+}
+
+/* Sets the onclick function for the given checkpoint 
+ * Parameter types: (Checkpoint)
+ */
+function SetCheckpointClick(checkpoint){
+	checkpoint.clickCircle.click(function(){
+		var id = this.attr('id');
+		var type = id.slice(0, 1);
+		var index = parseInt(id.slice(1));
+		var checkpoint = leftCheckpoints[index];
+		if (right) checkpoint = rightCheckpoints[index];
+		GamePlay(index);
+	});
+}
+
+/* Sets the on mouseover function for the given checkpoint 
+ * Parameter types: (Checkpoint)
+ */
+function SetCheckpointMouseover(checkpoint){
+	checkpoint.clickCircle.mouseover(function(){
+		var id = this.attr('id');
+		var type = id.slice(0, 1);
+		var index = parseInt(id.slice(1));
+		if (type == 'N' || type == 'R' || type == 'H'){
+			checkpoint.clickCircle.attr('opacity', 0.4);
+		} 
+	});
+}
+
+/* Sets the on mouseout function for the given checkpoint 
+ * Parameter types: (Checkpoint)
+ */
+function SetCheckpointMouseout(checkpoint){
+	checkpoint.clickCircle.mouseout(function(){
+		var id = this.attr('id');
+		var type = id.slice(0, 1);
+		var index = parseInt(id.slice(1));
+		if (type == 'N' || type == 'R' || type == 'H'){
+			checkpoint.clickCircle.attr('opacity', 0);
+		} 
+	});
+}
+
+/* Sets the color of the given checkpoint
+ * Parameter types: (Checkpoint)
+ */
+function SetCheckpointColor(checkpoint){
+	var pointColor = checkpointColor;
+	if (checkpoint.redS || checkpoint.capture) pointColor = redSPointColor;
+	else if (checkpoint.hazard) pointColor = hazardPointColor;
+	checkpoint.circle.attr('fill', pointColor);
+}
+
+/* Sets the letter of the given checkpoint
+ * Parameter types: (Checkpoint, SVG, float)
+ */
+function SetCheckpointLetter(checkpoint, map, cpSize){
+	var letter = null;
+	var letterColor = checkpointLetterColor;
+
+	if (checkpoint.greenS || checkpoint.redS) letter = 'S';
+	else if (checkpoint.hazard) letter = 'H';
+	else if (checkpoint.capture) letter = 'C';
+	else if (checkpoint.index < 2) letter = (checkpoint.index + 2).toString();
+
+	if (checkpoint.redS) letterColor = "yellow";
+
+	if (letter != null){
+		var text = map.text(letter).move(checkpoint.x, checkpoint.y + cpSize * checkpointTextYScale);
+		text.font({ family: "Tahoma", size: cpSize * specialCheckpointTextSize, anchor: 'middle', fill: letterColor });
+		svgObjects.push(text);
+	}
+}
+
+/* Sets the id attribute of the given checkpoint's click circle
+ * Parameter types: (Checkpoint)
+ */
+function SetCheckpointClickCircleId(checkpoint){
+	var id = 'N';
+	if (checkpoint.redS || checkpoint.capture) id = 'R';
+	if (checkpoint.hazard) id = 'H';
+	id = id + checkpoint.index.toString();
+	checkpoint.clickCircle.attr('id', id);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
