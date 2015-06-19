@@ -142,11 +142,15 @@ function Setup(){
 
 	CreateSpinner();
 
-
+	AddStartArrows();
 
 	/*********************** Start Here ***************************/
-	player0 = new Player("Player0", continent0);
-	player1 = new Player("Player1", continent1);
+	
+	if (player0 == null && player1 == null){
+		player0 = new Player("Player0", continent0);
+		player1 = new Player("Player1", continent1);
+	}
+
 	AddPlayerPlaceHolders();
 
 	AddQuestionText('<a href="http://www.github.com/roleen">Hello!</a> How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today?');
@@ -177,6 +181,44 @@ function AddQuestionText(question){
 function AddAnswerText(answer){
 	var div = document.getElementById('answerContent');
 	div.innerHTML = answer;
+}
+
+/* Adds the red start arrows to the board */
+function AddStartArrows(){
+	
+	var polygonCoordinates = new Array();
+	var xDeviation = GetMapWidth() * arrowXDeviation;
+	var yDeviation = GetMapHeight() * arrowYDeviation;
+	var cpSize = GetMapWidth() * checkpointSize;
+
+	for (var i = 0; i < arrowPolygonCoordinates.length; i++){
+		polygonCoordinates.push([arrowPolygonCoordinates[i][0] * GetMapWidth() * 0.015 + xDeviation, 
+								arrowPolygonCoordinates[i][1] * GetMapHeight() * 0.015 + yDeviation]);
+	}
+	var leftArrow = leftMap.polygon(polygonCoordinates).fill('red').stroke({width: 2});
+	var cx = (polygonCoordinates[3][0]);
+	var cy = (polygonCoordinates[3][1] + polygonCoordinates[5][1]) * 0.5;
+	var leftArrowCircle = leftMap.circle(cpSize).attr({ cx: cx, cy: cy, fill: 'red', stroke:'yellow', 'stroke-width': 2});
+	var text = leftMap.text('1').move(cx, cy + cpSize * checkpointTextYScale);
+	text.font({ family: "Tahoma", size: cpSize * checkpointTextSize, anchor: 'middle', fill: 'yellow' });
+	svgObjects.push(leftArrow);
+	svgObjects.push(leftArrowCircle);
+	svgObjects.push(text);
+
+	var polygonCoordinates = new Array();
+	for (var i = 0; i < arrowPolygonCoordinates.length; i++){
+		polygonCoordinates.push([GetMapWidth() - (arrowPolygonCoordinates[i][0] * GetMapWidth() * 0.015 + xDeviation), 
+								arrowPolygonCoordinates[i][1] * GetMapHeight() * 0.015 + yDeviation]);
+	}
+	var rightArrow = rightMap.polygon(polygonCoordinates).fill('red').stroke({width: 2});
+	var cx = (polygonCoordinates[3][0]);
+	var cy = (polygonCoordinates[3][1] + polygonCoordinates[5][1]) * 0.5;
+	var rightArrowCircle = rightMap.circle(cpSize).attr({ cx: cx, cy: cy, fill: 'red', stroke:'yellow', 'stroke-width': 2 });
+	var text = rightMap.text('1').move(cx, cy + cpSize * checkpointTextYScale);
+	text.font({ family: "Tahoma", size: cpSize * checkpointTextSize, anchor: 'middle', fill: 'yellow' });
+	svgObjects.push(rightArrow);
+	svgObjects.push(rightArrowCircle);
+	svgObjects.push(text);
 }
 
 /* Returns the width of the middle section of the board */

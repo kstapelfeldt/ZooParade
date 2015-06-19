@@ -90,10 +90,12 @@ function AddAnimalsCaptured(player, animal){
 
 /* Adds placeholders for both the players */
 function AddPlayerPlaceHolders(){
+	var checkpoint = leftCheckpoints[0];
+	if (player0.currentCheckpoint != null) checkpoint = player0.currentCheckpoint;
 	player0.placeHolder = leftMap.image('Resources/Player0.png', GetMapWidth() * mapScale * playerPlaceHolderScale, 
 							GetMapHeight() * mapScale * playerPlaceHolderScale);
-	player0.placeHolder.cx(leftCheckpoints[0].x + GetMapWidth() * playerPlaceHolderXScale);
-	player0.placeHolder.cy(leftCheckpoints[0].y + GetMapHeight() * playerPlaceHolderYScale);
+	player0.placeHolder.cx(checkpoint.x + GetMapWidth() * playerPlaceHolderXScale);
+	player0.placeHolder.cy(checkpoint.y + GetMapHeight() * playerPlaceHolderYScale);
 
 	player0.placeHolder.click(function(){
 		if (!right){
@@ -103,11 +105,12 @@ function AddPlayerPlaceHolders(){
 
 	svgObjects.push(player0.placeHolder);
 
-
+	var checkpoint = rightCheckpoints[0];
+	if (player1.currentCheckpoint != null) checkpoint = player1.currentCheckpoint;
 	player1.placeHolder = rightMap.image('Resources/Player1.png', GetMapWidth() * mapScale * playerPlaceHolderScale, 
 							GetMapHeight() * mapScale * playerPlaceHolderScale);
-	player1.placeHolder.cx(rightCheckpoints[0].x - GetMapWidth() * playerPlaceHolderXScale);
-	player1.placeHolder.cy(rightCheckpoints[0].y + GetMapHeight() * playerPlaceHolderYScale);
+	player1.placeHolder.cx(checkpoint.x - GetMapWidth() * playerPlaceHolderXScale);
+	player1.placeHolder.cy(checkpoint.y + GetMapHeight() * playerPlaceHolderYScale);
 
 	player1.placeHolder.click(function(){
 		if (right){
@@ -155,6 +158,7 @@ function MovePlayer(player, checkpoint){
 			animationTime = (distances[i - 1] / totalDistance) * totalAnimationTime;
 			setTimeout(function () {
 				if (i < path.length - 1) {
+					//VisitCheckpoint(path[i]);
 					player.placeHolder.animate(animationTime).move(path[i+1].x + xDeviation, path[i+1].y + yDeviation);
 					i++;
 					animationLoop();

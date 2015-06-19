@@ -83,10 +83,17 @@ var pathEdges = [[0 ,1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7],
 				[33, 28], [28, 25], [25, 20], [20, 21], [21, 16], [37, 34], [34, 29], 
 				[29, 30], [30, 31], [31, 32]];
 
+// Relative positions of the red arrow
+var arrowPolygonCoordinates = [[-5,5], [-5,10], [20,10], [20,12], [24,7.5], [20,3], [20,5]];
+
+var arrowXDeviation = -0.19;
+var arrowYDeviation = 0.005;
+
 var checkpointSize = 0.045;				// Size of normal checkpoints
 var specialCheckpointSize = 0.06;		// Size of special checkpoints
-var checkpointTextYScale = -0.45;		// Y scale of special checkpoints text
-var specialCheckpointTextSize = 0.7;	// Size of special checkpoints text 
+var checkpointTextYScale = -0.4;		// Y scale of special checkpoints text
+var specialCheckpointTextYScale = -0.47;
+var checkpointTextSize = 0.7;	// Size of special checkpoints text 
 var edgeWidth = 0.013;					// Width of the lines joining checkpoints
 
 // Animal capture points indices
@@ -142,7 +149,7 @@ var checkpointColor = 'green';
 var redSPointColor = 'red';
 var greenSPointColor = 'green';
 var capturePointColor = 'red';
-var hazardPointColor = 'blue';
+var hazardPointColor = '#2595BA';
 var checkpointLetterColor = "white";
 
 

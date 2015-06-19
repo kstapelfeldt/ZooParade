@@ -167,9 +167,13 @@ function SetCheckpointLetter(checkpoint, map, cpSize){
 
 	if (checkpoint.redS) letterColor = "yellow";
 
+	var textYDeviation = cpSize * checkpointTextYScale;
+	if (checkpoint.greenS || checkpoint.redS || checkpoint.hazard || checkpoint.capture) 
+		textYDeviation = cpSize * specialCheckpointTextYScale;
+
 	if (letter != null){
-		var text = map.text(letter).move(checkpoint.x, checkpoint.y + cpSize * checkpointTextYScale);
-		text.font({ family: "Tahoma", size: cpSize * specialCheckpointTextSize, anchor: 'middle', fill: letterColor });
+		var text = map.text(letter).move(checkpoint.x, checkpoint.y + textYDeviation);
+		text.font({ family: "Tahoma", size: cpSize * checkpointTextSize, anchor: 'middle', fill: letterColor });
 		svgObjects.push(text);
 	}
 }
