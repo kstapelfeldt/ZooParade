@@ -134,7 +134,7 @@ var continentNameY = 0.01;
 // Spinner variables
 var prevAngle = -147;
 var pinAngleDeviation = -147;
-var angles = [0, 0, 54, 54, 90, 126, 126, 180, 180, 234, 234,306, 306, 270];
+var angles = [0, 0, 54, 54, 90, 126, 126, 180, 180, 234, 234, 306, 306, 270];
 var redNumbers = [5, 5, 6, 6, 3, 4, 4, 5, 5, 4, 4, 6, 6, 3];
 var greenNumbers = [2, 2, 1, 1, 4, 3, 3, 2, 2, 3, 3, 1, 1, 4];
 

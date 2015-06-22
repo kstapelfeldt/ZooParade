@@ -23,7 +23,7 @@ var minScreenHeight = screen.height * minScreenHeightScale;
 document.getElementById("body").style.minWidth = minScreenWidth;
 document.getElementById("body").style.minHeight = minScreenHeight;
 
-Setup();
+StartGame();
 
 // Adjust all the objects on window resize
 $(window).resize(function(){
@@ -33,20 +33,25 @@ $(window).resize(function(){
 
 
 // Game variables
+var leftStartPosition;
+var rightStartPosition;
 var continent0;
 var continent1;
 var player0;
 var player1;
 var right = false;
 
-player0.currentCheckpoint = leftCheckpoints[0];
-player1.currentCheckpoint = rightCheckpoints[0];
+var leftCapturePoints;
+var rightCapturePoints;
 
-MovePlayer(player0, leftCheckpoints[1]);
-player0.visitedCheckpoints.push(leftCheckpoints[0]);
+function StartGame(){
+	/*********************** Start Here ***************************/
 
-MovePlayer(player1, rightCheckpoints[1]);
-player1.visitedCheckpoints.push(rightCheckpoints[0]);
+	leftCapturePoints = capturePoints.slice();
+	rightCapturePoints = capturePoints.slice();
+	Setup();
+}
+
 
 
 function GamePlay(index){
@@ -71,19 +76,18 @@ function GamePlay(index){
 }
 
 function MakeMove(player, index, checkpoints){
-	
-	var nextCheckpoint = checkpoints[index];
-	var pathIndex;
 
-	for (var i = 0; i < player.possiblePaths.length; i++){
-		var lastCp = player.possiblePaths[i][player.possiblePaths[i].length - 1];
-		if (lastCp == nextCheckpoint) pathIndex = i;
-		DeselectCheckpoint(lastCp);
-	}
+	if (player.currentCheckpoint == null && index == 0){
+		DeselectCheckpoint(checkpoints[index]);
+	} else {
+		var nextCheckpoint = checkpoints[index];
+		var pathIndex;
 
-	player.visitedCheckpoints.push(player.currentCheckpoint);
-	for (var i = 0; i < player.possiblePaths[pathIndex].length - 1; i++){
-		player.visitedCheckpoints.push(player.possiblePaths[pathIndex][i]);
+		for (var i = 0; i < player.possiblePaths.length; i++){
+			var lastCp = player.possiblePaths[i][player.possiblePaths[i].length - 1];
+			if (lastCp == nextCheckpoint) pathIndex = i;
+			DeselectCheckpoint(lastCp);
+		}
 	}
 
 	MovePlayer(player, checkpoints[index]);
@@ -105,6 +109,9 @@ function Setup(){
 		document.getElementById("body").style.overflowX = "hidden";
 	}
 	
+	AddStartArrows(false);
+	AddStartArrows(true);
+
 	// Creates Left Map
 	CreateMapCheckpoints(leftMap, leftCheckpoints, false);
 	LinkCheckpoints(leftPath, leftCheckpoints);
@@ -141,17 +148,14 @@ function Setup(){
 	AddAnimalImages(continent1Animals, rightPath, true);
 
 	CreateSpinner();
-
-	AddStartArrows();
-
-	/*********************** Start Here ***************************/
 	
 	if (player0 == null && player1 == null){
-		player0 = new Player("Player0", continent0);
-		player1 = new Player("Player1", continent1);
+		player0 = new Player("Player0", continent0, leftMap, leftCheckpoints);
+		player1 = new Player("Player1", continent1, rightMap, rightCheckpoints);
 	}
 
-	AddPlayerPlaceHolders();
+	AddPlayerPlaceHolders(leftStartPosition, false);
+	AddPlayerPlaceHolders(rightStartPosition, true);
 
 	AddQuestionText('<a href="http://www.github.com/roleen">Hello!</a> How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today?');
 	AddAnswerText('I am good! Life is awesome! I am doing what I am not doing. I am good! Life is awesome! I am doing what I am not doing. I am good! Life is awesome! I am doing what I am not doing. <a href="http://www.google.com">Click here</a> to go to the mysterious website.');
@@ -184,41 +188,35 @@ function AddAnswerText(answer){
 }
 
 /* Adds the red start arrows to the board */
-function AddStartArrows(){
-	
+function AddStartArrows(right){
+	var map = leftMap;
+	if (right) map = rightMap;
+
 	var polygonCoordinates = new Array();
 	var xDeviation = GetMapWidth() * arrowXDeviation;
 	var yDeviation = GetMapHeight() * arrowYDeviation;
 	var cpSize = GetMapWidth() * checkpointSize;
 
 	for (var i = 0; i < arrowPolygonCoordinates.length; i++){
-		polygonCoordinates.push([arrowPolygonCoordinates[i][0] * GetMapWidth() * 0.015 + xDeviation, 
-								arrowPolygonCoordinates[i][1] * GetMapHeight() * 0.015 + yDeviation]);
+		var x = arrowPolygonCoordinates[i][0] * GetMapWidth() * 0.015 + xDeviation;
+		if (right) x = GetMapWidth() - x;
+		var y = arrowPolygonCoordinates[i][1] * GetMapHeight() * 0.015 + yDeviation;
+		polygonCoordinates.push([x, y]);
 	}
-	var leftArrow = leftMap.polygon(polygonCoordinates).fill('red').stroke({width: 2});
-	var cx = (polygonCoordinates[3][0]);
-	var cy = (polygonCoordinates[3][1] + polygonCoordinates[5][1]) * 0.5;
-	var leftArrowCircle = leftMap.circle(cpSize).attr({ cx: cx, cy: cy, fill: 'red', stroke:'yellow', 'stroke-width': 2});
-	var text = leftMap.text('1').move(cx, cy + cpSize * checkpointTextYScale);
+
+	var arrow = map.polygon(polygonCoordinates).fill('red').stroke({width: 2});
+	var cx = polygonCoordinates[3][0];
+	var cy = (polygonCoordinates [3][1] + polygonCoordinates[5][1]) * 0.5;
+	var arrowCircle = map.circle(cpSize).attr({ cx: cx, cy: cy, fill: 'red', stroke:'yellow', 'stroke-width': 2});
+	var text = map.text('1').move(cx, cy + cpSize * checkpointTextYScale);
 	text.font({ family: "Tahoma", size: cpSize * checkpointTextSize, anchor: 'middle', fill: 'yellow' });
-	svgObjects.push(leftArrow);
-	svgObjects.push(leftArrowCircle);
+
+	svgObjects.push(arrow);
+	svgObjects.push(arrowCircle);
 	svgObjects.push(text);
 
-	var polygonCoordinates = new Array();
-	for (var i = 0; i < arrowPolygonCoordinates.length; i++){
-		polygonCoordinates.push([GetMapWidth() - (arrowPolygonCoordinates[i][0] * GetMapWidth() * 0.015 + xDeviation), 
-								arrowPolygonCoordinates[i][1] * GetMapHeight() * 0.015 + yDeviation]);
-	}
-	var rightArrow = rightMap.polygon(polygonCoordinates).fill('red').stroke({width: 2});
-	var cx = (polygonCoordinates[3][0]);
-	var cy = (polygonCoordinates[3][1] + polygonCoordinates[5][1]) * 0.5;
-	var rightArrowCircle = rightMap.circle(cpSize).attr({ cx: cx, cy: cy, fill: 'red', stroke:'yellow', 'stroke-width': 2 });
-	var text = rightMap.text('1').move(cx, cy + cpSize * checkpointTextYScale);
-	text.font({ family: "Tahoma", size: cpSize * checkpointTextSize, anchor: 'middle', fill: 'yellow' });
-	svgObjects.push(rightArrow);
-	svgObjects.push(rightArrowCircle);
-	svgObjects.push(text);
+	if (right) rightStartPosition = {x: cx - GetMapWidth() * 0.003, y: cy};
+	else leftStartPosition = {x: cx + GetMapWidth() * 0.001, y: cy};
 }
 
 /* Returns the width of the middle section of the board */
@@ -265,6 +263,18 @@ function Remove(list, element){
 	}
 	return element;
 }
+
+
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
+
+
 
 
 

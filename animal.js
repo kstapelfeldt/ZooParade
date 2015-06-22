@@ -6,10 +6,23 @@
 function Animal(name, continent, shortName){
 	this.name = name;
 	this.continent = continent;
+	this.svg = {};
+	this.image = null;
 	this.svgPath = 'Resources/SVG/' + shortName + '.svg';
 	this.pngPath = 'Resources/PNG/' + shortName + '.png';
 	this.zoopngPath = 'Resources/ZooPNG/' + shortName + '.png';
 }
+
+
+function Flee(animal, animalCheckpoint){
+	
+	var animalIndex = svgObjects.indexOf(animal.svg[animalCheckpoint.index]);
+	svgObjects[animalIndex].parent.removeElement(svgObjects[animalIndex]);
+	svgObjects.splice(animalIndex, 1);
+
+	delete animal.svg[animalCheckpoint.index];
+}
+
 
 /* Positions animal svgs at the right position for the animals
  * Parameter types: (list of Animal, SVG, list of Checkpoint, boolean)
@@ -40,6 +53,9 @@ function PositionAnimal(animal, path, checkpointsList, checkpointIndex, xDeviati
 	image.cx(checkpointsList[checkpointIndex].x + GetMapWidth() * xDeviation * sign);
 	image.cy(checkpointsList[checkpointIndex].y + GetMapHeight() * yDeviation);
 	svgObjects.push(image);
+
+	animal.svg[checkpointIndex] = image;
+	checkpointsList[checkpointIndex].animal = animal;
 }
 
 /* Adds Animal pictures at the edges of the board 
@@ -59,15 +75,18 @@ function AddAnimalImages(animals, path, right){
 	image.cy(imgYposition);
 	imgYposition += imgHeight;
 	svgObjects.push(image);
+	animals[0].image = image;
 
 	var image = path.image(animals[1].pngPath, imgWidth, imgHeight);
 	image.cx(x);
 	image.cy(imgYposition);
 	imgYposition += imgHeight;
 	svgObjects.push(image);
+	animals[1].image = image;
 
 	var image = path.image(animals[2].pngPath, imgWidth, imgHeight);
 	image.cx(x);
 	image.cy(imgYposition);
 	svgObjects.push(image);
+	animals[2].image = image;
 }

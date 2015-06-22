@@ -3,13 +3,14 @@
 /* Initializer for Player object
  * Parameter types : (string, Continent)
  */
-function Player(name, continent, checkpoints){
+function Player(name, continent, map, checkpoints){
 	this.name = name;
 	this.continent = continent;
 	this.currentCheckpoint = null;
 	this.visitedCheckpoints = new Array();
 	this.animalsCaptured = new Array();
 	this.placeHolder = null;
+	this.map = map;
 	this.spin = false;
 	this.steps = 1;
 	this.checkpoints = continent.checkpoints;
@@ -81,6 +82,22 @@ function AddVisitedCheckpoint(player, checkpoint){
 	player.visitedCheckpoints.push(checkpoint);
 }
 
+function VisitCheckpoint(player, checkpoint, pass){
+	if (checkpoint.capture){
+		if (pass){
+		// Animal flees from the capture point
+			checkpoint.capture = false;
+			RemoveCapturePoint(player.map, checkpoint);
+			Flee(checkpoint.animal, checkpoint);
+		
+		} else {
+			// At animal capture point, switch to capture questions
+			
+		}
+	}
+
+}
+
 /* Add the animal to the list of animals captured of the player
  * Parameter types : (Player, Animal)
  */
@@ -89,35 +106,33 @@ function AddAnimalsCaptured(player, animal){
 }
 
 /* Adds placeholders for both the players */
-function AddPlayerPlaceHolders(){
-	var checkpoint = leftCheckpoints[0];
-	if (player0.currentCheckpoint != null) checkpoint = player0.currentCheckpoint;
-	player0.placeHolder = leftMap.image('Resources/Player0.png', GetMapWidth() * mapScale * playerPlaceHolderScale, 
-							GetMapHeight() * mapScale * playerPlaceHolderScale);
-	player0.placeHolder.cx(checkpoint.x + GetMapWidth() * playerPlaceHolderXScale);
-	player0.placeHolder.cy(checkpoint.y + GetMapHeight() * playerPlaceHolderYScale);
+function AddPlayerPlaceHolders(position, right){
+	var player = player0;
+	if (right) player = player1;
 
-	player0.placeHolder.click(function(){
-		if (!right){
-			GamePlay(player0.currentCheckpoint.index);
+	var map = leftMap;
+	if (right) map = rightMap;
+
+	var sign = 1;
+	if (right) sign = -1;
+
+	var imgSrc = 'Resources/Player0.png';
+	if (right) imgSrc = 'Resources/Player1.png';
+
+	player.placeHolder = map.image(imgSrc, GetMapWidth() * mapScale * playerPlaceHolderScale, 
+							GetMapHeight() * mapScale * playerPlaceHolderScale);
+	player.placeHolder.cx(position.x + GetMapWidth() * playerPlaceHolderXScale * sign);
+	player.placeHolder.cy(position.y + GetMapHeight() * playerPlaceHolderYScale);
+
+	player.placeHolder.click(function(){
+		if (player.currentCheckpoint == null){
+			SelectCheckpoint(player.continent.checkpoints[0]);
+		} else {
+			GamePlay(player.currentCheckpoint.index);
 		}
 	});
 
-	svgObjects.push(player0.placeHolder);
-
-	var checkpoint = rightCheckpoints[0];
-	if (player1.currentCheckpoint != null) checkpoint = player1.currentCheckpoint;
-	player1.placeHolder = rightMap.image('Resources/Player1.png', GetMapWidth() * mapScale * playerPlaceHolderScale, 
-							GetMapHeight() * mapScale * playerPlaceHolderScale);
-	player1.placeHolder.cx(checkpoint.x - GetMapWidth() * playerPlaceHolderXScale);
-	player1.placeHolder.cy(checkpoint.y + GetMapHeight() * playerPlaceHolderYScale);
-
-	player1.placeHolder.click(function(){
-		if (right){
-			GamePlay(player1.currentCheckpoint.index);
-		}
-	});
-	svgObjects.push(player1.placeHolder);
+	svgObjects.push(player.placeHolder);
 }
 
 /* Moves the player to the given checkpoint
@@ -125,15 +140,14 @@ function AddPlayerPlaceHolders(){
  */
 function MovePlayer(player, checkpoint){
 
-	player.currentCheckpoint = checkpoint;
-	player.steps = 1;
-	player.spin = (checkpoint.redS || checkpoint.greenS);
-
-	
 	var xDeviation = GetMapWidth() * playerPlaceholderXDeviation;
 	var yDeviation = GetMapHeight() * playerPlaceholderYDeviation;
 
-	if (player.visitedCheckpoints.length > 0){
+	var totalAnimationTime;
+
+	if (player.currentCheckpoint != null) AddVisitedCheckpoint(player, player.currentCheckpoint);
+
+	if (player.visitedCheckpoints.length > 0 && player.steps > 1){
 		var path;
 		for (var i = 0; i < player.possiblePaths.length; i++){
 			if (player.possiblePaths[i][player.possiblePaths[i].length - 1] == checkpoint) path = player.possiblePaths[i];
@@ -147,19 +161,20 @@ function MovePlayer(player, checkpoint){
 			distances.push(distance);
 		}
 		
-		var totalAnimationTime = totalDistance / GetMapWidth() * playerMoveSpeed;
-		var i = 0;
+		totalAnimationTime = totalDistance / GetMapWidth() * playerMoveSpeed;
+		var i = 1;
 		var animationTime = (distances[i] / totalDistance) * totalAnimationTime;
 
-		player.placeHolder.animate(animationTime).move(path[i+1].x + xDeviation, path[i+1].y + yDeviation);
-		i = 1;
+		player.placeHolder.animate(animationTime).move(path[i].x + xDeviation, path[i].y + yDeviation);
+		i++;
 
 		function animationLoop () {
 			animationTime = (distances[i - 1] / totalDistance) * totalAnimationTime;
 			setTimeout(function () {
-				if (i < path.length - 1) {
-					//VisitCheckpoint(path[i]);
-					player.placeHolder.animate(animationTime).move(path[i+1].x + xDeviation, path[i+1].y + yDeviation);
+				if (i < path.length) {
+					VisitCheckpoint(player, path[i - 1], true);
+					AddVisitedCheckpoint(player, path[i - 1]);
+					player.placeHolder.animate(animationTime).move(path[i].x + xDeviation, path[i].y + yDeviation);
 					i++;
 					animationLoop();
 				}
@@ -167,8 +182,18 @@ function MovePlayer(player, checkpoint){
 		}
 		animationLoop();
 	} else {
-		player.placeHolder.animate(500).move(checkpoint.x + xDeviation, checkpoint.y + yDeviation);
+		totalAnimationTime = 150;
+		player.placeHolder.animate(150).move(checkpoint.x + xDeviation, checkpoint.y + yDeviation);
 	}
+
+	player.steps = 1;
+	player.currentCheckpoint = checkpoint;
+	
+	setTimeout(function(){
+    	VisitCheckpoint(player, player.currentCheckpoint, false);
+	}, totalAnimationTime);
+	
+	player.spin = (checkpoint.redS || checkpoint.greenS);
 }
 
 

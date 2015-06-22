@@ -13,9 +13,12 @@ function Checkpoint(x, y, capture, greenS, redS, hazard, index, right){
 	this.index = index;
 	this.right = right;
 
+	this.animal = null;
+
 	this.visited = false;
 	this.selected = false;
 	this.circle = null;
+	this.letter = null;
 	this.clickCircle = null;
 	this.nextCheckpoints = new Array();
 }
@@ -43,21 +46,26 @@ function CreateMapCheckpoints(map, checkpointsList, right){
 			checkpointsList.push(checkpoint);
 		}
 
-		checkpointsList[i].circle = map.circle(cpSize).attr({ cx: x, cy: y });
-		svgObjects.push(checkpointsList[i].circle);
-		
-		SetCheckpointColor(checkpointsList[i]);
-		SetCheckpointLetter(checkpointsList[i], map, cpSize);
-
-		checkpointsList[i].clickCircle = map.circle(cpSize).attr({ cx: x, cy: y, opacity: 0 });
-		svgObjects.push(checkpointsList[i].clickCircle);
-
-		SetCheckpointClickCircleId(checkpointsList[i]);
-
-		SetCheckpointClick(checkpointsList[i]);
-		SetCheckpointMouseover(checkpointsList[i]);
-		SetCheckpointMouseout(checkpointsList[i]);
+		CreateMapCheckpoint(map, checkpointsList[i], cpSize);
 	}
+	//alert(checkpointsList[0].circle.attr(zIndex : 1));
+}
+
+function CreateMapCheckpoint(map, checkpoint, cpSize){
+	checkpoint.circle = map.circle(cpSize).attr({ cx: checkpoint.x, cy: checkpoint.y });
+	svgObjects.push(checkpoint.circle);
+	
+	SetCheckpointColor(checkpoint);
+	SetCheckpointLetter(checkpoint, map, cpSize);
+
+	checkpoint.clickCircle = map.circle(cpSize).attr({ cx: checkpoint.x, cy: checkpoint.y, opacity: 0 });
+	svgObjects.push(checkpoint.clickCircle);
+
+	SetCheckpointClickCircleId(checkpoint);
+
+	SetCheckpointClick(checkpoint);
+	SetCheckpointMouseover(checkpoint);
+	SetCheckpointMouseout(checkpoint);
 }
 
 /* Links all the checkpoints in the given path based on the edges for the given map
@@ -80,6 +88,20 @@ function LinkCheckpoints(path, checkpointsList){
 		}
 		svgObjects.push(line);
 	}
+}
+
+
+/* Makes a capture point into a normal checkpoint after animal has fled 
+ * Parameter types: (SVG, Checkpoint)
+ */
+function RemoveCapturePoint(map, checkpoint){
+	var cpSize = GetMapWidth() * checkpointSize;
+	checkpoint.circle.size(cpSize);
+	checkpoint.circle.attr({size: cpSize, fill: checkpointColor, 'stroke-width': 0});
+
+	var letterIndex = svgObjects.indexOf(checkpoint.letter);
+	svgObjects[letterIndex].parent.removeElement(svgObjects[letterIndex]);
+	svgObjects.splice(letterIndex, 1);
 }
 
 /* Selects the given checkpoint 
@@ -151,6 +173,7 @@ function SetCheckpointColor(checkpoint){
 	if (checkpoint.redS || checkpoint.capture) pointColor = redSPointColor;
 	else if (checkpoint.hazard) pointColor = hazardPointColor;
 	checkpoint.circle.attr('fill', pointColor);
+	if (checkpoint.capture) checkpoint.circle.attr({'stroke-width': 3});
 }
 
 /* Sets the letter of the given checkpoint
@@ -174,6 +197,7 @@ function SetCheckpointLetter(checkpoint, map, cpSize){
 	if (letter != null){
 		var text = map.text(letter).move(checkpoint.x, checkpoint.y + textYDeviation);
 		text.font({ family: "Tahoma", size: cpSize * checkpointTextSize, anchor: 'middle', fill: letterColor });
+		checkpoint.letter = text;
 		svgObjects.push(text);
 	}
 }
