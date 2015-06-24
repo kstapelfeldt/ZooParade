@@ -16,9 +16,9 @@ ProcessCSV(rows);
 // alert(questions);
 // alert(answers);
 
-alert(GetNextQuestion());
-alert(GetNextQuestion());
-alert(GetNextQuestion());
+// alert(GetNextQuestion());
+// alert(GetNextQuestion());
+// alert(GetNextQuestion());
 
 function ProcessCSV(rows){
 	for (var i = 1; i < rows.length; i++){
