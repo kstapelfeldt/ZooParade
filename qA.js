@@ -1,111 +1,115 @@
-/*
-*We will need a separate array for the AI.
-*Each time this array will hold only the current questions revelant to one animal.
-*/
-var playerQuestions = [];
-var AIQUestions = [];
-/*
-*Once a question has been used it will be taken out and be put into this array.
-*If all questions have been exhausted the original array will be filled with this one.
-*/
-var AIUsed = [];
-var playerUsed = [];
 
-/*
-*Is given the type of question desired to be returned.
-*Returns a random question of the requested type that has not already been used.
-*unless the questions have been exhausted. Then techiniquely they have been used.
-*Takes in a bool player, to determine which array to put
-*the questions in. If player is false it goes into the
-*AIQuestions array, if true goes to PlayerQuestions array.
+var playerQuestions, AIQuestions;
+var playerUsed = [], AIUsed = [];
+var player = true;
+
+/*Takes in the type of question desired.
+*Returns an array with a random object, with a question, of the requested 
+*question type that has not already been used.
+*The object is indexed by string. Ex. result[0]["Question"]
 *Parameter type: (String)
-*return: List object with [boolean, int, string, string]
+*return: (array of object)
 */
-function GetNextQuestionAnswer(QuestionType, player){
+function GetNextQuestion(QuestionType){
 	var result = [];
-	var isIn;
-	//isEmpty(player);
+
 	if(player){
-		for(count = 0; count < playerQuestions.data.length-1; count++){
-			//alert(playerQuestions.data[count]["Question"]);
-			/*if(playerQuestions.data[count]["QuestionType"] == QuestionType){
-				/*for i in playerUsed.data{
-					if(playerQuestions.data[count] == i){
-						isIn = true;
-					}
-				}
+		for(count = 0; count < playerQuestions.data.length; count++){
+			if(playerQuestions.data[count]["QuestionType"] == QuestionType){
+				result.push(playerQuestions.data[count]);
+			}
+		}
+		if(result.length == 0){
+			result=FillEmpty(QuestionType);
+			for(i= 0; i< playerUsed.length;i++){
+			}
+		}
 
-				//if(!isIn){
-					//result will collect all the values of the wanted question type.
-					//don't add something to result if you have already used it.
-					//something here is messing with the indexs and deleting the wrong thing.
-					result.push(playerQuestions.data[count]);
-					delete playerQuestions.data[count];
-					playerQuestions.data.splice(count,1);	
-				//}
-			}*/
-			//alert(playerQuestions.data[count]["Question"]+ "after");
-		}	
-		//alert(playerQuestions.data.length);
-		//alert(result.length);
-		playerUsed.push(result[Math.floor(Math.random() * result.length)]);
-		//alert(playerUsed[0]["Question"]);
-
-		return playerUsed;
-		//get a random question from this selection
+		var rand = Math.floor(Math.random() * result.length);
+		RemoveUsed(result[rand]);
+		playerUsed.push(result[rand]);
+		return result[rand];
 	}else{
 		for(count = 0; count < AIQuestions.data.length; count++){
 			if(AIQuestions.data[count]["QuestionType"] == QuestionType){
-				result.push(AIQuestions.data[count]["Question"]);
-				delete AIQuestions.data[count]["QuestionType"];
-				AIQuestions.data.splice(count,1);
+				result.push(AIQuestions.data[count]);
 			}
 		}
+		if(result.length == 0){
+			result=FillEmpty(QuestionType);
+		}
+		var rand = Math.floor(Math.random() * result.length);
+		RemoveUsed(result[rand]);
+		AIUsed.push(result[rand]);
+		return result[rand];
 	}
 }
 
-/*Check if all the questions have been used for either the player or AI
-*if they have then reload all the questions from either AIUsed or playerUsed
-*so that you can use them again.
-*Takes in which player is being asked to reload.
-*Parameter type: (bool)
+/*Takes in the item to be removed from the appropriate array.
+*Parameter type (object)
 */
-function isEmpty(Player){
+function RemoveUsed(item) {
+    if (player) {
+        for (count = 0; count < playerQuestions.data.length; count++) {
+            if (playerQuestions.data[count] == item) {
+                delete playerQuestions.data[count];
+                playerQuestions.data.splice(count, 1);
+            }
+        }
+    } else {
+        for (count = 0; count < AIQuestions.data.length; count++) {
+            if (AIQuestions.data[count] == item) {
+                delete AIQuestions.data[count];
+                AIQuestions.data.splice(count, 1);
+            }
+        }
+    }
+}
+
+/*Takes in the question type that has already been exhuasted
+*then refills the appropiate array with the used questions.
+*Returns an array filled with questions of the requested type.
+*Parameter type: (string)
+*Return type: (array)
+*/
+function FillEmpty(QuestionType){
+	var result = [];
 	if(player){
-		if(playerQuestions.data.length <= 0){
-			PlayerQuestions.data = playerUsed.data;
-			playerUsed.data.length = 0; 
+		for(count = 0; count < playerUsed.length;count++){
+			if(playerUsed[count]["QuestionType"] == QuestionType){
+				result.push(playerUsed[count]);
+				playerQuestions.data.push(playerUsed[count]);
+			}
 		}
+		return result;
 	}else{
-		if(AIQuestions.data.length <= 0){
-			AIQuestions.data = AIUsed.data;
-			AIUsed.data.length = 0;
-		}
+	    for (count = 0; count < AIUsed.length; count++) {
+	        if (AIUsed[count]["QuestionType"] == QuestionType) {
+	            result.push(AIUsed[count]);
+	            AIQuestions.data.push(AIUsed[count]);
+	        }
+	    }
+	    return result;
 	}
 }
-/*Reads the contents of the file and parses it.
-*Takes in a bool player, to determine which array to put
-*the questions in. If player is false it goes into the
-*AIQuestions array, if true goes to PlayerQuestions array.
-*Parameter type: (string), (bool)
-*Callback runs ProcessQA
-*/
 
-function ReadFile(path, player) {
-    Papa.parse(path+ ".csv", { 
+/*Takes in the animal in order to get the questions related to it.
+*Reads the contents of the file and parses it.
+*Parameter type: (string)
+*Callback fills the appropriate player array.
+*/
+function ReadFile(animal) {
+    Papa.parse(animal+ ".csv", { 
 	    download: true,
 	    skipEmptyLines: true,
 	    header: true,
 	    complete: function (results) {
 	    	if(player){
-	    		playerQuestions = results;
-	    		GetNextQuestionAnswer(1,player);
+	    	    playerQuestions = results;
 	    	}
 	    	else{
-	    		AIQuestions = results;
+	    	    AIQuestions = results;
 	    	}
 	    }
  	});
 }
-
-ReadFile("Dog", true);

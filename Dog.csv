@@ -1,5 +1,5 @@
-BinaryQuestion,QuestionType,Question,Answer
-TRUE,1,what are you?,yo
-FALSE,1,how are you?,no
-TRUE,2,why are you?,mo
-TRUE,1,sup?,po
+QuestionType,Question,Answer
+1,what are you?,yo
+1,how are you?,no
+2,why are you?,mo
+1,sup?,po
