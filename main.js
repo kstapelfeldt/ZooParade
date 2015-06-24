@@ -11,7 +11,6 @@ var game = new Game();
 Setup(game);
 
 
-
 // Adjust all the objects on window resize
 $(window).resize(function(){
 	Destroy(game);
@@ -72,16 +71,6 @@ function MakeMove(player, index){
 }
 
 
-
-
-
-
-
-
-
-
-
-
 /* Adds the question in the question section of the game 
  * Parameter types: (string)
  */
@@ -121,18 +110,7 @@ function GetPanelHeight(){
 	return Math.max(minScreenHeight, window.innerHeight) * panelHeightScale;
 }
 
-/* Reads the text of the file at the given path and returns
- * the contents of the file
- * Parameter type: (string)
- * Return type: string
- */
-function ReadFile(path) 
-{
-	var txtFile = new XMLHttpRequest();
-	txtFile.open("GET", path, false);
-	txtFile.send(null);
-	return txtFile.responseText;
-}
+
 
 /* Removes the element from the list
  * Parameter types: (list of object, object)

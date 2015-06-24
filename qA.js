@@ -1,115 +1,54 @@
 
-var playerQuestions, AIQuestions;
-var playerUsed = [], AIUsed = [];
-var player = true;
 
-/*Takes in the type of question desired.
-*Returns an array with a random object, with a question, of the requested 
-*question type that has not already been used.
-*The object is indexed by string. Ex. result[0]["Question"]
-*Parameter type: (String)
-*return: (array of object)
-*/
-function GetNextQuestion(QuestionType){
-	var result = [];
+var content = ReadFile('Dog.csv');
+var rows = content.split('\n');
 
-	if(player){
-		for(count = 0; count < playerQuestions.data.length; count++){
-			if(playerQuestions.data[count]["QuestionType"] == QuestionType){
-				result.push(playerQuestions.data[count]);
-			}
-		}
-		if(result.length == 0){
-			result=FillEmpty(QuestionType);
-			for(i= 0; i< playerUsed.length;i++){
-			}
-		}
 
-		var rand = Math.floor(Math.random() * result.length);
-		RemoveUsed(result[rand]);
-		playerUsed.push(result[rand]);
-		return result[rand];
-	}else{
-		for(count = 0; count < AIQuestions.data.length; count++){
-			if(AIQuestions.data[count]["QuestionType"] == QuestionType){
-				result.push(AIQuestions.data[count]);
-			}
-		}
-		if(result.length == 0){
-			result=FillEmpty(QuestionType);
-		}
-		var rand = Math.floor(Math.random() * result.length);
-		RemoveUsed(result[rand]);
-		AIUsed.push(result[rand]);
-		return result[rand];
+//alert(content + '\n\n' + rows.length);
+
+var questionTypes = [];
+var questions = [];
+var answers = [];
+
+
+ProcessCSV(rows);
+// alert(questionTypes);
+// alert(questions);
+// alert(answers);
+
+alert(GetNextQuestion());
+alert(GetNextQuestion());
+alert(GetNextQuestion());
+
+function ProcessCSV(rows){
+	for (var i = 1; i < rows.length; i++){
+		//alert(rows[i]);
+		var row = rows[i].split(',');
+		if (row.length >= 1) questionTypes.push(row[0]);
+		if (row.length >= 2) questions.push(row[1]);
+		if (row.length >= 3) answers.push(row[2]); 
 	}
 }
 
-/*Takes in the item to be removed from the appropriate array.
-*Parameter type (object)
-*/
-function RemoveUsed(item) {
-    if (player) {
-        for (count = 0; count < playerQuestions.data.length; count++) {
-            if (playerQuestions.data[count] == item) {
-                delete playerQuestions.data[count];
-                playerQuestions.data.splice(count, 1);
-            }
-        }
-    } else {
-        for (count = 0; count < AIQuestions.data.length; count++) {
-            if (AIQuestions.data[count] == item) {
-                delete AIQuestions.data[count];
-                AIQuestions.data.splice(count, 1);
-            }
-        }
-    }
+
+function GetNextQuestion(){
+	var index = Math.floor(Math.random() * questions.length);
+	var question = questions[index];
+	questions.splice(index, 1);
+	questionTypes.splice(index, 1);
+	answers.splice(index, 1);
+	return question;
 }
 
-/*Takes in the question type that has already been exhuasted
-*then refills the appropiate array with the used questions.
-*Returns an array filled with questions of the requested type.
-*Parameter type: (string)
-*Return type: (array)
-*/
-function FillEmpty(QuestionType){
-	var result = [];
-	if(player){
-		for(count = 0; count < playerUsed.length;count++){
-			if(playerUsed[count]["QuestionType"] == QuestionType){
-				result.push(playerUsed[count]);
-				playerQuestions.data.push(playerUsed[count]);
-			}
-		}
-		return result;
-	}else{
-	    for (count = 0; count < AIUsed.length; count++) {
-	        if (AIUsed[count]["QuestionType"] == QuestionType) {
-	            result.push(AIUsed[count]);
-	            AIQuestions.data.push(AIUsed[count]);
-	        }
-	    }
-	    return result;
-	}
-}
-
-/*Takes in the animal in order to get the questions related to it.
-*Reads the contents of the file and parses it.
-*Parameter type: (string)
-*Callback fills the appropriate player array.
-*/
-function ReadFile(animal) {
-    Papa.parse(animal+ ".csv", { 
-	    download: true,
-	    skipEmptyLines: true,
-	    header: true,
-	    complete: function (results) {
-	    	if(player){
-	    	    playerQuestions = results;
-	    	}
-	    	else{
-	    	    AIQuestions = results;
-	    	}
-	    }
- 	});
+/* Reads the text of the file at the given path and returns
+ * the contents of the file
+ * Parameter type: (string)
+ * Return type: string
+ */
+function ReadFile(path) 
+{
+	var txtFile = new XMLHttpRequest();
+	txtFile.open("GET", path, false);
+	txtFile.send(null);
+	return txtFile.responseText;
 }
