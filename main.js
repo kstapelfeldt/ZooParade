@@ -1,20 +1,3 @@
-// SVG objects for Left map
-var leftMap = SVG('leftMap');
-var leftPath = leftMap.nested();
-var leftCheckpoints = new Array();
-
-// SVG objects for Right map
-var rightMap = SVG('rightMap');
-var rightPath = rightMap.nested();
-var rightCheckpoints = new Array();
-
-var svgObjects = new Array();			// Array of all svg objects in the game
-
-var middleSection = SVG('center');		// SVG object for the middle section of the board
-
-var spinnerSection = SVG('spinner');	// SVG object for the Spinner section
-
-
 // Minimum Screen width and height to see the full game
 var minScreenWidth = screen.width * minScreenWidthScale;
 var minScreenHeight = screen.height * minScreenHeightScale;
@@ -23,64 +6,60 @@ var minScreenHeight = screen.height * minScreenHeightScale;
 document.getElementById("body").style.minWidth = minScreenWidth;
 document.getElementById("body").style.minHeight = minScreenHeight;
 
-StartGame();
+
+var game = new Game();
+Setup(game);
+
+
 
 // Adjust all the objects on window resize
 $(window).resize(function(){
-	Destroy();
-	Setup();
+	Destroy(game);
+	Setup(game);
 });
 
-
-// Game variables
-var leftStartPosition;
-var rightStartPosition;
-var continent0;
-var continent1;
-var player0;
-var player1;
-var right = false;
-
-var leftCapturePoints;
-var rightCapturePoints;
-
-function StartGame(){
-	/*********************** Start Here ***************************/
-
-	leftCapturePoints = capturePoints.slice();
-	rightCapturePoints = capturePoints.slice();
-	Setup();
-}
-
-
-
 function GamePlay(index){
-	var player = player0;
-	if (right) player = player1;
+	
+	var player = game.player0;
+	if (game.right) player = game.player1;
 
-	var checkpoints = leftCheckpoints;
-	if (right) checkpoints = rightCheckpoints;
-
-	if (!player.spin){
-		if (checkpoints[index] == player.currentCheckpoint){
+	var checkpoints = player.checkpoints;
+	var checkpoint = checkpoints[index];
+	
+	if (player.move1) {
+		DeselectCheckpoint(player.checkpoints[0]);
+		MovePlayer(player, player.checkpoints[0]);
+		player.move1 = false;
+		game.right = !game.right;
+	} else if (player.move2) {
+		DeselectCheckpoint(player.checkpoints[1]);
+		MovePlayer(player, player.checkpoints[1]);
+		player.move2 = false;
+		game.right = !game.right;
+	} else if (!player.spin){
+		if (checkpoint == player.currentCheckpoint){
 			player.possiblePaths = GetPossiblePaths(player, player.steps);
 			for (var i = 0; i < player.possiblePaths.length; i++){
 				SelectCheckpoint (player.possiblePaths[i][player.possiblePaths[i].length - 1]);
 			}
-		} else if (checkpoints[index].selected){
-			MakeMove(player, index, checkpoints);
+		} else if (checkpoint.selected){
+			MakeMove(player, index);
+			game.right = !game.right;
 		}
 	} else {
 		alert("Please spin the spinner by clicking the 'Spin' button");
-	}
+	}	
 }
 
-function MakeMove(player, index, checkpoints){
-
-	if (player.currentCheckpoint == null && index == 0){
-		DeselectCheckpoint(checkpoints[index]);
+function MakeMove(player, index){
+	
+	var prevCp = null;
+	if ((player.currentCheckpoint == null) && (index == 0)){
+		index = index++;
+		DeselectCheckpoint(player.checkpoints[index]);
 	} else {
-		var nextCheckpoint = checkpoints[index];
+		prevCp = player.currentCheckpoint;
+		var nextCheckpoint = player.checkpoints[index];
 		var pathIndex;
 
 		for (var i = 0; i < player.possiblePaths.length; i++){
@@ -89,92 +68,25 @@ function MakeMove(player, index, checkpoints){
 			DeselectCheckpoint(lastCp);
 		}
 	}
-
-	MovePlayer(player, checkpoints[index]);
-	right = !right;
+	MovePlayer(player, player.checkpoints[index]);
 }
 
-/* Sets up the game graphics */
-function Setup(){
 
-	if (window.innerHeight < minScreenHeight){
-		document.getElementById("body").style.overflowY = "auto";
-	} else{
-		document.getElementById("body").style.overflowY = "hidden";
-	}
 
-	if (window.innerWidth < minScreenWidth){
-		document.getElementById("body").style.overflowX = "auto";
-	} else {
-		document.getElementById("body").style.overflowX = "hidden";
-	}
-	
-	AddStartArrows(false);
-	AddStartArrows(true);
 
-	// Creates Left Map
-	CreateMapCheckpoints(leftMap, leftCheckpoints, false);
-	LinkCheckpoints(leftPath, leftCheckpoints);
 
-	// Creates Right Map
-	CreateMapCheckpoints(rightMap, rightCheckpoints, true);
-	LinkCheckpoints(rightPath, rightCheckpoints);
 
-	// Set continent names and continent animals
-	var continent0Name = 'North America';
-	var continent0Animals = [new Animal('Moose', continent1Name, 'Moose'), 
-							new Animal('Grizzly Bear', continent1Name, 'Grizzly'), 
-							new Animal('Big Horn', continent1Name, 'Bighorn')];
 
-	var continent1Name = 'Asia';
-	var continent1Animals = [new Animal('Indian Rhinoceros', continent1Name, 'Rhinoceros'), 
-							new Animal('Indian Elephant', continent1Name, 'Elephant'), 
-							new Animal('Bengal Tiger', continent1Name, 'Tiger')];
 
-	// Create two Continent objects
-	continent0 = new Continent(continent0Name, continent0Animals, leftCheckpoints);
-	continent1 = new Continent(continent1Name, continent1Animals, rightCheckpoints);
 
-	// Add names of continents to the maps
-	AddContinentName(continent0Name, false);
-	AddContinentName(continent1Name, true);
 
-	// Add the svg images of animals to the map
-	PositionAnimals(continent0Animals, leftPath, leftCheckpoints, false);
-	PositionAnimals(continent1Animals, rightPath, rightCheckpoints, true);
 
-	// Add the pictures on the edges of the board
-	AddAnimalImages(continent0Animals, leftPath, false);
-	AddAnimalImages(continent1Animals, rightPath, true);
-
-	CreateSpinner();
-	
-	if (player0 == null && player1 == null){
-		player0 = new Player("Player0", continent0, leftMap, leftCheckpoints);
-		player1 = new Player("Player1", continent1, rightMap, rightCheckpoints);
-	}
-
-	AddPlayerPlaceHolders(leftStartPosition, false);
-	AddPlayerPlaceHolders(rightStartPosition, true);
-
-	AddQuestionText('<a href="http://www.github.com/roleen">Hello!</a> How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today?');
-	AddAnswerText('I am good! Life is awesome! I am doing what I am not doing. I am good! Life is awesome! I am doing what I am not doing. I am good! Life is awesome! I am doing what I am not doing. <a href="http://www.google.com">Click here</a> to go to the mysterious website.');
-	created = true;
-}
-
-/* Destroys the svg objects of the game */
-function Destroy(){
-
-	for(var i = 0; i < svgObjects.length; i++){
-		svgObjects[i].parent.removeElement(svgObjects[i]);
-	}
-	svgObjects = new Array();
-}
 
 /* Adds the question in the question section of the game 
  * Parameter types: (string)
  */
 function AddQuestionText(question){
+	// var div = document.getElementById(GetNextQuestion());
 	var div = document.getElementById('questionContent');
 	div.innerHTML = question;
 }
@@ -183,41 +95,11 @@ function AddQuestionText(question){
  * Parameter types: (string)
  */
 function AddAnswerText(answer){
+	// var div = document.getElementById(GetAnswerText());
 	var div = document.getElementById('answerContent');
 	div.innerHTML = answer;
 }
 
-/* Adds the red start arrows to the board */
-function AddStartArrows(right){
-	var map = leftMap;
-	if (right) map = rightMap;
-
-	var polygonCoordinates = new Array();
-	var xDeviation = GetMapWidth() * arrowXDeviation;
-	var yDeviation = GetMapHeight() * arrowYDeviation;
-	var cpSize = GetMapWidth() * checkpointSize;
-
-	for (var i = 0; i < arrowPolygonCoordinates.length; i++){
-		var x = arrowPolygonCoordinates[i][0] * GetMapWidth() * 0.015 + xDeviation;
-		if (right) x = GetMapWidth() - x;
-		var y = arrowPolygonCoordinates[i][1] * GetMapHeight() * 0.015 + yDeviation;
-		polygonCoordinates.push([x, y]);
-	}
-
-	var arrow = map.polygon(polygonCoordinates).fill('red').stroke({width: 2});
-	var cx = polygonCoordinates[3][0];
-	var cy = (polygonCoordinates [3][1] + polygonCoordinates[5][1]) * 0.5;
-	var arrowCircle = map.circle(cpSize).attr({ cx: cx, cy: cy, fill: 'red', stroke:'yellow', 'stroke-width': 2});
-	var text = map.text('1').move(cx, cy + cpSize * checkpointTextYScale);
-	text.font({ family: "Tahoma", size: cpSize * checkpointTextSize, anchor: 'middle', fill: 'yellow' });
-
-	svgObjects.push(arrow);
-	svgObjects.push(arrowCircle);
-	svgObjects.push(text);
-
-	if (right) rightStartPosition = {x: cx - GetMapWidth() * 0.003, y: cy};
-	else leftStartPosition = {x: cx + GetMapWidth() * 0.001, y: cy};
-}
 
 /* Returns the width of the middle section of the board */
 function GetMiddleWidth() {
@@ -263,17 +145,6 @@ function Remove(list, element){
 	}
 	return element;
 }
-
-
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-}
-
 
 
 

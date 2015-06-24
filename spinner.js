@@ -4,16 +4,16 @@ var spinnerBoard;
 /* Creates the Spinner object */
 function CreateSpinner(){
 
-	spinnerBoard = spinnerSection.image('Resources/spinner.png', GetPanelHeight() * spinnerBoardWidthScale, 
+	spinnerBoard = game.spinnerSection.image('Resources/spinner.png', GetPanelHeight() * spinnerBoardWidthScale, 
 					GetPanelHeight() * spinnerBoardHeightScale);
 	FixSpinnerBoardPosition();
-	svgObjects.push(spinnerBoard);
+	game.svgObjects.push(spinnerBoard);
 
 
-	pin = spinnerSection.image('Resources/pin.png', GetPanelHeight() * pinWidthScale, GetPanelHeight() * pinHeightScale);
+	pin = game.spinnerSection.image('Resources/pin.png', GetPanelHeight() * pinWidthScale, GetPanelHeight() * pinHeightScale);
 	pin.cx(pin.cx() + GetPanelHeight() * pinCXDeviation);
 	pin.cy(pin.cy() + GetPanelHeight() * pinCYDeviation);
-	svgObjects.push(pin);
+	game.svgObjects.push(pin);
 	var pinCenter = GetPinCenter();
 
 	CreateSpinButton();
@@ -48,7 +48,11 @@ function CreateSpinButton(){
 
 /* Spins the Spinner pin */
 function Spin(){
-	if ((!right && player0.spin) || (right && player1.spin)){
+	var right = game.right;
+	var player = game.player0;
+	if (right) player = game.player1;
+
+	if (right == player.right && player.spin){
 		var center = GetSpinnerBoardCenter();
 		pin.transform({rotation: prevAngle, cx: center.x, cy: center.y});
 
@@ -59,15 +63,9 @@ function Spin(){
 		pin.animate(2000).rotate(magnitude * direction + angle + pinAngleDeviation, center.x , center.y);
 		prevAngle = angle + pinAngleDeviation;
 
-		if (right){
-			player1.steps = greenNumbers[index];
-			if (player1.currentCheckpoint.redS) player1.steps = redNumbers[index];
-			player1.spin = false;
-		} else {
-			player0.steps = greenNumbers[index];
-			if (player0.currentCheckpoint.redS) player0.steps = redNumbers[index];
-			player0.spin = false;
-		}
+		player.steps = greenNumbers[index];
+		if (player.currentCheckpoint.redS) player.steps = redNumbers[index];
+		player.spin = false;
 	} else {
 		alert("You can use the spinner only at a Spin checkpoint.");
 	}	

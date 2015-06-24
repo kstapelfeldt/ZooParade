@@ -18,22 +18,22 @@ function AssignPlayer(continent, player){
 
 
 /* Adds the names of the continents to the maps 
- * Parameter types: (string, boolean)
+ * Parameter types: (Game, string, boolean)
  */
-function AddContinentName(continentName, right){
+function AddContinentName(game, continentName, right){
 	var x = GetMapWidth() * continentNameX;
 	var y = GetMapHeight() * continentNameY;
 	var fontSize = GetMapWidth() * mapScale * continentNameSize;
 	
 	var text;
 	if (right){
-		text = rightMap.text(continentName.toUpperCase()).move(GetMapWidth() - x, y);
+		text = game.rightMap.text(continentName.toUpperCase()).move(GetMapWidth() - x, y);
 	} else {
-		text = leftMap.text(continentName.toUpperCase()).move(x, y);
+		text = game.leftMap.text(continentName.toUpperCase()).move(x, y);
 	}
 	
 	text.font({ family: fontFamily, size: fontSize, anchor: 'middle', fill: continentNameColor, 
 		'font-weight' :'bold' });
 
-	svgObjects.push(text);
+	game.svgObjects.push(text);
 }

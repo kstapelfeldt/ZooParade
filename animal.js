@@ -16,35 +16,50 @@ function Animal(name, continent, shortName){
 
 function Flee(animal, animalCheckpoint){
 	
-	var animalIndex = svgObjects.indexOf(animal.svg[animalCheckpoint.index]);
-	svgObjects[animalIndex].parent.removeElement(svgObjects[animalIndex]);
-	svgObjects.splice(animalIndex, 1);
+	var animalIndex = game.svgObjects.indexOf(animal.svg[animalCheckpoint.index]);
+	game.svgObjects[animalIndex].parent.removeElement(game.svgObjects[animalIndex]);
+	game.svgObjects.splice(animalIndex, 1);
 
 	delete animal.svg[animalCheckpoint.index];
 }
 
 
 /* Positions animal svgs at the right position for the animals
- * Parameter types: (list of Animal, SVG, list of Checkpoint, boolean)
+ * Parameter types: (Game, list of Animal, boolean)
  */
-function PositionAnimals(animals, path, checkpointsList, right){
+function PositionAnimals(game, animals, right){
+
+	var path = game.leftPath;
+	if (right) path = game.rightPath;
+
+	var checkpointsList = game.leftCheckpoints;
+	if (right) checkpointsList = game.rightCheckpoints;
+
+	var capturePoints = game.leftCapturePoints;
+	if (right) capturePoints = game.rightCapturePoints;
 	
-	PositionAnimal(animals[0], path, checkpointsList, animal0Checkpoints[0], a0C0XDeviation, a0C0YDeviation, right);
-	PositionAnimal(animals[0], path, checkpointsList, animal0Checkpoints[1], a0C1XDeviation, a0C1YDeviation, right);
-
-	PositionAnimal(animals[1], path, checkpointsList, animal1Checkpoints[0], a1C0XDeviation, a1C0YDeviation, right);
-	PositionAnimal(animals[1], path, checkpointsList, animal1Checkpoints[1], a1C1XDeviation, a1C1YDeviation, right);
-
-	PositionAnimal(animals[2], path, checkpointsList, animal2Checkpoints[0], a2C1XDeviation, a2C1YDeviation, right);
-	PositionAnimal(animals[2], path, checkpointsList, animal2Checkpoints[1], a2C1XDeviation, a2C1YDeviation, right);
+	if (capturePoints[animal0Checkpoints[0]])
+	PositionAnimal(game, animals[0], path, checkpointsList, animal0Checkpoints[0], a0C0XDeviation, a0C0YDeviation, right);
+	if (capturePoints[animal0Checkpoints[1]])
+	PositionAnimal(game, animals[0], path, checkpointsList, animal0Checkpoints[1], a0C1XDeviation, a0C1YDeviation, right);
+	
+	if (capturePoints[animal1Checkpoints[0]])
+	PositionAnimal(game, animals[1], path, checkpointsList, animal1Checkpoints[0], a1C0XDeviation, a1C0YDeviation, right);
+	if (capturePoints[animal1Checkpoints[1]])
+	PositionAnimal(game, animals[1], path, checkpointsList, animal1Checkpoints[1], a1C1XDeviation, a1C1YDeviation, right);
+	
+	if (capturePoints[animal2Checkpoints[0]])
+	PositionAnimal(game, animals[2], path, checkpointsList, animal2Checkpoints[0], a2C1XDeviation, a2C1YDeviation, right);
+	if (capturePoints[animal2Checkpoints[1]])
+	PositionAnimal(game, animals[2], path, checkpointsList, animal2Checkpoints[1], a2C1XDeviation, a2C1YDeviation, right);
 }
 
 
 /* Position a single animal at the checkpoint at checkpointIndex and apply 
  * the x and y deviations 
- * Parameter types: (Animal, SVG, list of Checkpoint, int, float, float, boolean)
+ * Parameter types: (Game, Animal, SVG, list of Checkpoint, int, float, float, boolean)
  */
-function PositionAnimal(animal, path, checkpointsList, checkpointIndex, xDeviation, yDeviation, right) {
+function PositionAnimal(game, animal, path, checkpointsList, checkpointIndex, xDeviation, yDeviation, right) {
 	
 	var sign = 1;
 	if (right) sign = -1;
@@ -52,16 +67,19 @@ function PositionAnimal(animal, path, checkpointsList, checkpointIndex, xDeviati
 	var image = path.image(animal.svgPath, GetMapWidth() * mapScale, GetMapHeight() * mapScale);
 	image.cx(checkpointsList[checkpointIndex].x + GetMapWidth() * xDeviation * sign);
 	image.cy(checkpointsList[checkpointIndex].y + GetMapHeight() * yDeviation);
-	svgObjects.push(image);
+	game.svgObjects.push(image);
 
 	animal.svg[checkpointIndex] = image;
 	checkpointsList[checkpointIndex].animal = animal;
 }
 
 /* Adds Animal pictures at the edges of the board 
- * Parameter types: (list of Animal, SVG, boolean)
+ * Parameter types: (Game, list of Animal, boolean)
  */
-function AddAnimalImages(animals, path, right){
+function AddAnimalImages(game, animals, right){
+	var path = game.leftPath;
+	if(right) path = game.rightPath;
+
 	var imgWidth = GetMapWidth() * mapScale * 3;
 	var imgHeight = GetMapHeight() * mapScale * 2.25;
 
@@ -74,19 +92,19 @@ function AddAnimalImages(animals, path, right){
 	image.cx(x);
 	image.cy(imgYposition);
 	imgYposition += imgHeight;
-	svgObjects.push(image);
+	game.svgObjects.push(image);
 	animals[0].image = image;
 
 	var image = path.image(animals[1].pngPath, imgWidth, imgHeight);
 	image.cx(x);
 	image.cy(imgYposition);
 	imgYposition += imgHeight;
-	svgObjects.push(image);
+	game.svgObjects.push(image);
 	animals[1].image = image;
 
 	var image = path.image(animals[2].pngPath, imgWidth, imgHeight);
 	image.cx(x);
 	image.cy(imgYposition);
-	svgObjects.push(image);
+	game.svgObjects.push(image);
 	animals[2].image = image;
 }
