@@ -24,7 +24,7 @@ function Player(name, continent, map, checkpoints, capturePoints, right){
 
 
 /* Returns the next checkpoint for AI 
- * Parameter types : (Player)
+ * Parameter types : (Player, int)
  * Return type : Checkpoint
  */
 function GetNextCheckpoint(player, steps){

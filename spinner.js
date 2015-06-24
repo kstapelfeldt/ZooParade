@@ -37,7 +37,6 @@ function CreateSpinButton(){
 	spinButton.setAttributeNS(null, 'height', buttonHeight);
 	spinButton.setAttributeNS(null, 'fill', darkBackgroundColor);
 	
-	var buttonTextPosition = GetButtonTextPosition();
 	var spinButtonText = document.getElementById("spinButtonText");
 	spinButtonText.setAttribute('text-anchor', "middle");
 	spinButtonText.setAttribute('x', buttonPosition.x + buttonWidth * spinButtonTextXScale);
@@ -91,16 +90,6 @@ function GetPinCenter(){
  */
 function GetButtonPosition(){
 	return ({'x': GetPanelHeight() * spinButtonXScale, 'y': GetPanelHeight() * spinButtonYScale});
-}
-
-/* Returns the coordinates of the text in the spin button
- * Return type: dictionary
- */
-function GetButtonTextPosition(){
-	var buttonTextXDeviation = GetPanelHeight() * spinButtonTextXScale;
-	var buttonTextYDeviation = GetPanelHeight() * spinButtonTextYScale;
-	var position = GetButtonPosition();
-	return ({'x': position.x + buttonTextXDeviation, 'y': position.y + buttonTextYDeviation});
 }
 
 /* Fixes the position of the spinner board */

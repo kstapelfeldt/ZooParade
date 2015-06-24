@@ -17,6 +17,9 @@ $(window).resize(function(){
 	Setup(game);
 });
 
+AddQuestionText('<a href="http://www.github.com/roleen">Hello!</a> How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today?');
+AddAnswerText('<button type="button">Yes</button> <button type="button">No</button>');
+
 function GamePlay(index){
 	
 	var player = game.player0;
@@ -25,12 +28,12 @@ function GamePlay(index){
 	var checkpoints = player.checkpoints;
 	var checkpoint = checkpoints[index];
 	
-	if (player.move1) {
+	if (player.move1 && index == 0) {
 		DeselectCheckpoint(player.checkpoints[0]);
 		MovePlayer(player, player.checkpoints[0]);
 		player.move1 = false;
 		game.right = !game.right;
-	} else if (player.move2) {
+	} else if (player.move2 && index == 1) {
 		DeselectCheckpoint(player.checkpoints[1]);
 		MovePlayer(player, player.checkpoints[1]);
 		player.move2 = false;
@@ -84,11 +87,43 @@ function AddQuestionText(question){
  * Parameter types: (string)
  */
 function AddAnswerText(answer){
-	// var div = document.getElementById(GetAnswerText());
 	var div = document.getElementById('answerContent');
-	div.innerHTML = answer;
+	div.innerHTML = '<svg><g><rect id="yesButton" /><text id="yesButtonText">Yes</text> <rect id="noButton"></g><text id="noButtonText"></text></rect></svg>';
+	ActivateYesNoButtons();
 }
 
+
+function ActivateYesNoButtons(){
+
+	var buttonWidth = GetPanelHeight() * 0.35
+	var buttonHeight = GetPanelHeight() * 0.2;
+
+	var buttonPosition = GetYesButtonPosition();
+	var yesButton = document.getElementById("yesButton");
+	yesButton.setAttributeNS(null, 'x', buttonPosition.x);
+	yesButton.setAttributeNS(null, 'y', buttonPosition.y);
+	yesButton.setAttributeNS(null, 'rx', GetPanelHeight() * spinButtonRXScale);
+	yesButton.setAttributeNS(null, 'ry', GetPanelHeight() * spinButtonRYScale);
+	yesButton.setAttributeNS(null, 'width', buttonWidth);
+	yesButton.setAttributeNS(null, 'height', buttonHeight);
+	yesButton.setAttributeNS(null, 'fill', mapBackgroundColor);
+	
+	
+	var yesButtonText = document.getElementById("yesButtonText");
+	yesButtonText.setAttribute('text-anchor', "middle");
+	yesButtonText.setAttribute('x', buttonPosition.x + buttonWidth * spinButtonTextXScale);
+	yesButtonText.setAttribute('y', buttonPosition.y + buttonHeight * spinButtonTextYScale);
+	yesButtonText.setAttribute('font-family', fontFamily);
+	yesButtonText.setAttribute('font-size', buttonHeight * 0.5);
+	yesButtonText.setAttribute('font-color', darkBackgroundColor);
+}
+
+/* Returns the position coordinates of the position of the spin button
+ * Return type: dictionary
+ */
+function GetYesButtonPosition(){
+	return ({'x': GetMapWidth() * 0.2, 'y': GetPanelHeight() * 0.2});
+}
 
 /* Returns the width of the middle section of the board */
 function GetMiddleWidth() {
