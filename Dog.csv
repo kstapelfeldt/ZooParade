@@ -1,5 +1,5 @@
-QuestionType,Question,Answer
-1,what are you?,yo
-1,how are you?,no
-2,why are you?,mo
-1,sup?,po
+Binary Question,QuestionType,Question,wrong,right
+TRUE,1,Are you home?,y,n
+FALSE,1,how are you?,bad/ ok/ could be better,great
+TRUE,2,Is it time?,n,y
+TRUE,1,Can you do it?,n,
