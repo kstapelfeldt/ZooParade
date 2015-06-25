@@ -1,5 +1,5 @@
-Binary Question,QuestionType,Question,wrong,right
-TRUE,1,Are you home?,y,n
-FALSE,1,how are you?,bad/ ok/ could be better,great
-TRUE,2,Is it time?,n,y
-TRUE,1,Can you do it?,n,
+Binary Question,QuestionType,Question,choices,right
+TRUE,1,Are you home?,,FALSE
+FALSE,1,How are you?,bad/ ok/ could be better/ great,great
+TRUE,2,Is it time?,,TRUE
+TRUE,1,Can you do it?,,TRUE
