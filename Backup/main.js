@@ -1,32 +1,26 @@
 // Minimum Screen width and height to see the full game
 var minScreenWidth = screen.width * minScreenWidthScale;
-var minScreenHeight = screen.width * 0.5;
+var minScreenHeight = screen.height * minScreenHeightScale;
 
 // Set the min screen width and height
-// document.getElementById("body").style.minWidth = minScreenWidth;
-// document.getElementById("body").style.minHeight = minScreenHeight;
-
-document.getElementById("body").width = screen.width;
-document.getElementById("body").height = screen.height;
-
+document.getElementById("body").style.minWidth = minScreenWidth;
+document.getElementById("body").style.minHeight = minScreenHeight;
 
 
 var game = new Game();
-
-FixBodySize(game);
 Setup(game);
 
 
 // Adjust all the objects on window resize
 $(window).resize(function(){
-
-	FixBodySize();
 	Destroy(game);
 	Setup(game);
 });
 
-AddQuestionText('<a href="http://www.github.com/roleen">Hello!</a> How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today?');
-AddAnswerText('<button type="button">Yes</button> <button type="button">No</button>');
+ReadFile("Dog");
+currentQuestion = GetNextQuestion(1);
+AddQuestionText();
+AddAnswerText();
 
 function GamePlay(index){
 	
@@ -88,28 +82,39 @@ function MakeMove(player, index){
 /* Adds the question in the question section of the game 
  * Parameter types: (string)
  */
-function AddQuestionText(question){
-	// var div = document.getElementById(GetNextQuestion());
+function AddQuestionText(){
 	var div = document.getElementById('questionContent');
-	div.innerHTML = question;
+	div.innerHTML = currentQuestion[2];
 }
 
-
 function YesClick(){
-	alert("Yes Clicked");
+	alert(currentQuestion);
+	if(currentQuestion[4] == "TRUE"){
+		alert("Congratulations, you are correct!");
+	}else{
+		alert("Sorry, that's incorrect. Please try again!");
+	}
+	alert("hi");
 }
 
 function NoClick(){
-	alert("No Clicked");
+	if(currentQuestion[4] == "FALSE"){
+		alert("Congratulations, you are correct!");
+	}else{
+		alert("Sorry, that's incorrect. Please try again!");
+	}
 }
 
 /* Adds the answer in the answer section of the game 
- * Parameter types: (string)
+ * 
  */
-function AddAnswerText(answer){
+function AddAnswerText(){
 	var div = document.getElementById('answerContent');
 	div.innerHTML = yesNoButtonHTML;
-	ActivateYesNoButtons();
+
+	if(currentQuestion[0] == "TRUE"){
+		ActivateYesNoButtons();
+	}
 }
 
 
@@ -168,62 +173,24 @@ function GetNoButtonPosition(){
 	return ({'x': GetMapWidth() * 0.5, 'y': GetPanelHeight() * 0.2});
 }
 
-
-
-
-var prevWidth = screen.width;
-function FixBodySize(game){
-	//alert("prev: " + prevWidth + ", current: " + screen.width);
-	prevWidth = screen.width;
-	//alert('called');
-
-	document.getElementById("body").width = screen.width;
-	document.getElementById("body").height = screen.height;
-
-
-	//game.leftMap.attr({width: 10000});
-	//document.getElementById("leftMap").width = GetMapWidth();
-
-	//document.getElementById("middleSection").width = GetMiddleWidth();
-	/*
-	if (window.innerHeight < minScreenHeight){
-		alert('H < MH');
-		document.getElementById("body").style.overflowY = "auto";
-	} else{
-		document.getElementById("body").style.overflowY = "hidden";
-	}
-
-	if (window.innerWidth < minScreenWidth){
-		alert('W < MW');
-		document.getElementById("body").style.overflowX = "auto";
-	} else{
-		document.getElementById("body").style.overflowX = "hidden";
-	}
-	*/
-}
-
 /* Returns the width of the middle section of the board */
 function GetMiddleWidth() {
-	return document.getElementById("body").width * middleSectionWidthScale;
-	//return Math.max(minScreenWidth, screen.width) * middleSectionWidthScale;
+	return Math.max(minScreenWidth, window.innerWidth) * middleSectionWidthScale;
 }
 
 /* Returns the width of a map */
 function GetMapWidth() {
-	return document.getElementById("body").width * mapWidthScale;
-	//return Math.max(minScreenWidth, screen.width) * mapWidthScale;
+	return Math.max(minScreenWidth, window.innerWidth) * mapWidthScale;
 }
 
 /* Returns the height of a map */
 function GetMapHeight() {
-	return document.getElementById("body").height * mapHeightScale;
-	//return Math.max(minScreenHeight, screen.height) * mapHeightScale;
+	return Math.max(minScreenHeight, window.innerHeight) * mapHeightScale;
 }
 
 /* Returns the height of the lower panels */
 function GetPanelHeight(){
-	return document.getElementById("body").height * panelHeightScale;
-	//return Math.max(minScreenHeight, screen.height) * panelHeightScale;
+	return Math.max(minScreenHeight, window.innerHeight) * panelHeightScale;
 }
 
 

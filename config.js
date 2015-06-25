@@ -1,9 +1,21 @@
 var minScreenWidthScale = 0.9;		// Restrict horizontal scaling
 var minScreenHeightScale = 0.8;		// Restrict vertical scaling
 
+//Question arrays for each player
+var playerQuestions = []
+var player2Questions = [];
+
+//Used Questions for each player
+var playerUsed = [];
+var player2Used = [];
+
+//Who's turn it is
+var player1 = true;
 
 // Map Scales
 var mapScale = 0.097;
+var mapScaleX = 0.097;
+var mapScaleY = 0.08;
 var mapWidthScale = 0.34;
 var mapHeightScale = 0.65;
 var middleSectionWidthScale = 0.25;
