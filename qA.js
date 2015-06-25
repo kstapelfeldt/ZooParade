@@ -1,8 +1,3 @@
-
-var playerQuestions = [], player2Questions = [];
-var playerUsed = [], player2Used = [];
-var player1 = true;
-
 function ProcessCSV(results){
 	var rows = results.split('\n');
 
@@ -30,7 +25,7 @@ function ProcessCSV(results){
 function GetNextQuestion(QuestionType){
 	var result = [];
 	if(player1){
-		for(count = 0; count < playerQuestions.length; count++){
+		for(var count = 0; count < playerQuestions.length; count++){
 			if(playerQuestions[count][1] == QuestionType){
 				result.push(playerQuestions[count]);
 			}
@@ -45,7 +40,7 @@ function GetNextQuestion(QuestionType){
 		RemoveUsed(result[rand]);
 		playerUsed.push(result[rand]);
 	}else{
-		for(count = 0; count < player2Questions.length; count++){
+		for(var count = 0; count < player2Questions.length; count++){
 			if(player2Questions[count][1] == QuestionType){
 				result.push(player2Questions[count]);
 			}
@@ -60,7 +55,7 @@ function GetNextQuestion(QuestionType){
 		player2Used.push(result[rand]);
 	}
 
-	return result[rand][2];
+	return result[rand];
 }
 
 /*Takes in the item to be removed from the appropriate array.
@@ -68,13 +63,13 @@ function GetNextQuestion(QuestionType){
 */
 function RemoveUsed(item){
 	if(player1){
-		for(count = 0; count < playerQuestions.length; count++){
+		for(var count = 0; count < playerQuestions.length; count++){
 			if(playerQuestions[count] == item){
 				playerQuestions.splice(count, 1);
 			}
 		}
 	}else{
-		for(count = 0; count < player2Questions.length; count++){
+		for(var count = 0; count < player2Questions.length; count++){
 			if(player2Questions[count] == item){
 				player2Questions.splice(count, 1);
 			}
@@ -91,14 +86,14 @@ function RemoveUsed(item){
 function FillEmpty(QuestionType){
 	var result = [];
 	if(player1){
-		for(count = 0; count < playerUsed.length; count++){
+		for(var count = 0; count < playerUsed.length; count++){
 			if(playerUsed[count][1] == QuestionType){
 				result.push(playerUsed[count]);
 				playerQuestions.push(playerUsed[count]);
 			}
 		}
 	}else{
-		for(count = 0; count < playerUsed.length; count++){
+		for(var count = 0; count < playerUsed.length; count++){
 			if(player2Used[count][1] == QuestionType){
 				result.push(player2Used[count]);
 				player2Questions.push(player2Used[count]);
