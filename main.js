@@ -83,12 +83,21 @@ function AddQuestionText(question){
 	div.innerHTML = question;
 }
 
+
+function YesClick(){
+	alert("Yes Clicked");
+}
+
+function NoClick(){
+	alert("No Clicked");
+}
+
 /* Adds the answer in the answer section of the game 
  * Parameter types: (string)
  */
 function AddAnswerText(answer){
 	var div = document.getElementById('answerContent');
-	div.innerHTML = '<svg><g><rect id="yesButton" /><text id="yesButtonText">Yes</text> <rect id="noButton"></g><text id="noButtonText"></text></rect></svg>';
+	div.innerHTML = yesNoButtonHTML;
 	ActivateYesNoButtons();
 }
 
@@ -116,13 +125,36 @@ function ActivateYesNoButtons(){
 	yesButtonText.setAttribute('font-family', fontFamily);
 	yesButtonText.setAttribute('font-size', buttonHeight * 0.5);
 	yesButtonText.setAttribute('font-color', darkBackgroundColor);
+
+	var buttonPosition = GetNoButtonPosition();
+	var noButton = document.getElementById("noButton");
+	noButton.setAttributeNS(null, 'x', buttonPosition.x);
+	noButton.setAttributeNS(null, 'y', buttonPosition.y);
+	noButton.setAttributeNS(null, 'rx', GetPanelHeight() * spinButtonRXScale);
+	noButton.setAttributeNS(null, 'ry', GetPanelHeight() * spinButtonRYScale);
+	noButton.setAttributeNS(null, 'width', buttonWidth);
+	noButton.setAttributeNS(null, 'height', buttonHeight);
+	noButton.setAttributeNS(null, 'fill', mapBackgroundColor);
+	
+	
+	var noButtonText = document.getElementById("noButtonText");
+	noButtonText.setAttribute('text-anchor', "middle");
+	noButtonText.setAttribute('x', buttonPosition.x + buttonWidth * spinButtonTextXScale);
+	noButtonText.setAttribute('y', buttonPosition.y + buttonHeight * spinButtonTextYScale);
+	noButtonText.setAttribute('font-family', fontFamily);
+	noButtonText.setAttribute('font-size', buttonHeight * 0.5);
+	noButtonText.setAttribute('font-color', darkBackgroundColor);
 }
 
 /* Returns the position coordinates of the position of the spin button
  * Return type: dictionary
  */
 function GetYesButtonPosition(){
-	return ({'x': GetMapWidth() * 0.2, 'y': GetPanelHeight() * 0.2});
+	return ({'x': GetMapWidth() * 0.25, 'y': GetPanelHeight() * 0.2});
+}
+
+function GetNoButtonPosition(){
+	return ({'x': GetMapWidth() * 0.5, 'y': GetPanelHeight() * 0.2});
 }
 
 /* Returns the width of the middle section of the board */

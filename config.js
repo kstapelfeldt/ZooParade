@@ -161,7 +161,7 @@ var playerMoveSpeed = 1500;
 var playerPlaceholderXDeviation = -0.035;
 var playerPlaceholderYDeviation = -0.045;
 
-
-
+var yesNoButtonHTML = '<svg width="100%" height="100%"><g cursor="pointer" onclick="YesClick()"><rect id="yesButton" cursor="pointer" /><text id="yesButtonText">Yes</text></g>' +
+						 '<g cursor="pointer" onclick="NoClick()"> <rect id="noButton" cursor="pointer" /><text id="noButtonText">No</text></g></svg>';
 
 
