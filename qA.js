@@ -1,54 +1,122 @@
 
+var playerQuestions = [], player2Questions = [];
+var playerUsed = [], player2Used = [];
+var player1 = true;
 
-var content = ReadFile('Dog.csv');
-var rows = content.split('\n');
+function ProcessCSV(results){
+	var rows = results.split('\n');
 
-
-//alert(content + '\n\n' + rows.length);
-
-var questionTypes = [];
-var questions = [];
-var answers = [];
-
-
-ProcessCSV(rows);
-// alert(questionTypes);
-// alert(questions);
-// alert(answers);
-
-// alert(GetNextQuestion());
-// alert(GetNextQuestion());
-// alert(GetNextQuestion());
-
-function ProcessCSV(rows){
 	for (var i = 1; i < rows.length; i++){
-		//alert(rows[i]);
 		var row = rows[i].split(',');
-		if (row.length >= 1) questionTypes.push(row[0]);
-		if (row.length >= 2) questions.push(row[1]);
-		if (row.length >= 3) answers.push(row[2]); 
+		if (player1){
+		 	if(row.length >= i){
+				playerQuestions.push(row);
+			}
+		}else{
+			if(row.length >= i){
+				player2Questions.push(row);
+			}
+		}
 	}
 }
 
+/*Takes in the type of question desired.
+*Returns an array with a random object, with a question, of the requested 
+*question type that has not already been used.
+*The object is indexed by string. Ex. result[0]["Question"]
+*Parameter type: (String)
+*return: (array of object)
+*/
+function GetNextQuestion(QuestionType){
+	var result = [];
+	if(player1){
+		for(count = 0; count < playerQuestions.length; count++){
+			if(playerQuestions[count][1] == QuestionType){
+				result.push(playerQuestions[count]);
+			}
+		}
 
-function GetNextQuestion(){
-	var index = Math.floor(Math.random() * questions.length);
-	var question = questions[index];
-	questions.splice(index, 1);
-	questionTypes.splice(index, 1);
-	answers.splice(index, 1);
-	return question;
+		if(result.length == 0){
+			result = FillEmpty(QuestionType);
+		}
+
+		var rand = Math.floor(Math.random() * result.length);
+		
+		RemoveUsed(result[rand]);
+		playerUsed.push(result[rand]);
+	}else{
+		for(count = 0; count < player2Questions.length; count++){
+			if(player2Questions[count][1] == QuestionType){
+				result.push(player2Questions[count]);
+			}
+		}
+		
+		if(result.length == 0){
+			result = FillEmpty(QuestionType);
+		}
+
+		var rand = Math.floor(Math.random() * result.length);
+		RemoveUsed(result[rand]);
+		player2Used.push(result[rand]);
+	}
+
+	return result[rand][2];
 }
 
-/* Reads the text of the file at the given path and returns
- * the contents of the file
- * Parameter type: (string)
- * Return type: string
- */
+/*Takes in the item to be removed from the appropriate array.
+*Parameter type (object)
+*/
+function RemoveUsed(item){
+	if(player1){
+		for(count = 0; count < playerQuestions.length; count++){
+			if(playerQuestions[count] == item){
+				playerQuestions.splice(count, 1);
+			}
+		}
+	}else{
+		for(count = 0; count < player2Questions.length; count++){
+			if(player2Questions[count] == item){
+				player2Questions.splice(count, 1);
+			}
+		}
+	}
+}
+
+/*Takes in the question type that has already been exhuasted
+*then refills the appropiate array with the used questions.
+*Returns an array filled with questions of the requested type.
+*Parameter type: (string)
+*Return type: (array)
+*/
+function FillEmpty(QuestionType){
+	var result = [];
+	if(player1){
+		for(count = 0; count < playerUsed.length; count++){
+			if(playerUsed[count][1] == QuestionType){
+				result.push(playerUsed[count]);
+				playerQuestions.push(playerUsed[count]);
+			}
+		}
+	}else{
+		for(count = 0; count < playerUsed.length; count++){
+			if(player2Used[count][1] == QuestionType){
+				result.push(player2Used[count]);
+				player2Questions.push(player2Used[count]);
+			}
+		}
+	}
+	return result;
+}
+
+/*Takes in the animal in order to get the questions related to it.
+*Reads the contents of the file and converts it to a string.
+*Then calls ProcessCSV to fill the appropriate question array.
+*Parameter type: (string)
+*/
 function ReadFile(path) 
 {
 	var txtFile = new XMLHttpRequest();
-	txtFile.open("GET", path, false);
+	txtFile.open("GET", path + ".csv", false);
 	txtFile.send(null);
-	return txtFile.responseText;
+	ProcessCSV(txtFile.responseText);
 }
