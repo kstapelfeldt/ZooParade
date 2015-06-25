@@ -11,6 +11,7 @@ function Player(name, continent, map, checkpoints, capturePoints, right){
 	this.capturePoints = capturePoints;
 	this.right = right;
 
+	this.clicked = false;
 	this.currentCheckpoint = null;
 	this.visitedCheckpoints = new Array();
 	this.animalsCaptured = new Array();
@@ -138,7 +139,7 @@ function AddPlayerPlaceHolder(game, right){
 	player.placeHolder.cy(position.y + GetMapHeight() * playerPlaceHolderYScale);
 
 	player.placeHolder.click(function(){
-
+		player.clicked = true;
 		if (player.right == game.right){
 			if (player.move1){
 				SelectCheckpoint(player.checkpoints[0]);

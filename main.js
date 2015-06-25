@@ -28,25 +28,28 @@ function GamePlay(index){
 	var checkpoints = player.checkpoints;
 	var checkpoint = checkpoints[index];
 	
-	if (player.move1 && index == 0) {
+	if (player.move1 && index == 0 && player.clicked) {
 		DeselectCheckpoint(player.checkpoints[0]);
 		MovePlayer(player, player.checkpoints[0]);
 		player.move1 = false;
 		game.right = !game.right;
-	} else if (player.move2 && index == 1) {
+		player.clicked = false;
+	} else if (player.move2 && index == 1 && player.clicked) {
 		DeselectCheckpoint(player.checkpoints[1]);
 		MovePlayer(player, player.checkpoints[1]);
 		player.move2 = false;
 		game.right = !game.right;
+		player.clicked = false;
 	} else if (!player.spin){
 		if (checkpoint == player.currentCheckpoint){
 			player.possiblePaths = GetPossiblePaths(player, player.steps);
 			for (var i = 0; i < player.possiblePaths.length; i++){
 				SelectCheckpoint (player.possiblePaths[i][player.possiblePaths[i].length - 1]);
 			}
-		} else if (checkpoint.selected){
+		} else if (checkpoint.selected && player.clicked){
 			MakeMove(player, index);
 			game.right = !game.right;
+			player.clicked = false;
 		}
 	} else {
 		alert("Please spin the spinner by clicking the 'Spin' button");
