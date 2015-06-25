@@ -48,18 +48,6 @@ function StartGame(game){
 
 /* Sets up the game graphics */
 function Setup(game){
-
-	if (window.innerHeight < minScreenHeight){
-		document.getElementById("body").style.overflowY = "auto";
-	} else{
-		document.getElementById("body").style.overflowY = "hidden";
-	}
-
-	if (window.innerWidth < minScreenWidth){
-		document.getElementById("body").style.overflowX = "auto";
-	} else{
-		document.getElementById("body").style.overflowX = "hidden";
-	}
 	
 	AddStartArrows(game, false);
 	AddStartArrows(game, true);

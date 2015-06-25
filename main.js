@@ -1,18 +1,26 @@
 // Minimum Screen width and height to see the full game
 var minScreenWidth = screen.width * minScreenWidthScale;
-var minScreenHeight = screen.height * minScreenHeightScale;
+var minScreenHeight = screen.width * 0.5;
 
 // Set the min screen width and height
-document.getElementById("body").style.minWidth = minScreenWidth;
-document.getElementById("body").style.minHeight = minScreenHeight;
+// document.getElementById("body").style.minWidth = minScreenWidth;
+// document.getElementById("body").style.minHeight = minScreenHeight;
+
+document.getElementById("body").width = screen.width;
+document.getElementById("body").height = screen.height;
+
 
 
 var game = new Game();
+
+FixBodySize(game);
 Setup(game);
 
 
 // Adjust all the objects on window resize
 $(window).resize(function(){
+
+	FixBodySize();
 	Destroy(game);
 	Setup(game);
 });
@@ -160,24 +168,62 @@ function GetNoButtonPosition(){
 	return ({'x': GetMapWidth() * 0.5, 'y': GetPanelHeight() * 0.2});
 }
 
+
+
+
+var prevWidth = screen.width;
+function FixBodySize(game){
+	//alert("prev: " + prevWidth + ", current: " + screen.width);
+	prevWidth = screen.width;
+	//alert('called');
+
+	document.getElementById("body").width = screen.width;
+	document.getElementById("body").height = screen.height;
+
+
+	//game.leftMap.attr({width: 10000});
+	//document.getElementById("leftMap").width = GetMapWidth();
+
+	//document.getElementById("middleSection").width = GetMiddleWidth();
+	/*
+	if (window.innerHeight < minScreenHeight){
+		alert('H < MH');
+		document.getElementById("body").style.overflowY = "auto";
+	} else{
+		document.getElementById("body").style.overflowY = "hidden";
+	}
+
+	if (window.innerWidth < minScreenWidth){
+		alert('W < MW');
+		document.getElementById("body").style.overflowX = "auto";
+	} else{
+		document.getElementById("body").style.overflowX = "hidden";
+	}
+	*/
+}
+
 /* Returns the width of the middle section of the board */
 function GetMiddleWidth() {
-	return Math.max(minScreenWidth, window.innerWidth) * middleSectionWidthScale;
+	return document.getElementById("body").width * middleSectionWidthScale;
+	//return Math.max(minScreenWidth, screen.width) * middleSectionWidthScale;
 }
 
 /* Returns the width of a map */
 function GetMapWidth() {
-	return Math.max(minScreenWidth, window.innerWidth) * mapWidthScale;
+	return document.getElementById("body").width * mapWidthScale;
+	//return Math.max(minScreenWidth, screen.width) * mapWidthScale;
 }
 
 /* Returns the height of a map */
 function GetMapHeight() {
-	return Math.max(minScreenHeight, window.innerHeight) * mapHeightScale;
+	return document.getElementById("body").height * mapHeightScale;
+	//return Math.max(minScreenHeight, screen.height) * mapHeightScale;
 }
 
 /* Returns the height of the lower panels */
 function GetPanelHeight(){
-	return Math.max(minScreenHeight, window.innerHeight) * panelHeightScale;
+	return document.getElementById("body").height * panelHeightScale;
+	//return Math.max(minScreenHeight, screen.height) * panelHeightScale;
 }
 
 

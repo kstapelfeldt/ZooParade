@@ -37,9 +37,9 @@ function CreateMapCheckpoints(game, map, checkpointsList, right){
 		var cpSize = GetMapWidth() * checkpointSize;
 		if (hazardPoints[i] || greenSPoints[i] || redSPoints[i] || capturePoints[i]) cpSize = GetMapWidth() * specialCheckpointSize;
 		
-		var x = (GetMapWidth() * positions[i][0] * mapScale) + (GetMapWidth() * moveHorizontal);
+		var x = (GetMapWidth() * positions[i][0] * mapScaleX) + (GetMapWidth() * moveHorizontal);
 		if (right) x = (GetMapWidth() - (GetMapWidth() * positions[i][0] * mapScale)) - (GetMapWidth() * moveHorizontal);
-		var y = (GetMapHeight() * positions[i][1] * mapScale) + (GetMapHeight() * moveVertical);
+		var y = (GetMapHeight() * positions[i][1] * mapScaleY) + (GetMapHeight() * moveVertical);
 		
 		if (game.created) {
 			checkpointsList[i].x = x;
@@ -91,7 +91,7 @@ function LinkCheckpoints(game, path, right){
 		var line = path.line(checkpointsList[index1].x, checkpointsList[index1].y, checkpointsList[index2].x, 
 		checkpointsList[index2].y).stroke({ width: eWidth, color: checkpointColor });
 
-		if (!created){
+		if (!game.created){
 			checkpointsList[index1].nextCheckpoints.push(checkpointsList[index2]);
 			checkpointsList[index2].nextCheckpoints.push(checkpointsList[index1]);
 		}
@@ -201,13 +201,12 @@ function SetCheckpointLetter(game, checkpoint, map, cpSize){
 
 	if (checkpoint.redS) letterColor = "yellow";
 
-	var textYDeviation = cpSize * checkpointTextYScale;
-	if (checkpoint.greenS || checkpoint.redS || checkpoint.hazard || checkpoint.capture) 
-		textYDeviation = cpSize * specialCheckpointTextYScale;
+	var textYDeviation = cpSize * -0.5;
 
 	if (letter != null){
-		var text = map.text(letter).move(checkpoint.x, checkpoint.y + textYDeviation);
-		text.font({ family: "Tahoma", size: cpSize * checkpointTextSize, anchor: 'middle', fill: letterColor });
+		var text = map.text(letter);
+		text.font({ family: "Tahoma", size: cpSize * checkpointTextSize, fill: letterColor, anchor: "middle" });
+		text.move(checkpoint.x, checkpoint.y + textYDeviation);
 		checkpoint.letter = text;
 		game.svgObjects.push(text);
 	}

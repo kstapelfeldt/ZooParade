@@ -4,6 +4,8 @@ var minScreenHeightScale = 0.8;		// Restrict vertical scaling
 
 // Map Scales
 var mapScale = 0.097;
+var mapScaleX = 0.097;
+var mapScaleY = 0.08;
 var mapWidthScale = 0.34;
 var mapHeightScale = 0.65;
 var middleSectionWidthScale = 0.25;
