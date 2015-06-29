@@ -11,7 +11,6 @@ function Player(name, continent, map, checkpoints, capturePoints, right){
 	this.capturePoints = capturePoints;
 	this.right = right;
 
-	this.clicked = false;
 	this.currentCheckpoint = null;
 	this.visitedCheckpoints = new Array();
 	this.animalsCaptured = new Array();
@@ -138,18 +137,6 @@ function AddPlayerPlaceHolder(game, right){
 	player.placeHolder.cx(position.x + GetMapWidth() * playerPlaceHolderXScale * sign);
 	player.placeHolder.cy(position.y + GetMapHeight() * playerPlaceHolderYScale);
 
-	player.placeHolder.click(function(){
-		player.clicked = true;
-		if (player.right == game.right){
-			if (player.move1){
-				SelectCheckpoint(player.checkpoints[0]);
-			} else if (player.move2){
-				SelectCheckpoint(player.checkpoints[1]);
-			} else {
-				GamePlay(player.currentCheckpoint.index);
-			}
-		}
-	});
 	game.svgObjects.push(player.placeHolder);
 }
 
@@ -186,6 +173,8 @@ function MoveForward(player, checkpoint, totalAnimationTime){
 	if (player.steps > 1){
 		var path;
 		for (var i = 0; i < player.possiblePaths.length; i++){
+			//var path = player.possiblePaths[i];
+			DeselectCheckpoint(player.possiblePaths[i][player.possiblePaths[i].length - 1]);
 			if (player.possiblePaths[i][player.possiblePaths[i].length - 1] == checkpoint) path = player.possiblePaths[i];
 		}
 		
@@ -263,7 +252,7 @@ function MovePlayerAnimation(player, path, totalAnimationTime, totalDistance, di
 				animationLoop();
 			}
 		}, animationTime);
-		
+
 	}
 	animationLoop();
 }

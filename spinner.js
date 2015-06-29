@@ -66,6 +66,15 @@ function Spin(){
 		player.steps = greenNumbers[index];
 		if (player.currentCheckpoint.redS) player.steps = redNumbers[index];
 		player.spin = false;
+
+		setTimeout(function(){
+			var paths = GetPossiblePaths(player, player.steps);
+			player.possiblePaths = paths;
+			for(var i = 0; i < paths.length; i++){
+				var path = paths[i];
+				SelectCheckpoint(path[path.length - 1]);
+			}
+		}, 2000);
 	} else {
 		AddMessage("You can use the spinner only at a Spin checkpoint");
 	}	

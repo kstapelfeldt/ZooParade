@@ -22,54 +22,55 @@ function GamePlay(index){
 	var checkpoints = player.checkpoints;
 	var checkpoint = checkpoints[index];
 	
-	if (player.move1 && index == 0 && player.clicked) {
-		DeselectCheckpoint(player.checkpoints[0]);
+	if (checkpoint.selected){
+		MovePlayer(player, checkpoint);
+		game.right = !game.right;
+	}
+}
+
+function CorrectAnswerMove(){
+	var player = game.player0;
+	if (game.right) player = game.player1;
+
+	if (player.move1){
 		MovePlayer(player, player.checkpoints[0]);
 		player.move1 = false;
 		game.right = !game.right;
-		player.clicked = false;
-	} else if (player.move2 && index == 1 && player.clicked) {
-		DeselectCheckpoint(player.checkpoints[1]);
+	} else if (player.move2){
 		MovePlayer(player, player.checkpoints[1]);
 		player.move2 = false;
 		game.right = !game.right;
-		player.clicked = false;
 	} else if (!player.spin){
-		if (checkpoint == player.currentCheckpoint){
-			player.possiblePaths = GetPossiblePaths(player, player.steps);
+		
+		var paths = GetPossiblePaths(player, player.steps);
+		player.possiblePaths = path;
+
+		if (paths.length == 1){
+			var path = paths[0];
+			MovePlayer(player, path[path.length - 1]);
+			game.right = !game.right;
+		} else {
 			for (var i = 0; i < player.possiblePaths.length; i++){
 				SelectCheckpoint (player.possiblePaths[i][player.possiblePaths[i].length - 1]);
 			}
-		} else if (checkpoint.selected && player.clicked){
-			MakeMove(player, index);
-			game.right = !game.right;
-			player.clicked = false;
 		}
-	} else {
-		AddMessage("Please spin the spinner by clicking the 'Spin' button");
+	} else AddMessage("Please spin the spinner by clicking the 'Spin' button");	
+}
+
+function WrongAnswerMove(){
+	var player = game.player0;
+	if (game.right) player = game.player1;
+
+	if (!player.move1 && !player.move2){
+		player.steps = -1;
+		MovePlayer(player, player.visitedCheckpoints[player.visitedCheckpoints.length - 1]);
+		game.right = !game.right;
 	}
 }
 
-function MakeMove(player, index){
-	
-	var prevCp = null;
-	if ((player.currentCheckpoint == null) && (index == 0)){
-		index = index++;
-		DeselectCheckpoint(player.checkpoints[index]);
-	} else {
-		prevCp = player.currentCheckpoint;
-		var nextCheckpoint = player.checkpoints[index];
-		var pathIndex;
-
-		for (var i = 0; i < player.possiblePaths.length; i++){
-			var lastCp = player.possiblePaths[i][player.possiblePaths[i].length - 1];
-			if (lastCp == nextCheckpoint) pathIndex = i;
-			DeselectCheckpoint(lastCp);
-		}
-	}
-	MovePlayer(player, player.checkpoints[index]);
-}
-
+/* Adds the message in the message section of the board
+ * Parameter types: (String)
+ */
 function AddMessage(message){
 	var div = document.getElementById('messageBox');
 	div.style.fontSize = GetMapWidth() * messageFontScale;
@@ -90,10 +91,12 @@ function AddQuestionText(question){
 
 function YesClick(){
 	AddMessage("Yes Clicked");
+	CorrectAnswerMove();
 }
 
 function NoClick(){
 	AddMessage("No Clicked");
+	WrongAnswerMove();
 }
 
 /* Adds the answer in the answer section of the game 
