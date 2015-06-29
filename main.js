@@ -47,7 +47,7 @@ function GamePlay(index){
 		}
 	} else {
 		alert("Please spin the spinner by clicking the 'Spin' button");
-	}	
+	}
 }
 
 function MakeMove(player, index){
@@ -88,7 +88,9 @@ function YesClick(){
 }
 
 function NoClick(){
-	alert("No Clicked");
+	game.player0.steps = -3;
+	MovePlayer(game.player0, game.player0.visitedCheckpoints[game.player0.visitedCheckpoints.length - 3]);
+	//alert("No Clicked");
 }
 
 /* Adds the answer in the answer section of the game 

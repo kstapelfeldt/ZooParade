@@ -158,16 +158,32 @@ function AddPlayerPlaceHolder(game, right){
  */
 function MovePlayer(player, checkpoint){
 	
-	var xDeviation = GetMapWidth() * playerPlaceholderXDeviation;
-	var yDeviation = GetMapHeight() * playerPlaceholderYDeviation;
-
-
-
 	var totalAnimationTime;
 
 	if (player.currentCheckpoint != null) AddVisitedCheckpoint(player, player.currentCheckpoint);
 
-	if (player.visitedCheckpoints.length > 0 && player.steps > 1){
+	if (player.steps > 0) MoveForward(player, checkpoint, totalAnimationTime);
+	else MoveBackwards(player, checkpoint, totalAnimationTime);
+
+	player.steps = 1;
+	player.currentCheckpoint = checkpoint;
+
+	setTimeout(function(){
+    	VisitCheckpoint(player, player.currentCheckpoint, false);
+	}, totalAnimationTime);
+	
+	player.spin = (checkpoint.redS || checkpoint.greenS);
+}
+
+/* Moves the given player forward 
+ * Parameter types: (Player, Checkpoint, float, float, float)
+ */
+function MoveForward(player, checkpoint, totalAnimationTime){
+
+	var xDeviation = GetMapWidth() * playerPlaceholderXDeviation;
+	var yDeviation = GetMapHeight() * playerPlaceholderYDeviation;
+
+	if (player.steps > 1){
 		var path;
 		for (var i = 0; i < player.possiblePaths.length; i++){
 			if (player.possiblePaths[i][player.possiblePaths[i].length - 1] == checkpoint) path = player.possiblePaths[i];
@@ -182,42 +198,74 @@ function MovePlayer(player, checkpoint){
 		}
 		
 		totalAnimationTime = totalDistance / GetMapWidth() * playerMoveSpeed;
-		var i = 1;
-		var animationTime = (distances[i] / totalDistance) * totalAnimationTime;
+		MovePlayerAnimation(player, path, totalAnimationTime, totalDistance, distances, xDeviation, yDeviation, true);
 
-		player.placeHolder.animate(animationTime).move(path[i].x + xDeviation, path[i].y + yDeviation);
-		i++;
-
-		function animationLoop () {
-			animationTime = (distances[i - 1] / totalDistance) * totalAnimationTime;
-			setTimeout(function () {
-				if (i < path.length) {
-					VisitCheckpoint(player, path[i - 1], true);
-					AddVisitedCheckpoint(player, path[i - 1]);
-					player.placeHolder.animate(animationTime).move(path[i].x + xDeviation, path[i].y + yDeviation);
-					i++;
-					animationLoop();
-				}
-			}, animationTime);
-		}
-		animationLoop();
 	} else {
 		totalAnimationTime = 150;
 		player.placeHolder.animate(150).move(checkpoint.x + xDeviation, checkpoint.y + yDeviation);
 	}
-
-	player.steps = 1;
-	player.currentCheckpoint = checkpoint;
-	
-	setTimeout(function(){
-    	VisitCheckpoint(player, player.currentCheckpoint, false);
-	}, totalAnimationTime);
-	
-	player.spin = (checkpoint.redS || checkpoint.greenS);
 }
 
+/* Moves the given player backwards 
+ * Parameter types: (Player, Checkpoint, float, float, float)
+ */
+function MoveBackwards(player, checkpoint, totalAnimationTime){
 
+	var xDeviation = GetMapWidth() * playerPlaceholderXDeviation;
+	var yDeviation = GetMapHeight() * playerPlaceholderYDeviation;
 
+	player.visitedCheckpoints.pop();
+	if (player.steps < -1){
+		var path = new Array();
+		while (player.steps != 0){
+			path.push(player.visitedCheckpoints.pop());
+			player.steps++;
+		}
+
+		var totalDistance = 0;
+		var distances = new Array();
+		for (var i = 0; i < path.length - 1; i++){
+			var distance = Math.pow(Math.pow(path[i].x - path[i+1].x, 2) + Math.pow(path[i].y - path[i+1].y, 2), 0.5);
+			totalDistance += distance;
+			distances.push(distance);
+		}
+		
+		totalAnimationTime = totalDistance / GetMapWidth() * playerMoveSpeed;
+		MovePlayerAnimation(player, path, totalAnimationTime, totalDistance, distances, xDeviation, yDeviation, false);
+
+	} else {
+		totalAnimationTime = 150;
+		player.placeHolder.animate(150).move(checkpoint.x + xDeviation, checkpoint.y + yDeviation);
+		player.visitedCheckpoints.pop();
+	}
+}
+
+/* Animates Player placeholder's movement along the path 
+ * Parameter types: (Player, list of Checkpoint, float, float, float, float, float, boolean)
+ */
+function MovePlayerAnimation(player, path, totalAnimationTime, totalDistance, distances, xDeviation, yDeviation, forward){
+	var i = 1;
+	var animationTime = (distances[i] / totalDistance) * totalAnimationTime;
+
+	player.placeHolder.animate(animationTime).move(path[i].x + xDeviation, path[i].y + yDeviation);
+	i++;
+
+	function animationLoop () {
+		animationTime = (distances[i - 1] / totalDistance) * totalAnimationTime;
+		setTimeout(function () {
+			if (i < path.length) {
+				if (forward){
+					VisitCheckpoint(player, path[i - 1], true);
+					AddVisitedCheckpoint(player, path[i - 1]);
+				}
+				player.placeHolder.animate(animationTime).move(path[i].x + xDeviation, path[i].y + yDeviation);
+				i++;
+				animationLoop();
+			}
+		}, animationTime);
+	}
+	animationLoop();
+}
 
 
 
