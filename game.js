@@ -11,8 +11,6 @@ function Game(){
 	this.rightPath = this.rightMap.nested();
 	this.rightCheckpoints = new Array();
 
-	this.middleSection = SVG('center');		// SVG object for the middle section of the board
-
 	this.spinnerSection = SVG('spinner');	// SVG object for the Spinner section
 
 	this.svgObjects = new Array();			// Array of all svg objects in the game
@@ -100,6 +98,8 @@ function Setup(game){
 	AddQuestionText('<a href="http://www.github.com/roleen">Hello!</a> How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today?');
 	AddAnswerText('<button type="button">Yes</button> <button type="button">No</button>');
 	
+	AddMessage("Hello! Welcome to Zoo Parade!!");
+
 	game.created = true;
 }
 

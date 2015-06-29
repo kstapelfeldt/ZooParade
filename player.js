@@ -263,6 +263,7 @@ function MovePlayerAnimation(player, path, totalAnimationTime, totalDistance, di
 				animationLoop();
 			}
 		}, animationTime);
+		
 	}
 	animationLoop();
 }

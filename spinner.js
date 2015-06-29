@@ -67,7 +67,7 @@ function Spin(){
 		if (player.currentCheckpoint.redS) player.steps = redNumbers[index];
 		player.spin = false;
 	} else {
-		alert("You can use the spinner only at a Spin checkpoint.");
+		AddMessage("You can use the spinner only at a Spin checkpoint");
 	}	
 }
 

@@ -46,7 +46,7 @@ function GamePlay(index){
 			player.clicked = false;
 		}
 	} else {
-		alert("Please spin the spinner by clicking the 'Spin' button");
+		AddMessage("Please spin the spinner by clicking the 'Spin' button");
 	}
 }
 
@@ -70,6 +70,11 @@ function MakeMove(player, index){
 	MovePlayer(player, player.checkpoints[index]);
 }
 
+function AddMessage(message){
+	var div = document.getElementById('messageBox');
+	div.style.fontSize = GetMapWidth() * messageFontScale;
+	div.innerHTML = '<center>' + message + '</center>';
+}
 
 /* Adds the question in the question section of the game 
  * Parameter types: (string)
@@ -84,13 +89,11 @@ function AddQuestionText(question){
 
 
 function YesClick(){
-	alert("Yes Clicked");
+	AddMessage("Yes Clicked");
 }
 
 function NoClick(){
-	game.player0.steps = -3;
-	MovePlayer(game.player0, game.player0.visitedCheckpoints[game.player0.visitedCheckpoints.length - 3]);
-	//alert("No Clicked");
+	AddMessage("No Clicked");
 }
 
 /* Adds the answer in the answer section of the game 
@@ -170,6 +173,8 @@ function FixBodySize(){
 	document.getElementById("leftMap").style.borderRadius =  borderRadius;
 	document.getElementById("rightMap").style.borderRadius =  borderRadius;
 	document.getElementById("center").style.borderRadius =  borderRadius;
+	document.getElementById("zoo").style.borderRadius = borderRadius;
+	document.getElementById("messageBox").style.borderRadius = borderRadius;
 	document.getElementById("question").style.borderRadius =  borderRadius;
 	document.getElementById("answer").style.borderRadius =  borderRadius;
 	document.getElementById("spinner").style.borderRadius =  borderRadius;

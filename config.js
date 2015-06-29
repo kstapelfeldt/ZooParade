@@ -177,5 +177,6 @@ var yesNoButtonHTML = '<svg width="100%" height="100%"><g cursor="pointer" oncli
 						 '<g cursor="pointer" onclick="NoClick()"> <rect id="noButton" cursor="pointer" /><text id="noButtonText">No</text></g></svg>';
 var headerFontScale = 0.05;
 var textFontScale = 0.03;
+var messageFontScale = 0.04;
 
 
