@@ -1,4 +1,4 @@
-var minScreenWidthScale = 0.9;		// Restrict horizontal scaling
+var minScreenWidthScale = 0.96;		// Restrict horizontal scaling
 var minScreenHeightScale = 0.8;		// Restrict vertical scaling
 
 //Question arrays for each player
@@ -15,21 +15,24 @@ var player1 = true;
 // Map Scales
 var mapScale = 0.097;
 var mapScaleX = 0.097;
-var mapScaleY = 0.08;
+var mapScaleY = 0.078;
 var mapWidthScale = 0.34;
 var mapHeightScale = 0.65;
 var middleSectionWidthScale = 0.25;
 var panelHeightScale = 0.27;
+var spinnerSectionHeightDeviation = 1.16;
 
 // Spinner Board Scales
-var spinnerBoardWidthScale = 0.9;
-var spinnerBoardHeightScale = 0.9;
+var spinnerBoardWidthScale = 0.75;
+var spinnerBoardHeightScale = 0.75;
 var spinnerBoardXScale = 0.05;
-var spinnerBoardYScale = 0.05;
+var spinnerBoardYScale = 0.03;
 
 // Spinner Pin Scales
-var pinWidthScale = 0.5;
-var pinHeightScale = 0.5;
+var pinWidthScale = 0.4;
+var pinHeightScale = 0.4;
+var pinCXDeviation = 0.245;
+var pinCYDeviation = 0.236;
 var pinCenterXScale = 0.008;
 var pinCenterYScale = 0.005;
 
@@ -103,8 +106,7 @@ var arrowYDeviation = 0.005;
 
 var checkpointSize = 0.045;				// Size of normal checkpoints
 var specialCheckpointSize = 0.06;		// Size of special checkpoints
-var checkpointTextYScale = -0.4;		// Y scale of special checkpoints text
-var specialCheckpointTextYScale = -0.47;
+var checkpointTextYScale = -0.5;		// Y scale of special checkpoints text
 var checkpointTextSize = 0.7;	// Size of special checkpoints text 
 var edgeWidth = 0.013;					// Width of the lines joining checkpoints
 
@@ -134,14 +136,11 @@ var a2C1YDeviation = -0.065;
 
 var created = false;	// Boolean representing the map created
 
-// Spinner's pin deviation
-var pinCXDeviation = 0.27;
-var pinCYDeviation = 0.29;
 
 // Continent name variables
 var continentNameSize = 0.7;
-var continentNameX = 0.6;
-var continentNameY = 0.01;
+var continentNameX = 0.63;
+var continentNameY = 0.02;
 
 // Spinner variables
 var prevAngle = -147;
@@ -166,14 +165,17 @@ var checkpointLetterColor = "white";
 
 
 // Player Placeholder Variables
-var playerPlaceHolderScale = 0.7;
+var playerPlaceHolderScale = 0.65;
 var playerPlaceHolderXScale = -0.002;
-var playerPlaceHolderYScale = -0.01;
+var playerPlaceHolderYScale = -0.011;
 var playerMoveSpeed = 1500;
-var playerPlaceholderXDeviation = -0.035;
+var playerPlaceholderXDeviation = -0.033;
 var playerPlaceholderYDeviation = -0.045;
 
+// Question Answer div variables
 var yesNoButtonHTML = '<svg width="100%" height="100%"><g cursor="pointer" onclick="YesClick()"><rect id="yesButton" cursor="pointer" /><text id="yesButtonText">Yes</text></g>' +
 						 '<g cursor="pointer" onclick="NoClick()"> <rect id="noButton" cursor="pointer" /><text id="noButtonText">No</text></g></svg>';
+var headerFontScale = 0.05;
+var textFontScale = 0.03;
 
 

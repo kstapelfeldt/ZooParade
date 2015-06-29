@@ -1,19 +1,7 @@
-// Minimum Screen width and height to see the full game
-var minScreenWidth = screen.width * minScreenWidthScale;
-var minScreenHeight = screen.width * 0.5;
-
-// Set the min screen width and height
-// document.getElementById("body").style.minWidth = minScreenWidth;
-// document.getElementById("body").style.minHeight = minScreenHeight;
-
-document.getElementById("body").width = screen.width;
-document.getElementById("body").height = screen.height;
-
-
 
 var game = new Game();
 
-FixBodySize(game);
+FixBodySize();
 Setup(game);
 
 
@@ -25,8 +13,6 @@ $(window).resize(function(){
 	Setup(game);
 });
 
-AddQuestionText('<a href="http://www.github.com/roleen">Hello!</a> How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today?');
-AddAnswerText('<button type="button">Yes</button> <button type="button">No</button>');
 
 function GamePlay(index){
 	
@@ -89,8 +75,10 @@ function MakeMove(player, index){
  * Parameter types: (string)
  */
 function AddQuestionText(question){
-	// var div = document.getElementById(GetNextQuestion());
+	document.getElementById('questionHeader').style.fontSize = GetMapWidth() * headerFontScale;
+
 	var div = document.getElementById('questionContent');
+	div.style.fontSize = GetMapWidth() * textFontScale;
 	div.innerHTML = question;
 }
 
@@ -107,7 +95,9 @@ function NoClick(){
  * Parameter types: (string)
  */
 function AddAnswerText(answer){
+	document.getElementById('answerHeader').style.fontSize = GetMapWidth() * headerFontScale;
 	var div = document.getElementById('answerContent');
+	div.style.fontSize = GetMapWidth() * textFontScale;
 	div.innerHTML = yesNoButtonHTML;
 	ActivateYesNoButtons();
 }
@@ -169,64 +159,52 @@ function GetNoButtonPosition(){
 }
 
 
-
-
-var prevWidth = screen.width;
-function FixBodySize(game){
-	//alert("prev: " + prevWidth + ", current: " + screen.width);
-	prevWidth = screen.width;
-	//alert('called');
+function FixBodySize(){
 
 	document.getElementById("body").width = screen.width;
 	document.getElementById("body").height = screen.height;
 
+	var borderRadius = (GetMapWidth() * 0.06).toString() + "px";
+	document.getElementById("leftMap").style.borderRadius =  borderRadius;
+	document.getElementById("rightMap").style.borderRadius =  borderRadius;
+	document.getElementById("center").style.borderRadius =  borderRadius;
+	document.getElementById("question").style.borderRadius =  borderRadius;
+	document.getElementById("answer").style.borderRadius =  borderRadius;
+	document.getElementById("spinner").style.borderRadius =  borderRadius;
 
-	//game.leftMap.attr({width: 10000});
-	//document.getElementById("leftMap").width = GetMapWidth();
+	// Minimum Screen width and height to see the full game
+	var minScreenWidth = screen.width * minScreenWidthScale;
+	var minScreenHeight = screen.height * minScreenHeightScale;
+	document.getElementById("body").style.minWidth = minScreenWidth;
+	document.getElementById("body").style.minHeight = minScreenHeight;
 
-	//document.getElementById("middleSection").width = GetMiddleWidth();
-	/*
-	if (window.innerHeight < minScreenHeight){
-		alert('H < MH');
-		document.getElementById("body").style.overflowY = "auto";
-	} else{
-		document.getElementById("body").style.overflowY = "hidden";
-	}
-
-	if (window.innerWidth < minScreenWidth){
-		alert('W < MW');
-		document.getElementById("body").style.overflowX = "auto";
-	} else{
-		document.getElementById("body").style.overflowX = "hidden";
-	}
-	*/
+	document.getElementById("leftMap").style.minHeight = minScreenHeight * mapHeightScale;
+	document.getElementById("rightMap").style.minHeight = minScreenHeight * mapHeightScale;
+	document.getElementById("center").style.minHeight = minScreenHeight * mapHeightScale;
+	document.getElementById("question").style.minHeight = minScreenHeight * panelHeightScale;
+	document.getElementById("answer").style.minHeight = minScreenHeight * panelHeightScale;
+	document.getElementById("spinner").style.minHeight = minScreenHeight * panelHeightScale * spinnerSectionHeightDeviation;
 }
 
 /* Returns the width of the middle section of the board */
 function GetMiddleWidth() {
 	return document.getElementById("body").width * middleSectionWidthScale;
-	//return Math.max(minScreenWidth, screen.width) * middleSectionWidthScale;
 }
 
 /* Returns the width of a map */
 function GetMapWidth() {
 	return document.getElementById("body").width * mapWidthScale;
-	//return Math.max(minScreenWidth, screen.width) * mapWidthScale;
 }
 
 /* Returns the height of a map */
 function GetMapHeight() {
 	return document.getElementById("body").height * mapHeightScale;
-	//return Math.max(minScreenHeight, screen.height) * mapHeightScale;
 }
 
 /* Returns the height of the lower panels */
 function GetPanelHeight(){
 	return document.getElementById("body").height * panelHeightScale;
-	//return Math.max(minScreenHeight, screen.height) * panelHeightScale;
 }
-
-
 
 /* Removes the element from the list
  * Parameter types: (list of object, object)

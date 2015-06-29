@@ -42,6 +42,7 @@ function CreateSpinButton(){
 	spinButtonText.setAttribute('x', buttonPosition.x + buttonWidth * spinButtonTextXScale);
 	spinButtonText.setAttribute('y', buttonPosition.y + buttonHeight * spinButtonTextYScale);
 	spinButtonText.setAttribute('font-family', fontFamily);
+	spinButtonText.setAttribute('font-size', GetMapWidth() * 0.04);
 }
 
 

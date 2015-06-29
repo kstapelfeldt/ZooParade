@@ -161,6 +161,8 @@ function MovePlayer(player, checkpoint){
 	var xDeviation = GetMapWidth() * playerPlaceholderXDeviation;
 	var yDeviation = GetMapHeight() * playerPlaceholderYDeviation;
 
+
+
 	var totalAnimationTime;
 
 	if (player.currentCheckpoint != null) AddVisitedCheckpoint(player, player.currentCheckpoint);

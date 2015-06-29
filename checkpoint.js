@@ -184,7 +184,7 @@ function SetCheckpointColor(checkpoint){
 	if (checkpoint.redS || checkpoint.capture) pointColor = redSPointColor;
 	else if (checkpoint.hazard) pointColor = hazardPointColor;
 	checkpoint.circle.attr('fill', pointColor);
-	if (checkpoint.capture) checkpoint.circle.attr({'stroke-width': 3});
+	if (checkpoint.capture) checkpoint.circle.attr({'stroke-width': GetMapWidth() * 0.005});
 }
 
 /* Sets the letter of the given checkpoint
@@ -201,7 +201,7 @@ function SetCheckpointLetter(game, checkpoint, map, cpSize){
 
 	if (checkpoint.redS) letterColor = "yellow";
 
-	var textYDeviation = cpSize * -0.5;
+	var textYDeviation = cpSize * checkpointTextYScale;
 
 	if (letter != null){
 		var text = map.text(letter);

@@ -96,6 +96,9 @@ function Setup(game){
 
 	AddPlayerPlaceHolder(game, false);
 	AddPlayerPlaceHolder(game, true);
+
+	AddQuestionText('<a href="http://www.github.com/roleen">Hello!</a> How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today?');
+	AddAnswerText('<button type="button">Yes</button> <button type="button">No</button>');
 	
 	game.created = true;
 }
@@ -127,12 +130,13 @@ function AddStartArrows(game, right){
 		polygonCoordinates.push([x, y]);
 	}
 
-	var arrow = map.polygon(polygonCoordinates).fill('red').stroke({width: 2});
+	var arrow = map.polygon(polygonCoordinates).fill('red').stroke({width: GetMapWidth() * 0.003});
 	var cx = polygonCoordinates[3][0];
 	var cy = (polygonCoordinates [3][1] + polygonCoordinates[5][1]) * 0.5;
-	var arrowCircle = map.circle(cpSize).attr({ cx: cx, cy: cy, fill: 'red', stroke:'yellow', 'stroke-width': 2});
-	var text = map.text('1').move(cx, cy + cpSize * checkpointTextYScale);
+	var arrowCircle = map.circle(cpSize).attr({ cx: cx, cy: cy, fill: 'red', stroke:'yellow', 'stroke-width': GetMapWidth() * 0.003});
+	var text = map.text('1');
 	text.font({ family: "Tahoma", size: cpSize * checkpointTextSize, anchor: 'middle', fill: 'yellow' });
+	text.move(cx, cy + cpSize * checkpointTextYScale);
 
 	game.svgObjects.push(arrow);
 	game.svgObjects.push(arrowCircle);

@@ -81,9 +81,9 @@ function AddAnimalImages(game, animals, right){
 	if(right) path = game.rightPath;
 
 	var imgWidth = GetMapWidth() * mapScale * 3;
-	var imgHeight = GetMapHeight() * mapScale * 2.25;
+	var imgHeight = GetMapHeight() * mapScale * 2;
 
-	var imgYposition = GetMapHeight() * mapScale * 3.5;
+	var imgYposition = GetMapHeight() * mapScale * 3;
 
 	var x = imgWidth / 2;
 	if (right) x = GetMapWidth() - x;
