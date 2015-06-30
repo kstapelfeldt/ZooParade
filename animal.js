@@ -79,8 +79,6 @@ function PositionAnimal(game, animal, path, checkpointsList, checkpointIndex, xD
  */
 function AddAnimalImages(game, animals, right){
 
-	AddMessage("called");
-
 	var path = game.leftPath;
 	if(right) path = game.rightPath;
 
@@ -96,8 +94,6 @@ function AddAnimalImages(game, animals, right){
 
 	var imgPath = animals[0].leftImgPath;
 	if(right) imgPath = animals[0].rightImgPath;
-	AddMessage(imgPath);
-
 	var image = path.image(imgPath, imgWidth, imgHeight);
 	image.cx(x);
 	image.cy(imgYposition);

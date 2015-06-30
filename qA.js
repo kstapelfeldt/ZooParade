@@ -1,17 +1,30 @@
+//Question arrays for each player
+var player0Questions = [];
+var player1Questions = [];
+
+//Who's turn it is
+var player1 = false;
+
+//Used Questions for each player
+var player0Used = [];
+var player1Used = [];
+
+
+
+var fileContent = ReadFile("Dog.csv");
+AddMessage(fileContent);
+ProcessCSV(fileContent);
+player1 = true;
+
+
 function ProcessCSV(results){
 	var rows = results.split('\n');
+	var playerQuestions = player0Questions;
+	if (player1) playerQuestions = player1Questions;
 
 	for (var i = 1; i < rows.length; i++){
 		var row = rows[i].split(',');
-		if (player1){
-		 	if(row.length >= i){
-				playerQuestions.push(row);
-			}
-		}else{
-			if(row.length >= i){
-				player2Questions.push(row);
-			}
-		}
+		playerQuestions.push(row);
 	}
 }
 
@@ -24,36 +37,24 @@ function ProcessCSV(results){
 */
 function GetNextQuestion(QuestionType){
 	var result = [];
-	if(player1){
-		for(var count = 0; count < playerQuestions.length; count++){
-			if(playerQuestions[count][1] == QuestionType){
-				result.push(playerQuestions[count]);
-			}
-		}
+	var playerQuestions = player0Questions;
+	if (player1) playerQuestions = player1Questions;
 
-		if(result.length == 0){
-			result = FillEmpty(QuestionType);
-		}
+	var playerUsed = player0Used;
+	if(player1) playerUsed = player1Used;
 
-		var rand = Math.floor(Math.random() * result.length);
-		
-		RemoveUsed(result[rand]);
-		playerUsed.push(result[rand]);
-	}else{
-		for(var count = 0; count < player2Questions.length; count++){
-			if(player2Questions[count][1] == QuestionType){
-				result.push(player2Questions[count]);
-			}
+	for(var count = 0; count < playerQuestions.length; count++){
+		if(playerQuestions[count][1] == QuestionType){
+			result.push(playerQuestions[count]);
 		}
-		
-		if(result.length == 0){
-			result = FillEmpty(QuestionType);
-		}
-
-		var rand = Math.floor(Math.random() * result.length);
-		RemoveUsed(result[rand]);
-		player2Used.push(result[rand]);
 	}
+
+	if(result.length == 0) result = FillEmpty(QuestionType);
+
+	var rand = Math.floor(Math.random() * result.length);
+	
+	RemoveUsed(result[rand]);
+	playerUsed.push(result[rand]);
 
 	return result[rand];
 }
@@ -62,17 +63,12 @@ function GetNextQuestion(QuestionType){
 *Parameter type (object)
 */
 function RemoveUsed(item){
-	if(player1){
-		for(var count = 0; count < playerQuestions.length; count++){
-			if(playerQuestions[count] == item){
-				playerQuestions.splice(count, 1);
-			}
-		}
-	}else{
-		for(var count = 0; count < player2Questions.length; count++){
-			if(player2Questions[count] == item){
-				player2Questions.splice(count, 1);
-			}
+	var playerQuestions = player0Questions;
+	if (player1) playerQuestions = player1Questions;
+
+	for(var count = 0; count < playerQuestions.length; count++){
+		if(playerQuestions[count] == item){
+			playerQuestions.splice(count, 1);
 		}
 	}
 }
@@ -84,22 +80,22 @@ function RemoveUsed(item){
 *Return type: (array)
 */
 function FillEmpty(QuestionType){
+
 	var result = [];
-	if(player1){
-		for(var count = 0; count < playerUsed.length; count++){
-			if(playerUsed[count][1] == QuestionType){
-				result.push(playerUsed[count]);
-				playerQuestions.push(playerUsed[count]);
-			}
-		}
-	}else{
-		for(var count = 0; count < playerUsed.length; count++){
-			if(player2Used[count][1] == QuestionType){
-				result.push(player2Used[count]);
-				player2Questions.push(player2Used[count]);
-			}
+
+	var playerQuestions = player0Questions;
+	if (player1) playerQuestions = player1Questions;
+
+	var playerUsed = player0Used;
+	if(player1) playerUsed = player1Used;
+
+	for(var count = 0; count < playerUsed.length; count++){
+		if(playerUsed[count][1] == QuestionType){
+			result.push(playerUsed[count]);
+			playerQuestions.push(playerUsed[count]);
 		}
 	}
+
 	return result;
 }
 
@@ -111,7 +107,7 @@ function FillEmpty(QuestionType){
 function ReadFile(path) 
 {
 	var txtFile = new XMLHttpRequest();
-	txtFile.open("GET", path + ".csv", false);
+	txtFile.open("GET", path, false);
 	txtFile.send(null);
-	ProcessCSV(txtFile.responseText);
+	return txtFile.responseText;
 }

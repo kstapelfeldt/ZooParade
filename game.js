@@ -98,7 +98,7 @@ function Setup(game){
 	AddQuestionText('<a href="http://www.github.com/roleen">Hello!</a> How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today?');
 	AddAnswerText('<button type="button">Yes</button> <button type="button">No</button>');
 	
-	AddMessage("Hello! Welcome to Zoo Parade!!");
+	//AddMessage("Hello! Welcome to Zoo Parade!!");
 
 	game.created = true;
 }
