@@ -28,6 +28,8 @@ function GamePlay(index){
 	}
 }
 
+
+/* This function is called when player gives the right answer */
 function CorrectAnswerMove(){
 	var player = game.player0;
 	if (game.right) player = game.player1;
@@ -43,7 +45,7 @@ function CorrectAnswerMove(){
 	} else if (!player.spin){
 		
 		var paths = GetPossiblePaths(player, player.steps);
-		player.possiblePaths = path;
+		player.possiblePaths = paths;
 
 		if (paths.length == 1){
 			var path = paths[0];
@@ -54,9 +56,10 @@ function CorrectAnswerMove(){
 				SelectCheckpoint (player.possiblePaths[i][player.possiblePaths[i].length - 1]);
 			}
 		}
-	} else AddMessage("Please spin the spinner by clicking the 'Spin' button");	
+	} else AddMessage("Please spin the spinner by clicking the 'Spin' button");
 }
 
+/* This function is called when player gives the right answer */
 function WrongAnswerMove(){
 	var player = game.player0;
 	if (game.right) player = game.player1;
@@ -88,12 +91,13 @@ function AddQuestionText(question){
 	div.innerHTML = question;
 }
 
-
+/* Called when Yes button is clicked in the answer section */
 function YesClick(){
 	AddMessage("Yes Clicked");
 	CorrectAnswerMove();
 }
 
+/* Called when No button is clicked in the answer section */
 function NoClick(){
 	AddMessage("No Clicked");
 	WrongAnswerMove();
@@ -110,7 +114,7 @@ function AddAnswerText(answer){
 	ActivateYesNoButtons();
 }
 
-
+/* Activates the Yes and No buttons in the answer section for a Yes/No question */
 function ActivateYesNoButtons(){
 
 	var buttonWidth = GetPanelHeight() * 0.35
@@ -155,18 +159,21 @@ function ActivateYesNoButtons(){
 	noButtonText.setAttribute('font-color', darkBackgroundColor);
 }
 
-/* Returns the position coordinates of the position of the spin button
+/* Returns the position coordinates of the position of the Yes button
  * Return type: dictionary
  */
 function GetYesButtonPosition(){
 	return ({'x': GetMapWidth() * 0.25, 'y': GetPanelHeight() * 0.2});
 }
 
+/* Returns the position coordinates of the position of the No button
+ * Return type: dictionary
+ */
 function GetNoButtonPosition(){
 	return ({'x': GetMapWidth() * 0.5, 'y': GetPanelHeight() * 0.2});
 }
 
-
+/* Fixes the size of every element in the body when window is resized */
 function FixBodySize(){
 
 	document.getElementById("body").width = screen.width;

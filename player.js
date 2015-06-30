@@ -170,13 +170,18 @@ function MoveForward(player, checkpoint, totalAnimationTime){
 	var xDeviation = GetMapWidth() * playerPlaceholderXDeviation;
 	var yDeviation = GetMapHeight() * playerPlaceholderYDeviation;
 
-	if (player.steps > 1){
-		var path;
+	var path;
+	if (player.possiblePaths != null){
 		for (var i = 0; i < player.possiblePaths.length; i++){
-			//var path = player.possiblePaths[i];
+
 			DeselectCheckpoint(player.possiblePaths[i][player.possiblePaths[i].length - 1]);
 			if (player.possiblePaths[i][player.possiblePaths[i].length - 1] == checkpoint) path = player.possiblePaths[i];
 		}
+	}
+	
+
+	if (player.steps > 1){
+		
 		
 		var totalDistance = 0;
 		var distances = new Array();
@@ -190,6 +195,7 @@ function MoveForward(player, checkpoint, totalAnimationTime){
 		MovePlayerAnimation(player, path, totalAnimationTime, totalDistance, distances, xDeviation, yDeviation, true);
 
 	} else {
+
 		totalAnimationTime = 150;
 		player.placeHolder.animate(150).move(checkpoint.x + xDeviation, checkpoint.y + yDeviation);
 	}

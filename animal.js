@@ -9,7 +9,8 @@ function Animal(name, continent, shortName){
 	this.svg = {};
 	this.image = null;
 	this.svgPath = 'Resources/SVG/' + shortName + '.svg';
-	this.pngPath = 'Resources/PNG/' + shortName + '.png';
+	this.leftImgPath = 'Resources/Images/' + shortName + 'Left.svg';
+	this.rightImgPath = 'Resources/Images/' + shortName + 'Right.svg';
 	this.zoopngPath = 'Resources/ZooPNG/' + shortName + '.png';
 }
 
@@ -77,6 +78,9 @@ function PositionAnimal(game, animal, path, checkpointsList, checkpointIndex, xD
  * Parameter types: (Game, list of Animal, boolean)
  */
 function AddAnimalImages(game, animals, right){
+
+	AddMessage("called");
+
 	var path = game.leftPath;
 	if(right) path = game.rightPath;
 
@@ -88,21 +92,31 @@ function AddAnimalImages(game, animals, right){
 	var x = imgWidth / 2;
 	if (right) x = GetMapWidth() - x;
 
-	var image = path.image(animals[0].pngPath, imgWidth, imgHeight);
+
+
+	var imgPath = animals[0].leftImgPath;
+	if(right) imgPath = animals[0].rightImgPath;
+	AddMessage(imgPath);
+
+	var image = path.image(imgPath, imgWidth, imgHeight);
 	image.cx(x);
 	image.cy(imgYposition);
 	imgYposition += imgHeight;
 	game.svgObjects.push(image);
 	animals[0].image = image;
 
-	var image = path.image(animals[1].pngPath, imgWidth, imgHeight);
+	var imgPath = animals[1].leftImgPath;
+	if(right) imgPath = animals[1].rightImgPath;
+	var image = path.image(imgPath, imgWidth, imgHeight);
 	image.cx(x);
 	image.cy(imgYposition);
 	imgYposition += imgHeight;
 	game.svgObjects.push(image);
 	animals[1].image = image;
 
-	var image = path.image(animals[2].pngPath, imgWidth, imgHeight);
+	var imgPath = animals[2].leftImgPath;
+	if(right) imgPath = animals[2].rightImgPath;
+	var image = path.image(imgPath, imgWidth, imgHeight);
 	image.cx(x);
 	image.cy(imgYposition);
 	game.svgObjects.push(image);
