@@ -1,5 +1,10 @@
 Binary Question,QuestionType,Question,choices,right
-TRUE,1,Are you home?,,FALSE
-FALSE,1,How are you?,bad/ ok/ could be better/ great,great
-TRUE,2,Is it time?,,TRUE
-TRUE,1,Can you do it?,,TRUE
+FALSE,1,Cat S1,A/B/C,B
+FALSE,1,Cat S2,A/B/C,B
+FALSE,1,Cat S3,A/B/C,B
+TRUE,2,Cat O1,,TRUE
+TRUE,2,Cat O2,,TRUE
+TRUE,2,Cat O3,,FALSE
+TRUE,2,Cat O4,,FALSE
+FALSE,3,Cat C1,A/B,B
+FALSE,4,Cat T1,A/B/C,B
