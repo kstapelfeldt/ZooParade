@@ -1,3 +1,15 @@
+var binaryIndex = 0;
+var typeIndex = 1;
+var questionIndex = 2;
+var choicesIndex = 3;
+var correctIndex = 4;
+
+var startQuestionType = 1;
+var onTrailQuestionType = 2;
+var captureQuestionType = 3;
+var tranportationQuestionType = 4;
+
+
 var minScreenWidthScale = 0.96;		// Restrict horizontal scaling
 var minScreenHeightScale = 0.8;		// Restrict vertical scaling
 

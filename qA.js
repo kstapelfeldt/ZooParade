@@ -1,29 +1,21 @@
-var binaryIndex = 0;
-var typeIndex = 1;
-var questionIndex = 2;
-var choicesIndex = 3;
-var correctIndex = 4;
 
-var startQuestionType = 1;
-var onTrailQuestionType = 2;
-var captureQuestionType = 3;
-var tranportationQuestionType = 4;
 
 //Who's turn it is
-var player1 = false;
+var rightPlayerQuestions = false;
 
 var player0Questions = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
-var player1Questions = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
+var rightPlayerQuestionsQuestions = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
 
 var player0Used = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
-var player1Used = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
+var rightPlayerQuestionsUsed = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
 
 
 var fileContent = ReadFile("Dog.csv");
 ProcessCSV(fileContent);
-player1 = true;
+rightPlayerQuestions = true;
 var fileContent = ReadFile("Cat.csv");
 ProcessCSV(fileContent);
+rightPlayerQuestions = false;
 
 
 /* Reads the csv string and stores the questions in the questions array
@@ -32,7 +24,7 @@ ProcessCSV(fileContent);
 function ProcessCSV(results){
 	var rows = results.split('\n');
 	var playerQuestions = player0Questions;
-	if (player1) playerQuestions = player1Questions;
+	if (rightPlayerQuestions) playerQuestions = rightPlayerQuestionsQuestions;
 
 	for (var i = 1; i < rows.length; i++){
 		var row = rows[i].split(',');
@@ -48,17 +40,16 @@ function ProcessCSV(results){
 /* Takes in the type of question desired.
  * Returns an array with a random object, with a question, of the requested 
  * question type that has not already been used.
- * The object is indexed by string. Ex. result[0]["Question"]
  * Parameter types: (String)
  * Return type: (array of object)
  */
 function GetNextQuestion(questionType){
 
 	var playerQuestions = player0Questions;
-	if (player1) playerQuestions = player1Questions;
+	if (rightPlayerQuestions) playerQuestions = rightPlayerQuestionsQuestions;
 
 	var playerUsed = player0Used;
-	if (player1) playerUsed = player1Used;
+	if (rightPlayerQuestions) playerUsed = rightPlayerQuestionsUsed;
 
 	var questions = playerQuestions.start;
 	var usedQuestions = playerUsed.start;

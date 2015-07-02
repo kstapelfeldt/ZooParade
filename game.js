@@ -95,10 +95,8 @@ function Setup(game){
 	AddPlayerPlaceHolder(game, false);
 	AddPlayerPlaceHolder(game, true);
 
-	AddQuestionText('<a href="http://www.github.com/roleen">Hello!</a> How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today? Hello! How are you? What\'s up with you today?');
+	AddQuestionText(GetNextQuestion(startQuestionType)[2]);
 	AddAnswerText('<button type="button">Yes</button> <button type="button">No</button>');
-	
-	//AddMessage("Hello! Welcome to Zoo Parade!!");
 
 	game.created = true;
 }
