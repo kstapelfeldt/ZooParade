@@ -39,6 +39,7 @@ function GamePlay(index){
 	}
 }
 
+/* Updates the game's current question */
 function UpdateQuestion(){
 	
 	var player = game.player0;
@@ -225,14 +226,14 @@ function ActivateYesNoButtons(){
  * Return type: dictionary
  */
 function GetYesButtonPosition(){
-	return ({'x': GetMapWidth() * 0.25, 'y': GetPanelHeight() * 0.2});
+	return ({'x': GetMapWidth() * 0.15, 'y': GetPanelHeight() * 0.2});
 }
 
 /* Returns the position coordinates of the position of the No button
  * Return type: dictionary
  */
 function GetNoButtonPosition(){
-	return ({'x': GetMapWidth() * 0.5, 'y': GetPanelHeight() * 0.2});
+	return ({'x': GetMapWidth() * 0.4, 'y': GetPanelHeight() * 0.2});
 }
 
 /* Fixes the size of every element in the body when window is resized */

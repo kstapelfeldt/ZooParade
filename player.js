@@ -102,7 +102,6 @@ function VisitCheckpoint(player, checkpoint, pass){
 			
 		}
 	}
-
 }
 
 /* Add the animal to the list of animals captured of the player
@@ -177,10 +176,8 @@ function MoveForward(player, checkpoint){
 			if (player.possiblePaths[i][player.possiblePaths[i].length - 1] == checkpoint) path = player.possiblePaths[i];
 		}
 	}
-	
 
 	if (player.steps > 1){
-		
 		
 		var totalDistance = 0;
 		var distances = new Array();
