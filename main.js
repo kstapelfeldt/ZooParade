@@ -1,9 +1,10 @@
 
 var game = new Game();
+var totalAnimationTime = 0;
 
 FixBodySize();
 Setup(game);
-AddQuestion();
+UpdateQuestion();
 
 // Adjust all the objects on window resize
 $(window).resize(function(){
@@ -13,11 +14,36 @@ $(window).resize(function(){
 	Setup(game);
 });
 
-function AddQuestion(){
+
+function GamePlay(index){
 	
 	var player = game.player0;
 	if (game.right) player = game.player1;
+
+	var nextPlayer = game.player1;
+	if (game.right) nextPlayer = game.player0;
+
+	var message = nextPlayer.name + "'s turn";
+	if (nextPlayer.spin) message += "<br/>Spin the spinner by clicking 'SPIN'";
+
+	var checkpoints = player.checkpoints;
+	var checkpoint = checkpoints[index];
 	
+	if (checkpoint.selected){
+		MovePlayer(player, checkpoint);
+		game.right = !game.right;
+		setTimeout(function(){
+			AddMessage(message);
+			UpdateQuestion();
+		}, totalAnimationTime);
+	}
+}
+
+function UpdateQuestion(){
+	
+	var player = game.player0;
+	if (game.right) player = game.player1;
+
 	if (!player.spin){
 		var playerQuestions = player0Questions;
 		if (game.right) playerQuestions = player1Questions;
@@ -36,53 +62,61 @@ function AddQuestion(){
 	}
 }
 
-function GamePlay(index){
-	
-	var player = game.player0;
-	if (game.right) player = game.player1;
-
-	var checkpoints = player.checkpoints;
-	var checkpoint = checkpoints[index];
-	
-	if (checkpoint.selected){
-		MovePlayer(player, checkpoint);
-		game.right = !game.right;
-		AddQuestion();
-	}
-}
-
-
 /* This function is called when player gives the right answer */
 function CorrectAnswerMove(){
 	var player = game.player0;
 	if (game.right) player = game.player1;
 
-	if (player.move1){
-		MovePlayer(player, player.checkpoints[0]);
-		player.move1 = false;
-		game.right = !game.right;
-		AddQuestion();
-	} else if (player.move2){
-		MovePlayer(player, player.checkpoints[1]);
-		player.move2 = false;
-		game.right = !game.right;
-		AddQuestion();
-	} else if (!player.spin){
-		
-		var paths = GetPossiblePaths(player, player.steps);
-		player.possiblePaths = paths;
+	var nextPlayer = game.player1;
+	if (game.right) nextPlayer = game.player0;
 
-		if (paths.length == 1){
-			var path = paths[0];
-			MovePlayer(player, path[path.length - 1]);
+	var message = "Correct Answer!<br/>" + nextPlayer.name + "'s turn";
+	if (nextPlayer.spin) message += "<br/>Spin the spinner by clicking 'SPIN'"; 
+
+	if (!player.spin){
+		if (player.move1){
+			MovePlayer(player, player.checkpoints[0]);
+			player.move1 = false;
 			game.right = !game.right;
-			AddQuestion();
+
+			setTimeout(function(){
+				AddMessage(message);
+				UpdateQuestion();
+			}, totalAnimationTime);
+
+		} else if (player.move2){
+			MovePlayer(player, player.checkpoints[1]);
+			player.move2 = false;
+			game.right = !game.right;
+
+			setTimeout(function(){
+				AddMessage(message);
+				UpdateQuestion();
+			}, totalAnimationTime);
+
 		} else {
-			for (var i = 0; i < player.possiblePaths.length; i++){
-				SelectCheckpoint (player.possiblePaths[i][player.possiblePaths[i].length - 1]);
+			
+			var paths = GetPossiblePaths(player, player.steps);
+			player.possiblePaths = paths;
+
+			if (paths.length == 1){
+				var path = paths[0];
+				MovePlayer(player, path[path.length - 1]);
+				game.right = !game.right;
+				
+				setTimeout(function(){
+					AddMessage(message);
+					UpdateQuestion();
+				}, totalAnimationTime);
+
+			} else {
+				for (var i = 0; i < player.possiblePaths.length; i++){
+					SelectCheckpoint (player.possiblePaths[i][player.possiblePaths[i].length - 1]);
+				}
+				AddMessage("Click on one of the highlighted checkpoints to move player");
 			}
 		}
-	} else AddMessage("Please spin the spinner by clicking the 'Spin' button");
+	} else AddMessage("Please spin the spinner by clicking the 'SPIN' button");
 }
 
 /* This function is called when player gives the right answer */
@@ -90,10 +124,18 @@ function WrongAnswerMove(){
 	var player = game.player0;
 	if (game.right) player = game.player1;
 
+	var nextPlayer = game.player1;
+	if (game.right) nextPlayer = game.player0;
+
+	var message = "Wrong Answer!<br/>" + nextPlayer.name + "'s turn";
+	if (nextPlayer.spin) message += "<br/>Spin the spinner by clicking 'SPIN'";
+
 	if (!player.move1 && !player.move2){
 		player.steps = -1;
 		MovePlayer(player, player.visitedCheckpoints[player.visitedCheckpoints.length - 1]);
 		game.right = !game.right;
+		UpdateQuestion();
+		AddMessage(message);
 	}
 }
 
@@ -101,9 +143,10 @@ function WrongAnswerMove(){
  * Parameter types: (String)
  */
 function AddMessage(message){
-	var div = document.getElementById('messageBox');
+	var div = document.getElementById('messageBoxContent');
 	div.style.fontSize = GetMapWidth() * messageFontScale;
 	div.innerHTML = '<center>' + message + '</center>';
+	game.currentMessage = message;
 }
 
 /* Adds the question in the question section of the game 
@@ -115,6 +158,7 @@ function AddQuestionText(question){
 	var div = document.getElementById('questionContent');
 	div.style.fontSize = GetMapWidth() * textFontScale;
 	div.innerHTML = question;
+	game.currentQuestion = question;
 }
 
 /* Adds the answer in the answer section of the game 
@@ -128,6 +172,8 @@ function AddAnswerText(answer){
 	div.innerHTML = answer;
 
 	if (answer == correctYesHTML || answer == correctNoHTML) ActivateYesNoButtons();
+
+	game.currentAnswer = answer;
 }
 
 /* Activates the Yes and No buttons in the answer section for a Yes/No question */

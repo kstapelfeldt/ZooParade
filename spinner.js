@@ -73,6 +73,7 @@ function Spin(){
 			for(var i = 0; i < paths.length; i++){
 				var path = paths[i];
 				SelectCheckpoint(path[path.length - 1]);
+				AddMessage("Click on one of the highlighted checkpoints to move player");
 			}
 		}, 2000);
 	} else {

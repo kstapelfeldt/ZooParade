@@ -182,6 +182,7 @@ var correctNoHTML = '<svg width="100%" height="100%"><g cursor="pointer" onclick
 						'<rect id="yesButton" cursor="pointer" /> <text id="yesButtonText">Yes</text></g>' + 
 						'<g cursor="pointer" onclick="CorrectAnswerMove()"> <rect id="noButton" cursor="pointer" />'+
 						' <text id="noButtonText">No</text></g></svg>';
+						
 var headerFontScale = 0.05;
 var textFontScale = 0.03;
 var messageFontScale = 0.04;

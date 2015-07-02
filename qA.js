@@ -26,19 +26,21 @@ function ProcessCSV(results, right){
 
 		var question = row[questionIndex];
 
-		var answer = "";
+		var answer = "<br/>";
 		if (row[binaryIndex] == "TRUE"){
 			if (row[correctIndex] == "TRUE") answer = correctYesHTML;
 			else answer = correctNoHTML;
 		} else{
-			answer += row[choicesIndex];
+			
 			var choices = row[choicesIndex].split("/");
-
-			answer = '<select>'
+			var correctAnswer = row[correctIndex].trim();
+			
 			for (var j = 0; j < choices.length; j++){
-				answer += '<option onClick="CorrectAnswerMove()">' + choices[j].trim() + '</option>';
+				var label = choices[j].trim();
+				var action = "WrongAnswerMove()";
+				if (label == correctAnswer) action = "CorrectAnswerMove()";
+				answer += '<div class="mcqOption" cursor="pointer" onClick="' + action + '"><center>' + label + '</center></div><br/>'
 			}
-			answer += '</select>'
 		}
 
 		var qAPair = {'question': question, 'answer': answer};

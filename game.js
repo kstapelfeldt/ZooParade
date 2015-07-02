@@ -33,6 +33,10 @@ function Game(){
 	this.leftCapturePoints = capturePoints.slice();
 	this.rightCapturePoints = capturePoints.slice();
 
+	this.currentMessage = "Welcome to Zoo Parade!";
+	this.currentQuestion = "";
+	this.currentAnswer = "";
+
 	this.created = false;
 }
 
@@ -95,7 +99,9 @@ function Setup(game){
 	AddPlayerPlaceHolder(game, false);
 	AddPlayerPlaceHolder(game, true);
 
-	//AddAnswerText('<button type="button">Yes</button> <button type="button">No</button>');
+	AddQuestionText(game.currentQuestion);
+	AddAnswerText(game.currentAnswer);
+	AddMessage(game.currentMessage);
 
 	game.created = true;
 }

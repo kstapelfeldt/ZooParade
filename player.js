@@ -145,13 +145,11 @@ function AddPlayerPlaceHolder(game, right){
  * Parameter types: (Player, Checkpoint)
  */
 function MovePlayer(player, checkpoint){
-	
-	var totalAnimationTime;
 
 	if (player.currentCheckpoint != null) AddVisitedCheckpoint(player, player.currentCheckpoint);
 
-	if (player.steps > 0) MoveForward(player, checkpoint, totalAnimationTime);
-	else MoveBackwards(player, checkpoint, totalAnimationTime);
+	if (player.steps > 0) MoveForward(player, checkpoint);
+	else MoveBackwards(player, checkpoint);
 
 	player.steps = 1;
 	player.currentCheckpoint = checkpoint;
@@ -166,7 +164,7 @@ function MovePlayer(player, checkpoint){
 /* Moves the given player forward 
  * Parameter types: (Player, Checkpoint, float, float, float)
  */
-function MoveForward(player, checkpoint, totalAnimationTime){
+function MoveForward(player, checkpoint){
 
 	var xDeviation = GetMapWidth() * playerPlaceholderXDeviation;
 	var yDeviation = GetMapHeight() * playerPlaceholderYDeviation;
@@ -193,7 +191,7 @@ function MoveForward(player, checkpoint, totalAnimationTime){
 		}
 		
 		totalAnimationTime = totalDistance / GetMapWidth() * playerMoveSpeed;
-		MovePlayerAnimation(player, path, totalAnimationTime, totalDistance, distances, xDeviation, yDeviation, true);
+		MovePlayerAnimation(player, path, totalDistance, distances, xDeviation, yDeviation, true);
 
 	} else {
 
@@ -205,7 +203,7 @@ function MoveForward(player, checkpoint, totalAnimationTime){
 /* Moves the given player backwards 
  * Parameter types: (Player, Checkpoint, float, float, float)
  */
-function MoveBackwards(player, checkpoint, totalAnimationTime){
+function MoveBackwards(player, checkpoint){
 
 	var xDeviation = GetMapWidth() * playerPlaceholderXDeviation;
 	var yDeviation = GetMapHeight() * playerPlaceholderYDeviation;
@@ -227,7 +225,7 @@ function MoveBackwards(player, checkpoint, totalAnimationTime){
 		}
 		
 		totalAnimationTime = totalDistance / GetMapWidth() * playerMoveSpeed;
-		MovePlayerAnimation(player, path, totalAnimationTime, totalDistance, distances, xDeviation, yDeviation, false);
+		MovePlayerAnimation(player, path, totalDistance, distances, xDeviation, yDeviation, false);
 
 	} else {
 		totalAnimationTime = 150;
@@ -239,7 +237,7 @@ function MoveBackwards(player, checkpoint, totalAnimationTime){
 /* Animates Player placeholder's movement along the path 
  * Parameter types: (Player, list of Checkpoint, float, float, float, float, float, boolean)
  */
-function MovePlayerAnimation(player, path, totalAnimationTime, totalDistance, distances, xDeviation, yDeviation, forward){
+function MovePlayerAnimation(player, path, totalDistance, distances, xDeviation, yDeviation, forward){
 	var i = 1;
 	var animationTime = (distances[i] / totalDistance) * totalAnimationTime;
 
