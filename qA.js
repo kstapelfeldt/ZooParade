@@ -1,39 +1,52 @@
-
-
-//Who's turn it is
-var rightPlayerQuestions = false;
-
+// Dictionary of player questions
 var player0Questions = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
-var rightPlayerQuestionsQuestions = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
+var player1Questions = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
 
 var player0Used = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
-var rightPlayerQuestionsUsed = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
+var player1Used = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
 
-
+// Read from the CSV files and fill player questions
 var fileContent = ReadFile("Dog.csv");
-ProcessCSV(fileContent);
-rightPlayerQuestions = true;
+ProcessCSV(fileContent, false);
 var fileContent = ReadFile("Cat.csv");
-ProcessCSV(fileContent);
-rightPlayerQuestions = false;
+ProcessCSV(fileContent, true);
 
 
 /* Reads the csv string and stores the questions in the questions array
  * Parameter types: (String)
  */
-function ProcessCSV(results){
+function ProcessCSV(results, right){
 	var rows = results.split('\n');
 	var playerQuestions = player0Questions;
-	if (rightPlayerQuestions) playerQuestions = rightPlayerQuestionsQuestions;
+	if (right) playerQuestions = player1Questions;
 
 	for (var i = 1; i < rows.length; i++){
 		var row = rows[i].split(',');
 		if (row.length < 5) while (row.length < 5) row.push("");
 
-		if (row[typeIndex] == 1) playerQuestions.start.push(row);
-		else if (row[typeIndex] == 2) playerQuestions.onTrail.push(row);
-		else if (row[typeIndex] == 3) playerQuestions.capture.push(row);
-		else if (row[typeIndex] == 4) playerQuestions.transport.push(row);
+		var question = row[questionIndex];
+
+		var answer = "";
+		if (row[binaryIndex] == "TRUE"){
+			if (row[correctIndex] == "TRUE") answer = correctYesHTML;
+			else answer = correctNoHTML;
+		} else{
+			answer += row[choicesIndex];
+			var choices = row[choicesIndex].split("/");
+
+			answer = '<select>'
+			for (var j = 0; j < choices.length; j++){
+				answer += '<option onClick="CorrectAnswerMove()">' + choices[j].trim() + '</option>';
+			}
+			answer += '</select>'
+		}
+
+		var qAPair = {'question': question, 'answer': answer};
+		
+		if (row[typeIndex] == 1) playerQuestions.start.push(qAPair);
+		else if (row[typeIndex] == 2) playerQuestions.onTrail.push(qAPair);
+		else if (row[typeIndex] == 3) playerQuestions.capture.push(qAPair);
+		else if (row[typeIndex] == 4) playerQuestions.transport.push(qAPair);
 	}
 }
 
@@ -43,26 +56,26 @@ function ProcessCSV(results){
  * Parameter types: (String)
  * Return type: (array of object)
  */
-function GetNextQuestion(questionType){
+function GetNextQuestion(questionType, right){
 
 	var playerQuestions = player0Questions;
-	if (rightPlayerQuestions) playerQuestions = rightPlayerQuestionsQuestions;
+	if (right) playerQuestions = player1Questions;
 
 	var playerUsed = player0Used;
-	if (rightPlayerQuestions) playerUsed = rightPlayerQuestionsUsed;
+	if (right) playerUsed = player1Used;
 
 	var questions = playerQuestions.start;
 	var usedQuestions = playerUsed.start;
 
-	if (questionType == onTrailQuestionType) {
+	if (questionType == onTrailQuestion) {
 		questions = playerQuestions.onTrail;
 		usedQuestions = playerUsed.onTrail;
 	}
-	else if (questionType == captureQuestionType) {
+	else if (questionType == captureQuestion) {
 		questions = playerQuestions.capture;
 		usedQuestions = playerUsed.capture;
 	}
-	else if (questionType == tranportationQuestionType) {
+	else if (questionType == tranportationQuestion) {
 		questions = playerQuestions.transport;
 		usedQuestions = playerUsed.transport;
 	}

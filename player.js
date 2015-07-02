@@ -14,6 +14,7 @@ function Player(name, continent, map, checkpoints, capturePoints, right){
 	this.currentCheckpoint = null;
 	this.visitedCheckpoints = new Array();
 	this.animalsCaptured = new Array();
+	this.captured = false;
 	this.placeHolder = null;
 	this.spin = false;
 	this.steps = 1;

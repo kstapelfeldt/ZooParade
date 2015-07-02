@@ -4,10 +4,10 @@ var questionIndex = 2;
 var choicesIndex = 3;
 var correctIndex = 4;
 
-var startQuestionType = 1;
-var onTrailQuestionType = 2;
-var captureQuestionType = 3;
-var tranportationQuestionType = 4;
+var startQuestion = 1;
+var onTrailQuestion = 2;
+var captureQuestion = 3;
+var tranportationQuestion = 4;
 
 
 var minScreenWidthScale = 0.96;		// Restrict horizontal scaling
@@ -174,8 +174,14 @@ var playerPlaceholderXDeviation = -0.033;
 var playerPlaceholderYDeviation = -0.045;
 
 // Question Answer div variables
-var yesNoButtonHTML = '<svg width="100%" height="100%"><g cursor="pointer" onclick="YesClick()"><rect id="yesButton" cursor="pointer" /><text id="yesButtonText">Yes</text></g>' +
-						 '<g cursor="pointer" onclick="NoClick()"> <rect id="noButton" cursor="pointer" /><text id="noButtonText">No</text></g></svg>';
+var correctYesHTML = '<svg width="100%" height="100%"><g cursor="pointer" onclick="CorrectAnswerMove()">' + 
+						'<rect id="yesButton" cursor="pointer" /> <text id="yesButtonText">Yes</text></g>' + 
+						'<g cursor="pointer" onclick="WrongAnswerMove()"> <rect id="noButton" cursor="pointer" />'+
+						' <text id="noButtonText">No</text></g></svg>';
+var correctNoHTML = '<svg width="100%" height="100%"><g cursor="pointer" onclick="WrongAnswerMove()">' + 
+						'<rect id="yesButton" cursor="pointer" /> <text id="yesButtonText">Yes</text></g>' + 
+						'<g cursor="pointer" onclick="CorrectAnswerMove()"> <rect id="noButton" cursor="pointer" />'+
+						' <text id="noButtonText">No</text></g></svg>';
 var headerFontScale = 0.05;
 var textFontScale = 0.03;
 var messageFontScale = 0.04;

@@ -95,8 +95,7 @@ function Setup(game){
 	AddPlayerPlaceHolder(game, false);
 	AddPlayerPlaceHolder(game, true);
 
-	AddQuestionText(GetNextQuestion(startQuestionType)[2]);
-	AddAnswerText('<button type="button">Yes</button> <button type="button">No</button>');
+	//AddAnswerText('<button type="button">Yes</button> <button type="button">No</button>');
 
 	game.created = true;
 }
@@ -110,6 +109,7 @@ function Destroy(game){
 	}
 	game.svgObjects = new Array();
 }
+
 
 /* Adds the red start arrows to the board */
 function AddStartArrows(game, right){

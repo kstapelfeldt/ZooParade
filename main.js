@@ -3,7 +3,7 @@ var game = new Game();
 
 FixBodySize();
 Setup(game);
-
+AddQuestion();
 
 // Adjust all the objects on window resize
 $(window).resize(function(){
@@ -13,6 +13,28 @@ $(window).resize(function(){
 	Setup(game);
 });
 
+function AddQuestion(){
+	
+	var player = game.player0;
+	if (game.right) player = game.player1;
+	
+	if (!player.spin){
+		var playerQuestions = player0Questions;
+		if (game.right) playerQuestions = player1Questions;
+
+		var questionType = startQuestion;
+		if (player.visitedCheckpoints.length > 2) questionType = onTrailQuestion;
+		if (player.currentCheckpoint != null && player.currentCheckpoint.capture) questionType = captureQuestion;
+		if (player.captured) questionType = captureQuestion;
+
+		var qAPair = GetNextQuestion(questionType, game.right);
+		AddQuestionText(qAPair.question);
+		AddAnswerText(qAPair.answer);
+	} else {
+		AddQuestionText("");
+		AddAnswerText("");
+	}
+}
 
 function GamePlay(index){
 	
@@ -25,6 +47,7 @@ function GamePlay(index){
 	if (checkpoint.selected){
 		MovePlayer(player, checkpoint);
 		game.right = !game.right;
+		AddQuestion();
 	}
 }
 
@@ -38,10 +61,12 @@ function CorrectAnswerMove(){
 		MovePlayer(player, player.checkpoints[0]);
 		player.move1 = false;
 		game.right = !game.right;
+		AddQuestion();
 	} else if (player.move2){
 		MovePlayer(player, player.checkpoints[1]);
 		player.move2 = false;
 		game.right = !game.right;
+		AddQuestion();
 	} else if (!player.spin){
 		
 		var paths = GetPossiblePaths(player, player.steps);
@@ -51,6 +76,7 @@ function CorrectAnswerMove(){
 			var path = paths[0];
 			MovePlayer(player, path[path.length - 1]);
 			game.right = !game.right;
+			AddQuestion();
 		} else {
 			for (var i = 0; i < player.possiblePaths.length; i++){
 				SelectCheckpoint (player.possiblePaths[i][player.possiblePaths[i].length - 1]);
@@ -91,27 +117,17 @@ function AddQuestionText(question){
 	div.innerHTML = question;
 }
 
-/* Called when Yes button is clicked in the answer section */
-function YesClick(){
-	AddMessage("Yes Clicked");
-	CorrectAnswerMove();
-}
-
-/* Called when No button is clicked in the answer section */
-function NoClick(){
-	AddMessage("No Clicked");
-	WrongAnswerMove();
-}
-
 /* Adds the answer in the answer section of the game 
- * Parameter types: (string)
+ * Parameter types: (list of string)
  */
 function AddAnswerText(answer){
 	document.getElementById('answerHeader').style.fontSize = GetMapWidth() * headerFontScale;
 	var div = document.getElementById('answerContent');
 	div.style.fontSize = GetMapWidth() * textFontScale;
-	div.innerHTML = yesNoButtonHTML;
-	ActivateYesNoButtons();
+
+	div.innerHTML = answer;
+
+	if (answer == correctYesHTML || answer == correctNoHTML) ActivateYesNoButtons();
 }
 
 /* Activates the Yes and No buttons in the answer section for a Yes/No question */
