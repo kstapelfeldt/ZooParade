@@ -1,0 +1,12 @@
+Binary Question,QuestionType,Question,choices,right
+TRUE,1,Is found only in Asia?,,TRUE
+TRUE,1,Normally hunts at night?,,TRUE
+FALSE,1,Eats?,Meat (carnivorous)?/Vegetation (herbivorous)?/Both (omnivorous)?,Meat (carnivorous)?
+TRUE,2,Foot prints?,,TRUE
+TRUE,2,Nibbled leaves?,,FALSE
+TRUE,2,Freshly killed game?,,TRUE
+TRUE,2,A straight path to a water hole?,,TRUE
+TRUE,2,Bits of fruit on the trail?,,FALSE
+TRUE,2,Claw marks on trees?,,TRUE
+FALSE,3,Will you capture by:,Using a camouflaged box trap?/Driving to corral?,Using a camouflaged box trap?
+FALSE,4,Stand transport to zoo:,By air?/By ship?/By rail?,By ship?
