@@ -1,0 +1,12 @@
+Binary Question,QuestionType,Question,choices,right
+TRUE,1,The largest of all deer?,,TRUE
+TRUE,1,Is a good swimmer/,,TRUE
+FALSE,1,Eats?,Meat (carnivorous)?/Vegetation (herbivorous)?/Both (omnivorous)?,Vegetation (herbivorous)?
+TRUE,2,A broken horn?,,FALSE
+TRUE,2,Claw marks on trees?,,FALSE
+TRUE,2,Chewed leaves?,,TRUE
+TRUE,2,An antler lying on the trail?,,TRUE
+TRUE,2,Uprooted water lilies,,TRUE
+TRUE,2,Old logs ripped open?,,FALSE
+FALSE,3,Will you capture by:,Enticing to a corral?/Digging a pit on the trail?,Enticing to a corral?
+FALSE,4,Stand transport to zoo:,By air?/By ship?/By rail?,By rail?

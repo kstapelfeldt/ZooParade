@@ -150,14 +150,17 @@ function MovePlayer(player, checkpoint){
 	if (player.steps > 0) MoveForward(player, checkpoint);
 	else MoveBackwards(player, checkpoint);
 
-	player.steps = 1;
 	player.currentCheckpoint = checkpoint;
+	player.steps = 1;
+	player.spin = (checkpoint.redS || checkpoint.greenS);
 
 	setTimeout(function(){
     	VisitCheckpoint(player, player.currentCheckpoint, false);
+    	if (player.currentCheckpoint.hazard){
+    		player.steps = -1;
+    		MovePlayer(player, player.visitedCheckpoints[player.visitedCheckpoints.length - 2]);
+    	}
 	}, totalAnimationTime);
-	
-	player.spin = (checkpoint.redS || checkpoint.greenS);
 }
 
 /* Moves the given player forward 
@@ -254,7 +257,6 @@ function MovePlayerAnimation(player, path, totalDistance, distances, xDeviation,
 				animationLoop();
 			}
 		}, animationTime);
-
 	}
 	animationLoop();
 }

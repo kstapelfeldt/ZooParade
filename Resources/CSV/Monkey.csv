@@ -1,0 +1,12 @@
+Binary Question,QuestionType,Question,choices,right
+TRUE,1,Lives in family groups?,,TRUE
+TRUE,1,Has a cap-like hair on head?,,TRUE
+FALSE,1,Eats?,Meat (carnivorous)?/Vegetation (herbivorous)?/Both (omnivorous)?,Both (omnivorous)?
+TRUE,2,A trail leading to a swamp?,,FALSE
+TRUE,2,Trampled water plants?,,FALSE
+TRUE,2,Bits of fruit on the trail?,,TRUE
+TRUE,2,Chattering in trees?,,TRUE
+TRUE,2,Frightened deer running away?,,FALSE
+TRUE,2,Eggshells under trees?,,TRUE
+FALSE,3,Will you capture by:,Using a box trap in trees?/Digging a pit on the trail?,Using a box trap in trees?
+FALSE,4,Stand transport to zoo:,By air?/By ship?/By rail?,By air?

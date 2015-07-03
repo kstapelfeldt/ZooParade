@@ -1,0 +1,13 @@
+Binary Question,QuestionType,Question,choices,right
+TRUE,1,Is easily excited?,,TRUE
+TRUE,1,Is the world's tallest animal?,,TRUE
+FALSE,1,Eats?,Meat (carnivorous)?/Vegetation (herbivorous)?/Both (omnivorous)?,Vegetation (herbivorous)?
+TRUE,2,Leaves nibbled 12 ft. from the ground?,,TRUE
+TRUE,2,Claw marks on trees?,,FALSE
+TRUE,2,Freshly killed game?,,FALSE
+TRUE,2,Broken Acaia brances?,,TRUE
+TRUE,2,Vultures circling overhead?,,FALSE
+TRUE,2,Rubbed termite nests?,,FALSE
+TRUE,2,Hair tuffs in trees 10 ft. above the groud?,,TRUE
+FALSE,3,Will you capture by:,Luring to pit with live bait?/Using a lasso?,Using a lasso?
+FALSE,4,Stand transport to zoo:,By air?/By ship?/By rail?,By ship?

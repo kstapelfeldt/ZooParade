@@ -6,9 +6,9 @@ var player0Used = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
 var player1Used = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
 
 // Read from the CSV files and fill player questions
-var fileContent = ReadFile("Dog.csv");
+var fileContent = ReadFile("Resources/CSV/Grizzly.csv");
 ProcessCSV(fileContent, false);
-var fileContent = ReadFile("Cat.csv");
+var fileContent = ReadFile("Resources/CSV/Zebra.csv");
 ProcessCSV(fileContent, true);
 
 
@@ -16,14 +16,14 @@ ProcessCSV(fileContent, true);
  * Parameter types: (String)
  */
 function ProcessCSV(results, right){
+	
 	var rows = results.split('\n');
 	var playerQuestions = player0Questions;
 	if (right) playerQuestions = player1Questions;
 
+
 	for (var i = 1; i < rows.length; i++){
 		var row = rows[i].split(',');
-		if (row.length < 5) while (row.length < 5) row.push("");
-
 		var question = row[questionIndex];
 
 		var answer = "<br/>";

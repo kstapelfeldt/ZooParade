@@ -1,0 +1,13 @@
+Binary Question,QuestionType,Question,choices,right
+TRUE,1,Travels in herds?,,TRUE
+TRUE,1,Has a loud snort?,,TRUE
+FALSE,1,Eats?,Meat (carnivorous)?/Vegetation (herbivorous)?/Both (omnivorous)?,Vegetation (herbivorous)?
+TRUE,2,Nibbled leaves?,,TRUE
+TRUE,2,Claw marks on trees?,,FALSE
+TRUE,2,Freshly killed game?,,FALSE
+TRUE,2,Broken Acaia brances?,,TRUE
+TRUE,2,Vultures circling overhead?,,FALSE
+TRUE,2,A loud snort?,,TRUE
+TRUE,2,Rubbed termite nests?,,FALSE
+FALSE,3,Will you capture by:,Using a large throwing net?/Using a lasso?,Using a lasso?
+FALSE,4,Stand transport to zoo:,By air?/By ship?/By rail?,By ship?

@@ -1,0 +1,13 @@
+Binary Question,QuestionType,Question,choices,right
+TRUE,1,Is found in the mountain?,,TRUE
+TRUE,1,Is very sure footed?,,TRUE
+FALSE,1,Eats?,Meat (carnivorous)?/Vegetation (herbivorous)?/Both (omnivorous)?,Vegetation (herbivorous)?
+TRUE,2,Niddled leaves and grass?,,TRUE
+TRUE,2,Claw marks on trees?,,FALSE
+TRUE,2,A broken horn?,,TRUE
+TRUE,2,A broken honeycomb,,FALSE
+TRUE,2,Uprooted water lilies,,TRUE
+TRUE,2,Chewed aspen leaves?,,TRUE
+TRUE,2,A mud wallow?,,TRUE
+FALSE,3,Will you capture by:,Enticing to a corral?/Catching with a hand net?,Enticing to a corral?
+FALSE,4,Stand transport to zoo:,By air?/By ship?/By rail?,By rail?
