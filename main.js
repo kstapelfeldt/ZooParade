@@ -65,6 +65,7 @@ function UpdateQuestion(){
 
 /* This function is called when player gives the right answer */
 function CorrectAnswerMove(){
+
 	var player = game.player0;
 	if (game.right) player = game.player1;
 
@@ -122,6 +123,7 @@ function CorrectAnswerMove(){
 
 /* This function is called when player gives the right answer */
 function WrongAnswerMove(){
+	
 	var player = game.player0;
 	if (game.right) player = game.player1;
 

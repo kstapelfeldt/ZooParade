@@ -18,37 +18,44 @@ ProcessCSV(fileContent, true);
 function ProcessCSV(results, right){
 	
 	var rows = results.split('\n');
+
 	var playerQuestions = player0Questions;
 	if (right) playerQuestions = player1Questions;
 
 
 	for (var i = 1; i < rows.length; i++){
+
 		var row = rows[i].split(',');
-		var question = row[questionIndex];
 
-		var answer = "<br/>";
-		if (row[binaryIndex] == "TRUE"){
-			if (row[correctIndex] == "TRUE") answer = correctYesHTML;
-			else answer = correctNoHTML;
-		} else{
-			
-			var choices = row[choicesIndex].split("/");
-			var correctAnswer = row[correctIndex].trim();
-			
-			for (var j = 0; j < choices.length; j++){
-				var label = choices[j].trim();
-				var action = "WrongAnswerMove()";
-				if (label == correctAnswer) action = "CorrectAnswerMove()";
-				answer += '<div class="mcqOption" cursor="pointer" onClick="' + action + '"><center>' + label + '</center></div><br/>'
+		if (row[binaryIndex] != "" && row[typeIndex] != "" && row[questionIndex] != "" && 
+			(row[choicesIndex] != "" || row[correctIndex] != "")){
+
+			var question = row[questionIndex];
+
+			var answer = "<br/>";
+
+			if (row[binaryIndex].trim() == "TRUE"){
+				if (row[correctIndex].trim() == "TRUE") answer = correctYesHTML;
+				else answer = correctNoHTML;
+			} else{
+				var choices = row[choicesIndex].split("/");
+				var correctAnswer = row[correctIndex].trim();
+				
+				for (var j = 0; j < choices.length; j++){
+					var label = choices[j].trim();
+					var action = "WrongAnswerMove()";
+					if (label == correctAnswer) action = "CorrectAnswerMove()";
+					answer += '<div class="mcqOption" cursor="pointer" onClick="' + action + '"><center>' + label + '</center></div><br/>';
+				}
 			}
-		}
 
-		var qAPair = {'question': question, 'answer': answer};
-		
-		if (row[typeIndex] == 1) playerQuestions.start.push(qAPair);
-		else if (row[typeIndex] == 2) playerQuestions.onTrail.push(qAPair);
-		else if (row[typeIndex] == 3) playerQuestions.capture.push(qAPair);
-		else if (row[typeIndex] == 4) playerQuestions.transport.push(qAPair);
+			var qAPair = {'question': question, 'answer': answer};
+			
+			if (row[typeIndex] == 1) playerQuestions.start.push(qAPair);
+			else if (row[typeIndex] == 2) playerQuestions.onTrail.push(qAPair);
+			else if (row[typeIndex] == 3) playerQuestions.capture.push(qAPair);
+			else if (row[typeIndex] == 4) playerQuestions.transport.push(qAPair);
+		}
 	}
 }
 
