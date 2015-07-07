@@ -8,6 +8,7 @@ function Animal(name, continent, shortName){
 	this.continent = continent;
 	this.svg = {};
 	this.image = null;
+	this.csvPath = 'Resources/CSV/' + shortName + '.csv';
 	this.svgPath = 'Resources/SVG/' + shortName + '.svg';
 	this.leftImgPath = 'Resources/Images/' + shortName + 'Left.svg';
 	this.rightImgPath = 'Resources/Images/' + shortName + 'Right.svg';
@@ -137,6 +138,7 @@ function SetAnimalImagesOnClick(animal){
 		if (animal.continent.checkpoints[0].right == game.right) {
 			if (player.currentAnimal == null || player.capturedAnimals.indexOf(animal) == -1) {
 				player.currentAnimal = animal;
+				AnimalSelected(player, animal);
 			}
 		}
 	});

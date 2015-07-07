@@ -1,6 +1,6 @@
 var game = new Game();
-var qAPair = GetNextQuestion();
 var totalAnimationTime = 0;
+var qAPair;
 
 // Adjust all the objects on window resize
 $(window).resize(function(){
@@ -12,8 +12,28 @@ $(window).resize(function(){
 
 FixBodySize();
 Setup(game);
-AddQuestionText();
-AddAnswerText();
+AddMessage(game.player0.name + ", please choose 1 out of the three animals that you want to capture");
+
+
+/* This function is called when an animal is selected by the 
+ * player to capture
+ */
+function AnimalSelected(player, animal){
+
+	UpdatePlayerAnimal(player, animal.csvPath);
+
+	if (game.player1.currentAnimal == null){
+		AddMessage(game.player1.name + ", please choose 1 out of the three animals that you want to capture");
+		game.right = !game.right;
+	} else {
+		game.right = !game.right;
+
+		qAPair = GetNextQuestion();
+		AddQuestionText();
+		AddAnswerText();
+		AddMessage(game.player0.name + "'s turn");
+	}
+}
 
 /* Switches players and updates question and answers */
 function Proceed(){
@@ -32,6 +52,14 @@ function Proceed(){
 	AddMessage(message);
 }
 
+/* Called when animal is captured by the player */
+function AnimalCaptured(player, animal){
+	player.animalsCaptured.push(animal);
+	AddMessage("Please choose an animal to capture next");
+	// Move Player placeholder to the captured animal's image
+	// Make the player choose another animal in the next turn
+}
+
 /* Called when the player's answer is correct 
  * Moves the player to ahead and displays the appropriate info
  */
@@ -39,6 +67,7 @@ function CorrectAnswerMove(){
 	var player = game.player0;
 	if (game.right) player = game.player1;
 
+	var message = "Correct Answer!<br/>Check out more info in the answer section<br/>Click on 'Proceed' to continue";
 	if (player.move1 || player.move2 || player.move3){
 		if (player.move1){
 			MovePlayer(player, player.checkpoints[0]);
@@ -52,23 +81,34 @@ function CorrectAnswerMove(){
 		}
 		setTimeout(function(){
 			AddInfoText();
+			AddMessage(message);
 		}, totalAnimationTime);
 	
+	} else if (player.captured){
+		// Move the animal to the zoo
+		// Make the player choose another animal
+
 	} else {
-		var paths = GetPossiblePaths(player, player.steps);
-		player.possiblePaths = paths;
-		if (paths.length == 1){
-			var path = paths[0];
-			MovePlayer(player, path[path.length - 1]);
-			setTimeout(function(){
-				AddInfoText();
-			}, totalAnimationTime);
+		if (player.currentCheckpoint.capture && player.currentCheckpoint.animal == player.currentAnimal){
+			AnimalCaptured(player, player.currentAnimal);
 		} else {
-			for (var i = 0; i < player.possiblePaths.length; i++){
-				SelectCheckpoint (player.possiblePaths[i][player.possiblePaths[i].length - 1]);
+			var paths = GetPossiblePaths(player, player.steps);
+			player.possiblePaths = paths;
+			if (paths.length == 1){
+				var path = paths[0];
+				MovePlayer(player, path[path.length - 1]);
+				setTimeout(function(){
+					AddInfoText();
+					AddMessage(message);
+				}, totalAnimationTime);
+			} else {
+				for (var i = 0; i < player.possiblePaths.length; i++){
+					SelectCheckpoint (player.possiblePaths[i][player.possiblePaths[i].length - 1]);
+				}
+				AddMessage("Click on one of the highlighted checkpoints to move player");
 			}
-			AddMessage("Click on one of the highlighted checkpoints to move player");
 		}
+			
 	}
 }
 
@@ -105,7 +145,8 @@ function UpdateQuestion(){
 
 		var questionType = startQuestion;
 		if (player.visitedCheckpoints.length > 2) questionType = onTrailQuestion;
-		if (player.currentCheckpoint != null && player.currentCheckpoint.capture) questionType = captureQuestion;
+		if (player.currentCheckpoint != null && player.currentCheckpoint.capture && 
+			player.currentCheckpoint.animal == player.currentAnimal) questionType = captureQuestion;
 		if (player.captured) questionType = captureQuestion;
 
 		qAPair = GetNextQuestion(questionType, game.right);

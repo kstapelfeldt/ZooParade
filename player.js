@@ -92,17 +92,13 @@ function AddVisitedCheckpoint(player, checkpoint){
 
 function VisitCheckpoint(player, checkpoint, pass){
 	if (checkpoint.capture){
-		if (pass){
-		// Animal flees from the capture point
-		checkpoint.capture = false;
-		player.capturePoints[checkpoint.index] = false;
-		RemoveCapturePoint(player.map, checkpoint);
-		Flee(checkpoint.animal, checkpoint);
-		
-		} else {
-			// At animal capture point, switch to capture questions
-			
-		}
+		if (pass && (player.currentAnimal == checkpoint.animal)){
+			// Animal flees from the capture point
+			checkpoint.capture = false;
+			player.capturePoints[checkpoint.index] = false;
+			RemoveCapturePoint(player.map, checkpoint);
+			Flee(checkpoint.animal, checkpoint);
+		} else player.captured = true;
 	}
 }
 

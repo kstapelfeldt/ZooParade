@@ -6,11 +6,32 @@ var player0Used = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
 var player1Used = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
 
 // Read from the CSV files and fill player questions
-var fileContent = ReadFile("Resources/CSV/Grizzly.csv");
-ProcessCSV(fileContent, false);
-var fileContent = ReadFile("Resources/CSV/Elephant.csv");
-ProcessCSV(fileContent, true);
+// var fileContent = ReadFile("Resources/CSV/Grizzly.csv");
+// ProcessCSV(fileContent, false);
+// var fileContent = ReadFile("Resources/CSV/Elephant.csv");
+// ProcessCSV(fileContent, true);
 
+
+function UpdatePlayerAnimal(player, animalCSVPath){
+	var playerQuestions = player0Questions;
+	if (player.right) playerQuestions = player1Questions;
+
+	var playerUsed = player0Used;
+	if (player.right) playerUsed = player1Used;
+
+	playerQuestions.start = [];
+	playerQuestions.onTrail = [];
+	playerQuestions.capture = [];
+	playerQuestions.transport = [];
+
+	playerUsed.start = [];
+	playerUsed.onTrail = [];
+	playerUsed.capture = [];
+	playerUsed.transport = [];
+
+	var fileContent = ReadFile(animalCSVPath);
+	ProcessCSV(fileContent, player.right);
+}
 
 /* Reads the csv string and stores the questions in the questions array
  * Parameter types: (String)
