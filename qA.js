@@ -8,7 +8,7 @@ var player1Used = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
 // Read from the CSV files and fill player questions
 var fileContent = ReadFile("Resources/CSV/Grizzly.csv");
 ProcessCSV(fileContent, false);
-var fileContent = ReadFile("Resources/CSV/Zebra.csv");
+var fileContent = ReadFile("Resources/CSV/Elephant.csv");
 ProcessCSV(fileContent, true);
 
 
@@ -49,7 +49,10 @@ function ProcessCSV(results, right){
 				}
 			}
 
-			var qAPair = {'question': question, 'answer': answer};
+			var info = "";
+			if (row.length > infoIndex) info = row[infoIndex];
+
+			var qAPair = {'question': question, 'answer': answer, 'info': info};
 			
 			if (row[typeIndex] == 1) playerQuestions.start.push(qAPair);
 			else if (row[typeIndex] == 2) playerQuestions.onTrail.push(qAPair);

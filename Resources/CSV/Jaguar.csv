@@ -1,13 +1,13 @@
-Binary Question,QuestionType,Question,choices,right
-TRUE,1,Has rosette markings?,,TRUE
-TRUE,1,Is heavier than a leopard?,,TRUE
-FALSE,1,Eats?,Meat (carnivorous)?/Vegetation (herbivorous)?/Both (omnivorous)?,Meat (carnivorous)?
-TRUE,2,Bits of fruit on the trail?,,FALSE
-TRUE,2,Trampled water plants?,,FALSE
-TRUE,2,Freshly killed game?,,TRUE
-TRUE,2,Scratch marks on trees?,,TRUE
-TRUE,2,Cropped leaves?,,FALSE
-TRUE,2,Frightened deer running away?,,TRUE
-TRUE,2,A mud wallow?,,FALSE
-FALSE,3,Will you capture by:,Driving to corral?/Using a box trap?,Using a box trap?
-FALSE,4,Stand transport to zoo:,By air?/By ship?/By rail?,By ship?
+Binary Question,QuestionType,Question,choices,right,info
+TRUE,1,Has rosette markings?,,TRUE,
+TRUE,1,Is heavier than a leopard?,,TRUE,
+FALSE,1,Eats?,Meat (carnivorous)?/Vegetation (herbivorous)?/Both (omnivorous)?,Meat (carnivorous)?,
+TRUE,2,Bits of fruit on the trail?,,FALSE,
+TRUE,2,Trampled water plants?,,FALSE,
+TRUE,2,Freshly killed game?,,TRUE,
+TRUE,2,Scratch marks on trees?,,TRUE,
+TRUE,2,Cropped leaves?,,FALSE,
+TRUE,2,Frightened deer running away?,,TRUE,
+TRUE,2,A mud wallow?,,FALSE,
+FALSE,3,Will you capture by:,Driving to corral?/Using a box trap?,Using a box trap?,
+FALSE,4,Stand transport to zoo:,By air?/By ship?/By rail?,By ship?,

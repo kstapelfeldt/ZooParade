@@ -12,6 +12,7 @@ function Player(name, continent, map, checkpoints, capturePoints, right){
 	this.right = right;
 
 	this.currentCheckpoint = null;
+	this.currentAnimal = null;
 	this.visitedCheckpoints = new Array();
 	this.animalsCaptured = new Array();
 	this.captured = false;
@@ -21,6 +22,7 @@ function Player(name, continent, map, checkpoints, capturePoints, right){
 	this.possiblePaths = null;
 	this.move1 = true;
 	this.move2 = true;
+	this.move3 = true;
 }
 
 

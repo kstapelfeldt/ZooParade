@@ -1,12 +1,12 @@
-Binary Question,QuestionType,Question,choices,right
-TRUE,1,Has more than 3 toes?,,TRUE
-TRUE,1,Is shorter than the African elephant?,,TRUE
-FALSE,1,Eats?,Meat (carnivorous)?/Vegetation (herbivorous)?/Both (omnivorous)?,Vegetation (herbivorous)?
-TRUE,2,A trampled mud wallow?,,TRUE
-TRUE,2,Claw marks on trees?,,FALSE
-TRUE,2,Freshly killed game?,,FALSE
-TRUE,2,Broken tree limbs?,,TRUE
-TRUE,2,A straight path to a water hole?,,FALSE
-TRUE,2,Leaves stripped from tree tops?,,TRUE
-FALSE,3,Will you capture by:,Cornering and using a net?/Driving to corral?,Driving to corral?
-FALSE,4,Stand transport to zoo:,By air?/By ship?/By rail?,By ship?
+Binary Question,QuestionType,Question,choices,right,info
+TRUE,1,Has more than 3 toes?,,TRUE,
+TRUE,1,Is shorter than the African elephant?,,TRUE,
+FALSE,1,Eats?,Meat (carnivorous)?/Vegetation (herbivorous)?/Both (omnivorous)?,Vegetation (herbivorous)?,
+TRUE,2,A trampled mud wallow?,,TRUE,
+TRUE,2,Claw marks on trees?,,FALSE,
+TRUE,2,Freshly killed game?,,FALSE,
+TRUE,2,Broken tree limbs?,,TRUE,
+TRUE,2,A straight path to a water hole?,,FALSE,
+TRUE,2,Leaves stripped from tree tops?,,TRUE,
+FALSE,3,Will you capture by:,Cornering and using a net?/Driving to corral?,Driving to corral?,
+FALSE,4,Stand transport to zoo:,By air?/By ship?/By rail?,By ship?,

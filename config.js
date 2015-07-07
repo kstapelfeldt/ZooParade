@@ -3,6 +3,7 @@ var typeIndex = 1;
 var questionIndex = 2;
 var choicesIndex = 3;
 var correctIndex = 4;
+var infoIndex = 5;
 
 var startQuestion = 1;
 var onTrailQuestion = 2;
@@ -174,15 +175,14 @@ var playerPlaceholderXDeviation = -0.033;
 var playerPlaceholderYDeviation = -0.045;
 
 // Question Answer div variables
-var correctYesHTML = '<svg width="100%" height="100%"><g cursor="pointer" onclick="CorrectAnswerMove()">' + 
-						'<rect id="yesButton" cursor="pointer" /> <text id="yesButtonText">Yes</text></g>' + 
-						'<g cursor="pointer" onclick="WrongAnswerMove()"> <rect id="noButton" cursor="pointer" />'+
-						' <text id="noButtonText">No</text></g></svg>';
-var correctNoHTML = '<svg width="100%" height="100%"><g cursor="pointer" onclick="WrongAnswerMove()">' + 
-						'<rect id="yesButton" cursor="pointer" /> <text id="yesButtonText">Yes</text></g>' + 
-						'<g cursor="pointer" onclick="CorrectAnswerMove()"> <rect id="noButton" cursor="pointer" />'+
-						' <text id="noButtonText">No</text></g></svg>';
-						
+var correctYesHTML = '<center> <div id="yesButton" onclick="CorrectAnswerMove()">Yes</div>' + 
+						'<div id="noButton" onclick = "WrongAnswerMove()">No</div> </center>';
+
+var correctNoHTML = '<center> <div id="yesButton" onclick="WrongAnswerMove()">Yes</div>' + 
+						'<div id="noButton" onclick = "CorrectAnswerMove()">No</div> </center>';
+
+var proceedButtonHTML = '<center><div id="proceedButton" onclick="Proceed()">Proceed</div></center>' 
+
 var headerFontScale = 0.05;
 var textFontScale = 0.03;
 var messageFontScale = 0.04;

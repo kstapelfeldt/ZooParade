@@ -77,6 +77,9 @@ function Setup(game){
 	game.continent0 = new Continent(continent0Name, continent0Animals, game.leftCheckpoints);
 	game.continent1 = new Continent(continent1Name, continent1Animals, game.rightCheckpoints);
 
+	LinkContinentAnimals(continent0Animals, false);
+	LinkContinentAnimals(continent1Animals, true);
+
 	// Add names of continents to the maps
 	AddContinentName(game, continent0Name, false);
 	AddContinentName(game, continent1Name, true);
@@ -85,10 +88,6 @@ function Setup(game){
 	PositionAnimals(game, continent0Animals, false);
 	PositionAnimals(game, continent1Animals, true);
 
-	// Add the pictures on the edges of the board
-	AddAnimalImages(game, continent0Animals, false);
-	AddAnimalImages(game, continent1Animals, true);
-
 	CreateSpinner(game);
 	
 	if (game.player0 == null && game.player1 == null){
@@ -96,11 +95,18 @@ function Setup(game){
 		game.player1 = new Player("Player1", game.continent1, game.rightMap, game.rightCheckpoints, game.rightCapturePoints, true);
 	}
 
+	// Add the pictures on the edges of the board
+	AddAnimalImages(game, continent0Animals, false);
+	AddAnimalImages(game, continent1Animals, true);
+
+	game.continent0.player = game.player0;
+	game.continent1.player = game.player1;
+
 	AddPlayerPlaceHolder(game, false);
 	AddPlayerPlaceHolder(game, true);
 
-	AddQuestionText(game.currentQuestion);
-	AddAnswerText(game.currentAnswer);
+	// AddQuestionText(game.currentQuestion);
+	// AddAnswerText(game.currentAnswer);
 	AddMessage(game.currentMessage);
 
 	game.created = true;
@@ -148,6 +154,14 @@ function AddStartArrows(game, right){
 
 	if (right) game.rightStartPosition = {x: cx - GetMapWidth() * 0.003, y: cy};
 	else game.leftStartPosition = {x: cx + GetMapWidth() * 0.001, y: cy};
+}
+
+
+function LinkContinentAnimals(animals, right){
+	var continent = game.continent0;
+	if (right) continent = game.continent1;
+
+	for (var i = 0; i < animals.length; i++) animals[i].continent = continent;
 }
 
 

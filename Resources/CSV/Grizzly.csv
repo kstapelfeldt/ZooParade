@@ -1,12 +1,12 @@
-Binary Question,QuestionType,Question,choices,right
-TRUE,1,Has humped shoulders?,,TRUE
-TRUE,1,Has long front claws?,,TRUE
-FALSE,1,Eats?,Meat (carnivorous)?/Vegetation (herbivorous)?/Both (omnivorous)?,Both (omnivorous)?
-TRUE,2,A broken horn?,,FALSE
-TRUE,2,Claw marks on trees?,,TRUE
-TRUE,2,Chewed branches?,,FALSE
-TRUE,2,A broken honeycomb,,TRUE
-TRUE,2,Uprooted water lilies,,FALSE
-TRUE,2,Old logs ripped open?,,TRUE
-FALSE,3,Will you capture by:,Using a lasso?/Using a large box?,Using a large box trap?
-FALSE,4,Stand transport to zoo:,By air?/By ship?/By rail?,By rail?
+Binary Question,QuestionType,Question,choices,right,info
+TRUE,1,Has humped shoulders?,,TRUE,
+TRUE,1,Has long front claws?,,TRUE,
+FALSE,1,Eats?,Meat (carnivorous)?/Vegetation (herbivorous)?/Both (omnivorous)?,Both (omnivorous)?,
+TRUE,2,A broken horn?,,FALSE,
+TRUE,2,Claw marks on trees?,,TRUE,
+TRUE,2,Chewed branches?,,FALSE,
+TRUE,2,A broken honeycomb,,TRUE,
+TRUE,2,Uprooted water lilies,,FALSE,
+TRUE,2,Old logs ripped open?,,TRUE,
+FALSE,3,Will you capture by:,Using a lasso?/Using a large box?,Using a large box trap?,
+FALSE,4,Stand transport to zoo:,By air?/By ship?/By rail?,By rail?,

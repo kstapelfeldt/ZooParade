@@ -1,13 +1,13 @@
-Binary Question,QuestionType,Question,choices,right
-TRUE,1,Lives in swampy forests?,,TRUE
-TRUE,1,Has a long and mobile nose?,,TRUE
-FALSE,1,Eats?,Meat (carnivorous)?/Vegetation (herbivorous)?/Both (omnivorous)?,Vegetation (herbivorous)?
-TRUE,2,Vultures circling overhead?,,FALSE
-TRUE,2,Trampled water plants?,,TRUE
-TRUE,2,Freshly killed game?,,FALSE
-TRUE,2,Claw marks on trees?,,FALSE
-TRUE,2,Cropped leaves?,,TRUE
-TRUE,2,Frightened deer running away?,,FALSE
-TRUE,2,A mud wallow?,,TRUE
-FALSE,3,Will you capture by:,Using a net?/Digging a pit on the trail?,Digging a pit on the trail?
-FALSE,4,Stand transport to zoo:,By air?/By ship?/By rail?,By ship?
+Binary Question,QuestionType,Question,choices,right,info
+TRUE,1,Lives in swampy forests?,,TRUE,
+TRUE,1,Has a long and mobile nose?,,TRUE,
+FALSE,1,Eats?,Meat (carnivorous)?/Vegetation (herbivorous)?/Both (omnivorous)?,Vegetation (herbivorous)?,
+TRUE,2,Vultures circling overhead?,,FALSE,
+TRUE,2,Trampled water plants?,,TRUE,
+TRUE,2,Freshly killed game?,,FALSE,
+TRUE,2,Claw marks on trees?,,FALSE,
+TRUE,2,Cropped leaves?,,TRUE,
+TRUE,2,Frightened deer running away?,,FALSE,
+TRUE,2,A mud wallow?,,TRUE,
+FALSE,3,Will you capture by:,Using a net?/Digging a pit on the trail?,Digging a pit on the trail?,
+FALSE,4,Stand transport to zoo:,By air?/By ship?/By rail?,By ship?,

@@ -90,6 +90,8 @@ function AddAnimalImages(game, animals, right){
 	var x = imgWidth / 2;
 	if (right) x = GetMapWidth() - x;
 
+	var id = "L";
+	if (right) id = "R";
 
 
 	var imgPath = animals[0].leftImgPath;
@@ -101,6 +103,8 @@ function AddAnimalImages(game, animals, right){
 	game.svgObjects.push(image);
 	animals[0].image = image;
 
+	SetAnimalImagesOnClick(animals[0]);
+
 	var imgPath = animals[1].leftImgPath;
 	if(right) imgPath = animals[1].rightImgPath;
 	var image = path.image(imgPath, imgWidth, imgHeight);
@@ -110,6 +114,8 @@ function AddAnimalImages(game, animals, right){
 	game.svgObjects.push(image);
 	animals[1].image = image;
 
+	SetAnimalImagesOnClick(animals[1]);
+
 	var imgPath = animals[2].leftImgPath;
 	if(right) imgPath = animals[2].rightImgPath;
 	var image = path.image(imgPath, imgWidth, imgHeight);
@@ -117,4 +123,52 @@ function AddAnimalImages(game, animals, right){
 	image.cy(imgYposition);
 	game.svgObjects.push(image);
 	animals[2].image = image;
+
+	SetAnimalImagesOnClick(animals[2]);
+	
 }
+
+/* Sets the onClick method for animal images */
+function SetAnimalImagesOnClick(animal){
+	animal.image.click(function(){
+		var player = game.player0;
+		if (game.right) player = game.player1;
+
+		if (animal.continent.checkpoints[0].right == game.right) {
+			if (player.currentAnimal == null || player.capturedAnimals.indexOf(animal) == -1) {
+				player.currentAnimal = animal;
+			}
+		}
+	});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

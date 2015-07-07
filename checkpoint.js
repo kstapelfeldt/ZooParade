@@ -144,7 +144,28 @@ function SetCheckpointClick(checkpoint){
 		var id = this.attr('id');
 		var type = id.slice(0, 1);
 		var index = parseInt(id.slice(1));
-		if (checkpoint.right == game.right) GamePlay(index);
+		if (checkpoint.selected && checkpoint.right == game.right) {
+			
+			var player = game.player0;
+			if (game.right) player = game.player1;
+
+			var nextPlayer = game.player1;
+			if (game.right) nextPlayer = game.player0;
+
+			var spinnerPoint = player.currentCheckpoint.redS || player.currentCheckpoint.greenS;
+
+			MovePlayer(player, checkpoint);
+
+			setTimeout(function(){
+				if (spinnerPoint) {
+					Proceed();
+					var message = nextPlayer.name + "'s turn";
+					if (nextPlayer.spin) message += "<br/>Please spin the Spinner by clicking 'Spin'";
+					AddMessage(message);
+				}
+				else AddInfoText();
+			}, totalAnimationTime);
+		}
 	});
 }
 

@@ -1,12 +1,12 @@
-Binary Question,QuestionType,Question,choices,right
-TRUE,1,Belongs to the cat family?,,TRUE
-TRUE,1,Usually hunts a night?,,TRUE
-FALSE,1,Eats?,Meat (carnivorous)/Vegetation (herbivorous)/Both (omnivorous),Meat (carnivorous)
-TRUE,2,A mud wallow?,,FALSE
-TRUE,2,Freshly killed game?,,TRUE
-TRUE,2,Distant roar?,,TRUE
-TRUE,2,Broken Acaia brances?,,FALSE
-TRUE,2,Vultures circling overhead?,,TRUE
-TRUE,2,Leaves stripped from tree tops?,,FALSE
-FALSE,3,Will you capture by:,Using a large box trap?/Using a lasso?,Using a large box trap?
-FALSE,4,Stand transport to zoo:,By air?/By ship?/By rail?,By ship?
+Binary Question,QuestionType,Question,choices,right,info
+TRUE,1,Belongs to the cat family?,,TRUE,
+TRUE,1,Usually hunts a night?,,TRUE,
+FALSE,1,Eats?,Meat (carnivorous)/Vegetation (herbivorous)/Both (omnivorous),Meat (carnivorous),
+TRUE,2,A mud wallow?,,FALSE,
+TRUE,2,Freshly killed game?,,TRUE,
+TRUE,2,Distant roar?,,TRUE,
+TRUE,2,Broken Acaia brances?,,FALSE,
+TRUE,2,Vultures circling overhead?,,TRUE,
+TRUE,2,Leaves stripped from tree tops?,,FALSE,
+FALSE,3,Will you capture by:,Using a large box trap?/Using a lasso?,Using a large box trap?,
+FALSE,4,Stand transport to zoo:,By air?/By ship?/By rail?,By ship?,

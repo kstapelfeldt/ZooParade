@@ -1,12 +1,12 @@
-Binary Question,QuestionType,Question,choices,right
-TRUE,1,Has a tough armor-like hide?,,TRUE
-TRUE,1,Has a horn formed of hair bristles?,,TRUE
-FALSE,1,Eats?,Meat (carnivorous)?/Vegetation (herbivorous)?/Both (omnivorous)?,Vegetation (herbivorous)?
-TRUE,2,Leaves nibbled 12 ft. from the ground?,,FALSE
-TRUE,2,Claw marks on trees?,,FALSE
-TRUE,2,Freshly killed game?,,FALSE
-TRUE,2,A trampled mud wallow?,,TRUE
-TRUE,2,Leaves nibbled low on trees?,,TRUE
-TRUE,2,Trees rubbed 4 ft. from groud?,,TRUE
-FALSE,3,Will you capture by:,Luring a shallow pit on trail?/Using a large net?,Luring a shallow pit on trail?
-FALSE,4,Stand transport to zoo:,By air?/By ship?/By rail?,By ship?
+Binary Question,QuestionType,Question,choices,right,info
+TRUE,1,Has a tough armor-like hide?,,TRUE,
+TRUE,1,Has a horn formed of hair bristles?,,TRUE,
+FALSE,1,Eats?,Meat (carnivorous)?/Vegetation (herbivorous)?/Both (omnivorous)?,Vegetation (herbivorous)?,
+TRUE,2,Leaves nibbled 12 ft. from the ground?,,FALSE,
+TRUE,2,Claw marks on trees?,,FALSE,
+TRUE,2,Freshly killed game?,,FALSE,
+TRUE,2,A trampled mud wallow?,,TRUE,
+TRUE,2,Leaves nibbled low on trees?,,TRUE,
+TRUE,2,Trees rubbed 4 ft. from groud?,,TRUE,
+FALSE,3,Will you capture by:,Luring a shallow pit on trail?/Using a large net?,Luring a shallow pit on trail?,
+FALSE,4,Stand transport to zoo:,By air?/By ship?/By rail?,By ship?,
