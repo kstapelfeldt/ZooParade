@@ -8,6 +8,8 @@ function Animal(name, continent, shortName){
 	this.continent = continent;
 	this.svg = {};
 	this.image = null;
+	this.selected = false;
+	this.shadow = null;
 	this.csvPath = 'Resources/CSV/' + shortName + '.csv';
 	this.svgPath = 'Resources/SVG/' + shortName + '.svg';
 	this.leftImgPath = 'Resources/Images/' + shortName + 'Left.svg';
@@ -116,23 +118,36 @@ function AddAnimalImage(game, animal, path, imgWidth, imgHeight, x, y, right){
 	game.svgObjects.push(rect);
 
 	var text = path.text(animal.name);
-	text.font({ family: "Tahoma", size: imgWidth * 0.1, fill: '#000', anchor: "middle" });
-	text.move(x, y + imgHeight * 0.4);
+	text.font({ family: "Tahoma", size: imgWidth * 0.08, fill: '#000', anchor: "middle" });
+	text.move(x, y + imgHeight * 0.425);
 	game.svgObjects.push(text);
 
-	SetAnimalImagesOnClick(animal);
+	animal.shadow = path.rect(imgWidth, imgHeight * 0.8).attr({x: x - imgWidth * 0.5, y: y - imgHeight * 0.4, fill: '#000', opacity: 0});
+	game.svgObjects.push(animal.shadow);
+
+	SetAnimalImageOnClick(animal);
+
+	if (animal.selected) ShadowAnimalImage(animal);
 }
 
-/* Sets the onClick method for animal images */
-function SetAnimalImagesOnClick(animal){
-	animal.image.click(function(){
+function ShadowAnimalImage(animal){
+	animal.shadow.attr({opacity: 0.5});
+}
+
+/* Sets the onClick method for an animal image */
+function SetAnimalImageOnClick(animal){
+	animal.shadow.click(function(){
+
 		var player = game.player0;
 		if (game.right) player = game.player1;
 
 		if (animal.continent.checkpoints[0].right == game.right) {
 			if (player.currentAnimal == null || player.capturedAnimals.indexOf(animal) == -1) {
+
 				player.currentAnimal = animal;
 				player.animalSelected = true;
+				animal.selected = true;
+				ShadowAnimalImage(animal);
 				AnimalSelected(player, animal);
 			}
 		}
