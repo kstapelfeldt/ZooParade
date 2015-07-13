@@ -138,6 +138,7 @@ function SetAnimalImagesOnClick(animal){
 		if (animal.continent.checkpoints[0].right == game.right) {
 			if (player.currentAnimal == null || player.capturedAnimals.indexOf(animal) == -1) {
 				player.currentAnimal = animal;
+				player.animalSelected = true;
 				AnimalSelected(player, animal);
 			}
 		}

@@ -13,6 +13,7 @@ function Player(name, continent, map, checkpoints, capturePoints, right){
 
 	this.currentCheckpoint = null;
 	this.currentAnimal = null;
+	this.animalSelected = false;
 	this.visitedCheckpoints = new Array();
 	this.animalsCaptured = new Array();
 	this.captured = false;
@@ -92,13 +93,15 @@ function AddVisitedCheckpoint(player, checkpoint){
 
 function VisitCheckpoint(player, checkpoint, pass){
 	if (checkpoint.capture){
-		if (pass && (player.currentAnimal == checkpoint.animal)){
-			// Animal flees from the capture point
-			checkpoint.capture = false;
-			player.capturePoints[checkpoint.index] = false;
-			RemoveCapturePoint(player.map, checkpoint);
-			Flee(checkpoint.animal, checkpoint);
-		} else player.captured = true;
+		if (player.currentAnimal == checkpoint.animal){
+			if (pass){
+				// Animal flees from the capture point
+				checkpoint.capture = false;
+				player.capturePoints[checkpoint.index] = false;
+				RemoveCapturePoint(player.map, checkpoint);
+				Flee(checkpoint.animal, checkpoint);
+			}
+		} 
 	}
 }
 

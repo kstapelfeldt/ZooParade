@@ -37,6 +37,9 @@ function Game(){
 	this.currentQuestion = "";
 	this.currentAnswer = "";
 
+	this.gameOver = false;
+	this.winner = null;
+
 	this.created = false;
 }
 

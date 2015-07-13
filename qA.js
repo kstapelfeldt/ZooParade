@@ -19,15 +19,8 @@ function UpdatePlayerAnimal(player, animalCSVPath){
 	var playerUsed = player0Used;
 	if (player.right) playerUsed = player1Used;
 
-	playerQuestions.start = [];
-	playerQuestions.onTrail = [];
-	playerQuestions.capture = [];
-	playerQuestions.transport = [];
-
-	playerUsed.start = [];
-	playerUsed.onTrail = [];
-	playerUsed.capture = [];
-	playerUsed.transport = [];
+	playerQuestions = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
+	playerUsed = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
 
 	var fileContent = ReadFile(animalCSVPath);
 	ProcessCSV(fileContent, player.right);

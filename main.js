@@ -12,52 +12,97 @@ $(window).resize(function(){
 
 FixBodySize();
 Setup(game);
-AddMessage(game.player0.name + ", please choose 1 out of the three animals that you want to capture");
+AddMessage(game.player0.name + ", please choose an animal to capture");
 
 
 /* This function is called when an animal is selected by the 
  * player to capture
  */
 function AnimalSelected(player, animal){
+	
+	var nextPlayer = game.player0;
+	if (nextPlayer == player) nextPlayer = game.player1;
+
+	var message = nextPlayer.name + "'s turn";
+	if (nextPlayer.currentAnimal == null) message = nextPlayer.name + ", please choose an animal to capture";
 
 	UpdatePlayerAnimal(player, animal.csvPath);
 
-	if (game.player1.currentAnimal == null){
-		AddMessage(game.player1.name + ", please choose 1 out of the three animals that you want to capture");
-		game.right = !game.right;
-	} else {
-		game.right = !game.right;
-
-		qAPair = GetNextQuestion();
-		AddQuestionText();
-		AddAnswerText();
-		AddMessage(game.player0.name + "'s turn");
-	}
+	player.animalSelected = true;
+	player.visitedCheckpoints = new Array();
+	player.currentCheckpoint = null;
+	AddMessage(message);
+	Proceed();
 }
 
 /* Switches players and updates question and answers */
 function Proceed(){
-
-	game.right = !game.right;
-
+	
 	var player = game.player0;
 	if (game.right) player = game.player1;
-	
-	UpdateQuestion();
-	AddQuestionText();
-	AddAnswerText();
 
-	var message = player.name +  "'s turn";
-	if (player.spin) message += "<br/>Please spin the Spinner by clicking 'Spin'";
-	AddMessage(message);
+	if (game.gameOver){
+		AddMessage("Game Over! " + game.winner.name + " won the game!");
+	} else if (player.animalSelected){
+		game.right = !game.right;
+
+		var player = game.player0;
+		if (game.right) player = game.player1;
+		
+		UpdateQuestion();
+		AddQuestionText();
+		AddAnswerText();
+
+		var message = player.name +  "'s turn";
+		if (player.spin) message += "<br/>Please spin the Spinner by clicking 'Spin'";
+		AddMessage(message);
+	} else {
+		AddMessage(player.name + ", please choose an animal to capture");
+	}
 }
 
 /* Called when animal is captured by the player */
 function AnimalCaptured(player, animal){
+	totalAnimationTime = 500;
+
+	var xDeviation = GetMapWidth() * playerPlaceholderXDeviation;
+	var yDeviation = GetMapHeight() * playerPlaceholderYDeviation;
+	
 	player.animalsCaptured.push(animal);
-	AddMessage("Please choose an animal to capture next");
+	player.captured = true;
 	// Move Player placeholder to the captured animal's image
-	// Make the player choose another animal in the next turn
+	player.placeHolder.animate(totalAnimationTime).move(animal.image.cx() + xDeviation, animal.image.cy() + yDeviation);
+	
+
+	setTimeout(function(){
+		AddMessage(player.name + ", please choose an animal to capture next");
+		AddInfoText();
+	}, totalAnimationTime);
+}
+
+function AnimalTransported(player, animal){
+
+	totalAnimationTime = 250;
+
+	var startPosition = game.leftStartPosition;
+	if (game.right) startPosition = game.rightStartPosition;
+
+	var xDeviation = GetMapWidth() * playerPlaceholderXDeviation;
+	var yDeviation = GetMapHeight() * playerPlaceholderYDeviation;
+
+	player.placeHolder.animate(totalAnimationTime).move(startPosition.x + xDeviation, startPosition.y + yDeviation);
+	player.currentAnimal = null;
+	player.animalSelected = false;
+	player.captured = false;
+	player.move1 = true;
+	player.move2 = true;
+	player.move3 = true;
+	AddInfoText();
+
+	if (player.animalsCaptured.length == 3) {
+		game.gameOver = true;
+		game.winner = player;
+	}
 }
 
 /* Called when the player's answer is correct 
@@ -85,8 +130,7 @@ function CorrectAnswerMove(){
 		}, totalAnimationTime);
 	
 	} else if (player.captured){
-		// Move the animal to the zoo
-		// Make the player choose another animal
+		AnimalTransported(player, player.currentAnimal);
 
 	} else {
 		if (player.currentCheckpoint.capture && player.currentCheckpoint.animal == player.currentAnimal){
@@ -120,7 +164,7 @@ function WrongAnswerMove(){
 	if (game.right) player = game.player1;
 
 	var message = "Wrong Answer!<br/>Check out more info in the answer section<br/>Click on 'Proceed' to continue";
-	if (!player.move1 && !player.move2 && !player.move3){
+	if (!player.move1 && !player.move2 && !player.move3 && !player.captured){
 		player.steps = -1;
 		MovePlayer(player, player.visitedCheckpoints[player.visitedCheckpoints.length - 1]);
 	}
@@ -147,7 +191,7 @@ function UpdateQuestion(){
 		if (player.visitedCheckpoints.length > 2) questionType = onTrailQuestion;
 		if (player.currentCheckpoint != null && player.currentCheckpoint.capture && 
 			player.currentCheckpoint.animal == player.currentAnimal) questionType = captureQuestion;
-		if (player.captured) questionType = captureQuestion;
+		if (player.captured) questionType = tranportationQuestion;
 
 		qAPair = GetNextQuestion(questionType, game.right);
 	}
@@ -224,11 +268,6 @@ function Remove(list, element){
 	}
 	return element;
 }
-
-
-
-
-
 
 
 
