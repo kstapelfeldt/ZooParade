@@ -1,3 +1,6 @@
+/* Sets the size of the Yes and No buttons in the answer
+ * section for the yes/no question answers
+ */
 function SetYesNoButtonStyle(){
 	var borderRadius = (GetMapWidth() * 0.06).toString() + "px";
 
@@ -18,8 +21,18 @@ function SetYesNoButtonStyle(){
 	noButton.style.marginTop = GetPanelHeight() * 0.2;
 }
 
-function SetButtonTextSizes(){
+/* Sets the size of the text in Question and Answer sections
+ * of the board
+ */
+function SetQuestionAnswerTextSizes(){
+	document.getElementById('questionHeader').style.fontSize = GetMapWidth() * headerFontScale;
+	var div = document.getElementById('questionContent');
+	div.style.fontSize = GetMapWidth() * textFontScale;
 
+	document.getElementById('answerHeader').style.fontSize = GetMapWidth() * headerFontScale;
+	var div = document.getElementById('answerContent');
+	div.style.fontSize = GetMapWidth() * textFontScale;
+	if (div.innerHTML.indexOf("yesButton") > -1) SetYesNoButtonStyle();
 }
 
 /* Sets the position and style of the Proceed button in the 
@@ -35,6 +48,16 @@ function SetProceedButtonStyle(){
 function SetBodyStyle(){
 	document.getElementById("body").width = screen.width;
 	document.getElementById("body").height = screen.height;
+}
+
+/* Sets the borders, width, height of the zoo section 
+ * of the board
+ */
+function SetZooSectionBorders(){
+	var zoo = document.getElementById("zoo");
+	zoo.style.width = GetMiddleWidth() * 0.95;
+	zoo.style.height = GetMapHeight() * 0.50;
+	zoo.style.borderWidth = GetMiddleWidth() * 0.015;
 }
 
 /* Sets the border radius of all the sections of the board */

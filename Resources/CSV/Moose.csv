@@ -1,6 +1,6 @@
 Binary Question,QuestionType,Question,choices,right,info
 TRUE,1,The largest of all deer?,,TRUE,
-TRUE,1,Is a good swimmer/,,TRUE,
+TRUE,1,Is a good swimmer?,,TRUE,
 FALSE,1,Eats?,Meat (carnivorous)?/Vegetation (herbivorous)?/Both (omnivorous)?,Vegetation (herbivorous)?,
 TRUE,2,A broken horn?,,FALSE,
 TRUE,2,Claw marks on trees?,,FALSE,

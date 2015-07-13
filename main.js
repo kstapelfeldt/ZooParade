@@ -255,6 +255,8 @@ function FixBodySize(){
 	SetBodyStyle();
 	SetBorderRadius();
 	SetMinHeights();
+	SetQuestionAnswerTextSizes();
+	SetZooSectionBorders();
 }
 
 /* Removes the element from the list
