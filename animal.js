@@ -75,7 +75,7 @@ function PositionAnimal(game, animal, path, checkpointsList, checkpointIndex, xD
 	checkpointsList[checkpointIndex].animal = animal;
 }
 
-/* Adds Animal pictures at the edges of the board 
+/* Adds Animal images at the edges of the board 
  * Parameter types: (Game, list of Animal, boolean)
  */
 function AddAnimalImages(game, animals, right){
@@ -86,47 +86,41 @@ function AddAnimalImages(game, animals, right){
 	var imgWidth = GetMapWidth() * mapScale * 3;
 	var imgHeight = GetMapHeight() * mapScale * 2;
 
-	var imgYposition = GetMapHeight() * mapScale * 3;
-
 	var x = imgWidth / 2;
 	if (right) x = GetMapWidth() - x;
 
-	var id = "L";
-	if (right) id = "R";
+	var y = GetMapHeight() * mapScale * 3;
 
-
-	var imgPath = animals[0].leftImgPath;
-	if(right) imgPath = animals[0].rightImgPath;
-	var image = path.image(imgPath, imgWidth, imgHeight);
-	image.cx(x);
-	image.cy(imgYposition);
-	imgYposition += imgHeight;
-	game.svgObjects.push(image);
-	animals[0].image = image;
-
-	SetAnimalImagesOnClick(animals[0]);
-
-	var imgPath = animals[1].leftImgPath;
-	if(right) imgPath = animals[1].rightImgPath;
-	var image = path.image(imgPath, imgWidth, imgHeight);
-	image.cx(x);
-	image.cy(imgYposition);
-	imgYposition += imgHeight;
-	game.svgObjects.push(image);
-	animals[1].image = image;
-
-	SetAnimalImagesOnClick(animals[1]);
-
-	var imgPath = animals[2].leftImgPath;
-	if(right) imgPath = animals[2].rightImgPath;
-	var image = path.image(imgPath, imgWidth, imgHeight);
-	image.cx(x);
-	image.cy(imgYposition);
-	game.svgObjects.push(image);
-	animals[2].image = image;
-
-	SetAnimalImagesOnClick(animals[2]);
+	AddAnimalImage(game, animals[0], path, imgWidth, imgHeight, x, y, right);
+	y += imgHeight;
+	AddAnimalImage(game, animals[1], path, imgWidth, imgHeight, x, y, right);
+	y += imgHeight;
+	AddAnimalImage(game, animals[2], path, imgWidth, imgHeight, x, y, right);
 	
+}
+
+/* Adds animal image at the edge of the board
+ * Parameter types: (Game, Animal, SVG, float, float, float, float, boolean)
+ */
+function AddAnimalImage(game, animal, path, imgWidth, imgHeight, x, y, right){
+	var imgPath = animal.leftImgPath;
+	if(right) imgPath = animal.rightImgPath;
+
+	var image = path.image(imgPath, imgWidth, imgHeight);
+	image.cx(x);
+	image.cy(y);
+	game.svgObjects.push(image);
+	animal.image = image;
+
+	var rect = path.rect(imgWidth, imgHeight * 0.15).attr({fill: 'white', x: x - imgWidth * 0.5, y: y + imgHeight * 0.4, stroke: '#000'});
+	game.svgObjects.push(rect);
+
+	var text = path.text(animal.name);
+	text.font({ family: "Tahoma", size: imgWidth * 0.1, fill: '#000', anchor: "middle" });
+	text.move(x, y + imgHeight * 0.4);
+	game.svgObjects.push(text);
+
+	SetAnimalImagesOnClick(animal);
 }
 
 /* Sets the onClick method for animal images */
