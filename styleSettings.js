@@ -70,7 +70,7 @@ function SetBorderRadius(){
 	document.getElementById("messageBox").style.borderRadius = borderRadius;
 	document.getElementById("question").style.borderRadius =  borderRadius;
 	document.getElementById("answer").style.borderRadius =  borderRadius;
-	document.getElementById("spinner").style.borderRadius =  borderRadius;
+	document.getElementById("spinnerSection").style.borderRadius =  borderRadius;
 }
 
 /* Sets the minimum heights of all the sections of the board */
@@ -86,7 +86,7 @@ function SetMinHeights(){
 	document.getElementById("center").style.minHeight = minScreenHeight * mapHeightScale;
 	document.getElementById("question").style.minHeight = minScreenHeight * panelHeightScale;
 	document.getElementById("answer").style.minHeight = minScreenHeight * panelHeightScale;
-	document.getElementById("spinner").style.minHeight = minScreenHeight * panelHeightScale * spinnerSectionHeightDeviation;
+	document.getElementById("spinnerSection").style.minHeight = minScreenHeight * panelHeightScale * spinnerSectionHeightDeviation;
 }
 
 

@@ -148,6 +148,8 @@ function MovePlayer(player, checkpoint){
 
 	if (player.currentCheckpoint != null) AddVisitedCheckpoint(player, player.currentCheckpoint);
 
+	var scrollUp = player.currentCheckpoint != null && (player.currentCheckpoint.redS || player.currentCheckpoint.greenS);
+
 	if (player.steps > 0) MoveForward(player, checkpoint);
 	else MoveBackwards(player, checkpoint);
 
@@ -162,6 +164,8 @@ function MovePlayer(player, checkpoint){
     		MovePlayer(player, player.visitedCheckpoints[player.visitedCheckpoints.length - 2]);
     	}
 	}, totalAnimationTime);
+
+	if (scrollUp) $('#spinnerSection').animate({scrollTop: -GetPanelHeight()}, 1000);
 }
 
 /* Moves the given player forward 

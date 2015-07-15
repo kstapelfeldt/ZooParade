@@ -9,6 +9,7 @@ function Animal(name, continent, shortName){
 	this.svg = {};
 	this.image = null;
 	this.selected = false;
+	this.transported = false;
 	this.shadow = null;
 	this.csvPath = 'Resources/CSV/' + shortName + '.csv';
 	this.svgPath = 'Resources/SVG/' + shortName + '.svg';
@@ -94,9 +95,9 @@ function AddAnimalImages(game, animals, right){
 	var y = GetMapHeight() * mapScale * 3;
 
 	AddAnimalImage(game, animals[0], path, imgWidth, imgHeight, x, y, right);
-	y += imgHeight;
+	y += imgHeight * 1.02;
 	AddAnimalImage(game, animals[1], path, imgWidth, imgHeight, x, y, right);
-	y += imgHeight;
+	y += imgHeight * 1.02;
 	AddAnimalImage(game, animals[2], path, imgWidth, imgHeight, x, y, right);
 	
 }
@@ -122,7 +123,7 @@ function AddAnimalImage(game, animal, path, imgWidth, imgHeight, x, y, right){
 	text.move(x, y + imgHeight * 0.425);
 	game.svgObjects.push(text);
 
-	animal.shadow = path.rect(imgWidth, imgHeight * 0.8).attr({x: x - imgWidth * 0.5, y: y - imgHeight * 0.4, fill: '#000', opacity: 0});
+	animal.shadow = path.rect(imgWidth, imgHeight * 0.85).attr({x: x - imgWidth * 0.5, y: y - imgHeight * 0.45, fill: 'white', opacity: 0});
 	game.svgObjects.push(animal.shadow);
 
 	SetAnimalImageOnClick(animal);
@@ -132,6 +133,7 @@ function AddAnimalImage(game, animal, path, imgWidth, imgHeight, x, y, right){
 
 function ShadowAnimalImage(animal){
 	animal.shadow.attr({opacity: 0.5});
+	if (animal.transported) animal.shadow.attr({fill: '#000'});
 }
 
 /* Sets the onClick method for an animal image */

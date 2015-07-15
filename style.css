@@ -82,7 +82,7 @@ body{
 	overflow: auto;
 }
 
-#spinner{
+#spinnerSection{
 	background-color: #FFFF66;
 	width: 25%;
 	height: 27%;
@@ -91,6 +91,7 @@ body{
 	margin-bottom: 0.86%;
 	border-radius: 2em;
 	float: left;
+	overflow: hidden;
 }
 
 #answer{

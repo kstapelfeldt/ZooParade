@@ -54,7 +54,10 @@ function Proceed(){
 		AddAnswerText();
 
 		var message = player.name +  "'s turn";
-		if (player.spin) message += "<br/>Please spin the Spinner by clicking 'Spin'";
+		if (player.spin) {
+			message += "<br/>Please spin the Spinner by clicking 'Spin'";
+			$('#spinnerSection').animate({scrollTop: GetPanelHeight()}, 1000);
+		}
 		AddMessage(message);
 	} else {
 		AddMessage(player.name + ", please choose an animal to capture");
@@ -75,7 +78,6 @@ function AnimalCaptured(player, animal){
 	
 
 	setTimeout(function(){
-		AddMessage(player.name + ", please choose an animal to capture next");
 		AddInfoText();
 	}, totalAnimationTime);
 }
@@ -98,6 +100,9 @@ function AnimalTransported(player, animal){
 	player.move2 = true;
 	player.move3 = true;
 	AddInfoText();
+
+	animal.transported = true;
+	ShadowAnimalImage(animal);
 
 	if (player.animalsCaptured.length == 3) {
 		game.gameOver = true;

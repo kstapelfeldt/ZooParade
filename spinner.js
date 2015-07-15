@@ -4,13 +4,13 @@ var spinnerBoard;
 /* Creates the Spinner object */
 function CreateSpinner(){
 
-	spinnerBoard = game.spinnerSection.image('Resources/spinner.png', GetPanelHeight() * spinnerBoardWidthScale, 
+	spinnerBoard = game.spinner.image('Resources/spinner.png', GetPanelHeight() * spinnerBoardWidthScale, 
 					GetPanelHeight() * spinnerBoardHeightScale);
 	FixSpinnerBoardPosition();
 	game.svgObjects.push(spinnerBoard);
 
 
-	pin = game.spinnerSection.image('Resources/pin.png', GetPanelHeight() * pinWidthScale, GetPanelHeight() * pinHeightScale);
+	pin = game.spinner.image('Resources/pin.png', GetPanelHeight() * pinWidthScale, GetPanelHeight() * pinHeightScale);
 	pin.cx(pin.cx() + GetPanelHeight() * pinCXDeviation);
 	pin.cy(pin.cy() + GetPanelHeight() * pinCYDeviation);
 	game.svgObjects.push(pin);
@@ -64,7 +64,7 @@ function Spin(){
 		prevAngle = angle + pinAngleDeviation;
 
 		player.steps = greenNumbers[index];
-		if (player.currentCheckpoint.redS) player.steps = redNumbers[index];
+		if (player.currentCheckpoint.redS) player.steps = 3;//redNumbers[index];
 		player.spin = false;
 
 		setTimeout(function(){

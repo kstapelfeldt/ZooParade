@@ -11,7 +11,7 @@ function Game(){
 	this.rightPath = this.rightMap.nested();
 	this.rightCheckpoints = new Array();
 
-	this.spinnerSection = SVG('spinner');	// SVG object for the Spinner section
+	this.spinner = SVG('spinner');	// SVG object for the Spinner section
 
 	this.svgObjects = new Array();			// Array of all svg objects in the game
 
