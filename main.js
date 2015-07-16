@@ -41,10 +41,18 @@ function Proceed(){
 	var player = game.player0;
 	if (game.right) player = game.player1;
 
+	var currentMap = '#leftMap';
+	if (game.right) currentMap = '#rightMap';
+
+	var nextMap = '#rightMap';
+	if (game.right) nextMap = '#leftMap';
+
 	if (game.gameOver){
 		AddMessage("Game Over! " + game.winner.name + " won the game!");
 	} else if (player.animalSelected){
 		game.right = !game.right;
+		$(currentMap).css('background-color', mapDarkBackgroundColor);
+		$(nextMap).css('background-color', mapBackgroundColor);
 
 		var player = game.player0;
 		if (game.right) player = game.player1;
@@ -60,7 +68,7 @@ function Proceed(){
 		}
 		AddMessage(message);
 	} else {
-		AddMessage(player.name + ", please choose an animal to capture");
+		AddMessage(player.name + ", please choose an animal to capture by clicking on the animal image");
 	}
 }
 
@@ -246,7 +254,11 @@ function AddInfoText(){
 	
 	var info = qAPair.info;
 
-	info = "This is awesome!";
+	var player = game.player0;
+	if (game.right) player = game.player1;
+
+	if (player.currentAnimal == null) info = "Click <a href='http://google.ca'>here</a> to know more about the transportation";
+	else info = "Click <a href='http://google.ca'>here</a> to know more about " + player.currentAnimal.name;
 
 	var div = document.getElementById('answerContent');
 	div.innerHTML = '<div style="width:100%; height:80%;">'+ info + '</div>' + proceedButtonHTML;

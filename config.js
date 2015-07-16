@@ -156,6 +156,7 @@ var fontFamily = 'Courier';
 
 // Color variables
 var mapBackgroundColor = '#FFFF66';
+var mapDarkBackgroundColor = '#BABA4B';
 var darkBackgroundColor = '#4A2500';
 var continentNameColor = 'red';
 var checkpointColor = 'green';

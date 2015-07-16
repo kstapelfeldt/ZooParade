@@ -4,6 +4,12 @@ var spinnerBoard;
 /* Creates the Spinner object */
 function CreateSpinner(){
 
+	var theGuy = SVG('theGuy');
+	var image = theGuy.image('Resources/Images/theGuy.png', GetPanelHeight() * 0.8, GetPanelHeight() * 0.8);
+	image.cx(GetMiddleWidth() * 0.47);
+	image.cy(GetPanelHeight() * 0.46);
+	game.svgObjects.push(image);
+
 	spinnerBoard = game.spinner.image('Resources/spinner.png', GetPanelHeight() * spinnerBoardWidthScale, 
 					GetPanelHeight() * spinnerBoardHeightScale);
 	FixSpinnerBoardPosition();

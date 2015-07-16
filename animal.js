@@ -123,7 +123,7 @@ function AddAnimalImage(game, animal, path, imgWidth, imgHeight, x, y, right){
 	text.move(x, y + imgHeight * 0.425);
 	game.svgObjects.push(text);
 
-	animal.shadow = path.rect(imgWidth, imgHeight * 0.85).attr({x: x - imgWidth * 0.5, y: y - imgHeight * 0.45, fill: 'white', opacity: 0});
+	animal.shadow = path.rect(imgWidth, imgHeight * 0.85).attr({id:'shadow', x: x - imgWidth * 0.5, y: y - imgHeight * 0.45, fill: 'white', opacity: 0});
 	game.svgObjects.push(animal.shadow);
 
 	SetAnimalImageOnClick(animal);

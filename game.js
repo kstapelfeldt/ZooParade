@@ -94,8 +94,8 @@ function Setup(game){
 	CreateSpinner(game);
 	
 	if (game.player0 == null && game.player1 == null){
-		game.player0 = new Player("Player0", game.continent0, game.leftMap, game.leftCheckpoints, game.leftCapturePoints, false);
-		game.player1 = new Player("Player1", game.continent1, game.rightMap, game.rightCheckpoints, game.rightCapturePoints, true);
+		game.player0 = new Player("Dan", game.continent0, game.leftMap, game.leftCheckpoints, game.leftCapturePoints, false);
+		game.player1 = new Player("Roleen", game.continent1, game.rightMap, game.rightCheckpoints, game.rightCapturePoints, true);
 	}
 
 	// Add the pictures on the edges of the board
