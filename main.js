@@ -12,7 +12,7 @@ $(window).resize(function(){
 
 FixBodySize();
 Setup(game);
-AddMessage(game.player0.name + ", please choose an animal to capture");
+AddMessage(game.player0.name + ", please choose an animal to capture by clicking on the animal image");
 
 
 /* This function is called when an animal is selected by the 
@@ -24,7 +24,7 @@ function AnimalSelected(player, animal){
 	if (nextPlayer == player) nextPlayer = game.player1;
 
 	var message = nextPlayer.name + "'s turn";
-	if (nextPlayer.currentAnimal == null) message = nextPlayer.name + ", please choose an animal to capture";
+	if (nextPlayer.currentAnimal == null) message = nextPlayer.name + ", please choose an animal to capture by clicking on the animal image";
 
 	UpdatePlayerAnimal(player, animal.csvPath);
 
@@ -83,10 +83,10 @@ function AnimalCaptured(player, animal){
 	player.captured = true;
 	// Move Player placeholder to the captured animal's image
 	player.placeHolder.animate(totalAnimationTime).move(animal.image.cx() + xDeviation, animal.image.cy() + yDeviation);
-	
 
 	setTimeout(function(){
 		AddInfoText();
+		AddMessage(player.name + " captured " + animal.name);
 	}, totalAnimationTime);
 }
 
@@ -107,10 +107,15 @@ function AnimalTransported(player, animal){
 	player.move1 = true;
 	player.move2 = true;
 	player.move3 = true;
-	AddInfoText();
+	
 
 	animal.transported = true;
 	ShadowAnimalImage(animal);
+
+	setTimeout(function(){
+		AddInfoText();
+		AddMessage(player.name + " transported " + animal.name + " to the zoo!");
+	}, totalAnimationTime);
 
 	if (player.animalsCaptured.length == 3) {
 		game.gameOver = true;
