@@ -188,4 +188,8 @@ var headerFontScale = 0.05;
 var textFontScale = 0.03;
 var messageFontScale = 0.04;
 
+var spinnerAnimationTime = 2000;
+var spinnerSectionAnimationTime = 1000;
+
+
 

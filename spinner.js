@@ -70,7 +70,7 @@ function Spin(){
 		prevAngle = angle + pinAngleDeviation;
 
 		player.steps = greenNumbers[index];
-		if (player.currentCheckpoint.redS) player.steps = redNumbers[index];
+		if (player.currentCheckpoint.redS) player.steps = 3;//redNumbers[index];
 		player.spin = false;
 
 		setTimeout(function(){
@@ -81,7 +81,7 @@ function Spin(){
 				SelectCheckpoint(path[path.length - 1]);
 				AddMessage("Click on one of the highlighted checkpoints to move player");
 			}
-		}, 2000);
+		}, spinnerAnimationTime);
 	} else {
 		AddMessage("You can use the spinner only at a Spin checkpoint");
 	}	

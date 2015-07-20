@@ -139,25 +139,26 @@ function ShadowAnimalImage(animal){
 /* Sets the onClick method for an animal image */
 function SetAnimalImageOnClick(animal){
 	animal.shadow.click(function(){
-
-		var player = game.player0;
-		if (game.right) player = game.player1;
-
-		if (animal.continent.checkpoints[0].right == game.right) {
-			if (player.currentAnimal == null || player.capturedAnimals.indexOf(animal) == -1) {
-
-				player.currentAnimal = animal;
-				player.animalSelected = true;
-				animal.selected = true;
-				ShadowAnimalImage(animal);
-				AnimalSelected(player, animal);
-			}
-		}
+		if (!(ai && game.right)) AnimalImageClickFunction(animal);
 	});
 }
 
 
+function AnimalImageClickFunction(animal){
+	var player = game.player0;
+	if (game.right) player = game.player1;
 
+	if (animal.continent.checkpoints[0].right == game.right) {
+		if (player.currentAnimal == null || player.capturedAnimals.indexOf(animal) == -1) {
+
+			player.currentAnimal = animal;
+			player.animalSelected = true;
+			animal.selected = true;
+			ShadowAnimalImage(animal);
+			AnimalSelected(player, animal);
+		}
+	}
+}
 
 
 

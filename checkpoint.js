@@ -141,32 +141,35 @@ function DeselectCheckpoint(checkpoint){
  */
 function SetCheckpointClick(checkpoint){
 	checkpoint.clickCircle.click(function(){
-		var id = this.attr('id');
-		var type = id.slice(0, 1);
-		var index = parseInt(id.slice(1));
-		if (checkpoint.selected && checkpoint.right == game.right) {
-			
-			var player = game.player0;
-			if (game.right) player = game.player1;
-
-			var nextPlayer = game.player1;
-			if (game.right) nextPlayer = game.player0;
-
-			var spinnerPoint = player.currentCheckpoint.redS || player.currentCheckpoint.greenS;
-
-			MovePlayer(player, checkpoint);
-
-			setTimeout(function(){
-				if (spinnerPoint) {
-					Proceed();
-					var message = nextPlayer.name + "'s turn";
-					if (nextPlayer.spin) message += "<br/>Please spin the Spinner by clicking 'Spin'";
-					AddMessage(message);
-				}
-				else AddInfoText();
-			}, totalAnimationTime);
-		}
+		if (!(ai && game.right)) SelectedCheckpointClickFunction(checkpoint);
 	});
+}
+
+function SelectedCheckpointClickFunction(checkpoint){
+	
+	if (checkpoint.selected && checkpoint.right == game.right) {
+		
+		var player = game.player0;
+		if (game.right) player = game.player1;
+
+		var nextPlayer = game.player1;
+		if (game.right) nextPlayer = game.player0;
+
+		var spinnerPoint = player.currentCheckpoint.redS || player.currentCheckpoint.greenS;
+
+		MovePlayer(player, checkpoint);
+
+		setTimeout(function(){
+			totalAnimationTime = 0;
+			if (spinnerPoint) {
+				Proceed();
+				var message = nextPlayer.name + "'s turn";
+				if (nextPlayer.spin) message += "<br/>Please spin the Spinner by clicking 'Spin'";
+				AddMessage(message);
+			}
+			else AddInfoText();
+		}, totalAnimationTime);
+	}
 }
 
 /* Sets the on mouseover function for the given checkpoint 
