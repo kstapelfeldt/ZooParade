@@ -110,8 +110,6 @@ function GetNextQuestion(questionType, right){
 		while (usedQuestions.length != 0) questions.push(usedQuestions.pop());
 	}
 
-	if (!game.right) alert(questions.length);
-
 	var index = Math.floor(Math.random() * questions.length);
 	
 	var question = questions.splice(index, 1)[0];
