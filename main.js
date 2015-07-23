@@ -26,7 +26,9 @@ function AnimalSelected(player, animal){
 	var message = nextPlayer.name + "'s turn";
 	if (nextPlayer.currentAnimal == null) message = nextPlayer.name + ", please choose an animal to capture by clicking on the animal image";
 
+	//alert("before");
 	UpdatePlayerAnimal(player, animal.csvPath);
+	//alert('after');
 
 	player.animalSelected = true;
 	player.visitedCheckpoints = new Array();
@@ -57,8 +59,6 @@ function Proceed(){
 			var player = game.player0;
 			if (game.right) player = game.player1;
 			UpdateQuestion();
-			AddQuestionText();
-			AddAnswerText();
 
 			var message = player.name +  "'s turn";
 			if (player.spin) {
@@ -96,6 +96,7 @@ function AnimalCaptured(player, animal){
 	}, totalAnimationTime);
 }
 
+/* Called when animal is transported to the zoo by the player */
 function AnimalTransported(player, animal){
 
 	totalAnimationTime = 250;
@@ -218,16 +219,14 @@ function UpdateQuestion(){
 
 	if (player.animalSelected){
 		if (player.spin){
-			qAPair.question = "";
-			qAPair.answer = "";
-			qAPair.info = "";
+			qAPair = new Question("", "", "");
 		} else {
 
 			var questionType = startQuestion;
 			if (player.visitedCheckpoints.length > 2) questionType = onTrailQuestion;
 			if (player.currentCheckpoint != null && player.currentCheckpoint.capture && 
 				player.currentCheckpoint.animal == player.currentAnimal) questionType = captureQuestion;
-			if (player.captured) questionType = tranportationQuestion;
+			if (player.captured) questionType = transportQuestion;
 
 			qAPair = GetNextQuestion(questionType, game.right);
 		}
@@ -236,8 +235,6 @@ function UpdateQuestion(){
 		AddAnswerText();
 	}
 }
-
-
 
 /* Adds the message in the message section of the board
  * Parameter types: (String)
@@ -252,7 +249,9 @@ function AddMessage(message){
 /* Adds the question in the question section of the game */
 function AddQuestionText(){
 	if (qAPair != null){
+		
 		var question = qAPair.question;
+		//if (question == "") alert(question);
 
 		document.getElementById('questionHeader').style.fontSize = GetMapWidth() * headerFontScale;
 
@@ -265,6 +264,7 @@ function AddQuestionText(){
 
 /* Adds the answer in the answer section of the game */
 function AddAnswerText(){
+
 	if (qAPair != null){
 		var answer = qAPair.answer;
 

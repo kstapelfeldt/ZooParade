@@ -8,7 +8,7 @@ var infoIndex = 5;
 var startQuestion = 1;
 var onTrailQuestion = 2;
 var captureQuestion = 3;
-var tranportationQuestion = 4;
+var transportQuestion = 4;
 
 
 var minScreenWidthScale = 0.96;		// Restrict horizontal scaling

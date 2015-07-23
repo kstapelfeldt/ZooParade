@@ -1,29 +1,19 @@
-// Dictionary of player questions
-var player0Questions = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
-var player1Questions = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
-
-var player0Used = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
-var player1Used = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
-
-// Read from the CSV files and fill player questions
-// var fileContent = ReadFile("Resources/CSV/Grizzly.csv");
-// ProcessCSV(fileContent, false);
-// var fileContent = ReadFile("Resources/CSV/Elephant.csv");
-// ProcessCSV(fileContent, true);
-
+var player0QuestionSet = new QuestionSet();
+var player1QuestionSet = new QuestionSet();
 
 function UpdatePlayerAnimal(player, animalCSVPath){
-	var playerQuestions = player0Questions;
-	if (player.right) playerQuestions = player1Questions;
+	
+	
 
-	var playerUsed = player0Used;
-	if (player.right) playerUsed = player1Used;
+	var playerQuestionSet = player0QuestionSet;
+	if (player.right) playerQuestionSet = player1QuestionSet;
 
-	playerQuestions = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
-	playerUsed = {'start':[], 'onTrail':[], 'capture':[], 'transport':[]};
-
+	playerQuestionSet = new QuestionSet();
+	
 	var fileContent = ReadFile(animalCSVPath);
+
 	ProcessCSV(fileContent, player.right);
+
 }
 
 /* Reads the csv string and stores the questions in the questions array
@@ -33,9 +23,8 @@ function ProcessCSV(results, right){
 	
 	var rows = results.split('\n');
 
-	var playerQuestions = player0Questions;
-	if (right) playerQuestions = player1Questions;
-
+	var playerQuestionSet = player0QuestionSet;
+	if (right) playerQuestionSet = player1QuestionSet;
 
 	for (var i = 1; i < rows.length; i++){
 
@@ -65,13 +54,12 @@ function ProcessCSV(results, right){
 
 			var info = "";
 			if (row.length > infoIndex) info = row[infoIndex];
+			var questionObject = new Question(question, answer, info);
 
-			var qAPair = {'question': question, 'answer': answer, 'info': info};
-			
-			if (row[typeIndex] == 1) playerQuestions.start.push(qAPair);
-			else if (row[typeIndex] == 2) playerQuestions.onTrail.push(qAPair);
-			else if (row[typeIndex] == 3) playerQuestions.capture.push(qAPair);
-			else if (row[typeIndex] == 4) playerQuestions.transport.push(qAPair);
+			if (row[typeIndex] == startQuestion) playerQuestionSet.start.push(questionObject);
+			else if (row[typeIndex] == onTrailQuestion) playerQuestionSet.onTrail.push(questionObject);
+			else if (row[typeIndex] == captureQuestion) playerQuestionSet.capture.push(questionObject);
+			else if (row[typeIndex] == transportQuestion) playerQuestionSet.transport.push(questionObject);
 		}
 	}
 }
@@ -84,36 +72,10 @@ function ProcessCSV(results, right){
  */
 function GetNextQuestion(questionType, right){
 
-	var playerQuestions = player0Questions;
-	if (right) playerQuestions = player1Questions;
+	var playerQuestionSet = player0QuestionSet;
+	if (right) playerQuestionSet = player1QuestionSet;
 
-	var playerUsed = player0Used;
-	if (right) playerUsed = player1Used;
-
-	var questions = playerQuestions.start;
-	var usedQuestions = playerUsed.start;
-
-	if (questionType == onTrailQuestion) {
-		questions = playerQuestions.onTrail;
-		usedQuestions = playerUsed.onTrail;
-	}
-	else if (questionType == captureQuestion) {
-		questions = playerQuestions.capture;
-		usedQuestions = playerUsed.capture;
-	}
-	else if (questionType == tranportationQuestion) {
-		questions = playerQuestions.transport;
-		usedQuestions = playerUsed.transport;
-	}
-	
-	if (questions.length == 0){
-		while (usedQuestions.length != 0) questions.push(usedQuestions.pop());
-	}
-
-	var index = Math.floor(Math.random() * questions.length);
-	
-	var question = questions.splice(index, 1)[0];
-	usedQuestions.push(question);
+	var question = GetQuestion(playerQuestionSet, questionType);
 
 	return question;
 }
