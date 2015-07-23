@@ -5,7 +5,7 @@ var spinnerBoard;
 function CreateSpinner(){
 
 	var theGuy = SVG('theGuy');
-	var image = theGuy.image('Resources/Images/theGuy.png', GetPanelHeight() * 0.8, GetPanelHeight() * 0.8);
+	var image = theGuy.image('Resources/theGuy.png', GetPanelHeight() * 0.8, GetPanelHeight() * 0.8);
 	image.cx(GetMiddleWidth() * 0.47);
 	image.cy(GetPanelHeight() * 0.46);
 	game.svgObjects.push(image);

@@ -13,9 +13,9 @@ function Animal(name, continent, shortName){
 	this.shadow = null;
 	this.csvPath = 'Resources/CSV/' + shortName + '.csv';
 	this.svgPath = 'Resources/SVG/' + shortName + '.svg';
-	this.leftImgPath = 'Resources/Images/' + shortName + 'Left.svg';
-	this.rightImgPath = 'Resources/Images/' + shortName + 'Right.svg';
-	this.zoopngPath = 'Resources/ZooPNG/' + shortName + '.png';
+	this.leftImgPath = 'Resources/AnimalImages/LeftImages/' + shortName + 'Left.svg';
+	this.rightImgPath = 'Resources/AnimalImages/RightImages/' + shortName + 'Right.svg';
+	this.cageImgPath = 'Resources/AnimalImages/Cage/SVG/' + shortName + 'Cage.png';
 }
 
 
