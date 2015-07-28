@@ -71,6 +71,8 @@ function SetBorderRadius(){
 	document.getElementById("question").style.borderRadius =  borderRadius;
 	document.getElementById("answer").style.borderRadius =  borderRadius;
 	document.getElementById("spinnerSection").style.borderRadius =  borderRadius;
+	document.getElementById("zoo0").style.borderRadius = borderRadius;
+	document.getElementById("zoo1").style.borderRadius = borderRadius;
 }
 
 /* Sets the minimum heights of all the sections of the board */

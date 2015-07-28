@@ -161,7 +161,9 @@ function AnimalImageClickFunction(animal){
 }
 
 
+function PutAnimalInZoo(animal){
 
+}
 
 
 
