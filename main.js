@@ -7,6 +7,9 @@ $(window).resize(function(){
 	FixBodySize();
 	Destroy(game);
 	Setup(game);
+	PutAnimalsInZoo(game.zoo0Animals, false);
+	PutAnimalsInZoo(game.zoo1Animals, true);
+
 });
 
 
@@ -110,7 +113,6 @@ function AnimalTransported(player, animal){
 	var yDeviation = GetMapHeight() * playerPlaceholderYDeviation;
 
 	player.placeHolder.animate(totalAnimationTime).move(startPosition.x + xDeviation, startPosition.y + yDeviation);
-	Remove(continent.animals, player.currentAnimal);
 	player.currentAnimal = null;
 	player.animalSelected = false;
 	player.captured = false;
@@ -118,7 +120,7 @@ function AnimalTransported(player, animal){
 	player.move2 = true;
 	player.move3 = true;
 	
-
+	PutAnimalInZoo(animal, player.right);
 	animal.transported = true;
 	ShadowAnimalImage(animal);
 
@@ -300,7 +302,7 @@ function FixBodySize(){
 	SetBodyStyle();
 	SetBorderRadius();
 	SetMinHeights();
-	SetQuestionAnswerTextSizes();
+	SetTextSizes();
 	SetZooSectionBorders();
 }
 

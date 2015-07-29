@@ -15,7 +15,7 @@ function Animal(name, continent, shortName){
 	this.svgPath = 'Resources/SVG/' + shortName + '.svg';
 	this.leftImgPath = 'Resources/AnimalImages/LeftImages/' + shortName + 'Left.svg';
 	this.rightImgPath = 'Resources/AnimalImages/RightImages/' + shortName + 'Right.svg';
-	this.cageImgPath = 'Resources/AnimalImages/Cage/SVG/' + shortName + 'Cage.png';
+	this.cageImgPath = 'Resources/AnimalImages/Cage/SVG/' + shortName + 'Cage.svg';
 }
 
 
@@ -161,12 +161,38 @@ function AnimalImageClickFunction(animal){
 }
 
 
-function PutAnimalInZoo(animal){
+function PutAnimalInZoo(animal, right){
 
+	var zooAnimals = game.zoo0Animals;
+	if (right) zooAnimals = game.zoo1Animals;
+
+	var zoo = game.zoo0;
+	if (right) zoo = game.zoo1;
+
+	zooAnimals.push(animal);
+
+	var zooImgWidth = GetMiddleWidth() * 0.3;
+	var zooImgHeight = GetMapHeight() * 0.17;
+
+	var image = zoo.image(animal.cageImgPath, zooImgWidth, zooImgHeight);
+
+	var zooAnimalX =  zooImgWidth * 0.57 + (zooAnimals.length - 1) * zooImgWidth;
+
+	image.cx(zooAnimalX);
+
+	game.svgObjects.push(image);
 }
 
 
+function PutAnimalsInZoo(animals, right){
+	
+	var zoo = game.zoo0;
+	if (right) zoo = game.zoo1;
 
+	for (var i = 0; i < animals.length; i++){
+		PutAnimalInZoo(animals[i], right);
+	}
+}
 
 
 

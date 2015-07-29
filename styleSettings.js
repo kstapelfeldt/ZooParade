@@ -24,7 +24,10 @@ function SetYesNoButtonStyle(){
 /* Sets the size of the text in Question and Answer sections
  * of the board
  */
-function SetQuestionAnswerTextSizes(){
+function SetTextSizes(){
+
+	document.getElementById('zooHeader').style.fontSize = GetMapWidth() * zooHeaderFontScale;
+
 	document.getElementById('questionHeader').style.fontSize = GetMapWidth() * headerFontScale;
 	var div = document.getElementById('questionContent');
 	div.style.fontSize = GetMapWidth() * textFontScale;

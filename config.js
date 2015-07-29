@@ -187,6 +187,7 @@ var proceedButtonHTML = '<center><div id="proceedButton" onclick="Proceed()">Pro
 var headerFontScale = 0.05;
 var textFontScale = 0.03;
 var messageFontScale = 0.04;
+var zooHeaderFontScale = 0.12;
 
 var spinnerAnimationTime = 2000;
 var spinnerSectionAnimationTime = 1000;

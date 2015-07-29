@@ -13,6 +13,12 @@ function Game(){
 
 	this.spinner = SVG('spinner');	// SVG object for the Spinner section
 
+	this.zoo0 = SVG('zoo0');
+	this.zoo1 = SVG('zoo1');
+
+	this.zoo0Animals = new Array();
+	this.zoo1Animals = new Array();
+
 	this.svgObjects = new Array();			// Array of all svg objects in the game
 
 	// Initial positions of Player placeholders 
@@ -66,30 +72,32 @@ function Setup(game){
 	LinkCheckpoints(game, game.rightPath, true);
 
 	// Set continent names and continent animals
-	var continent0Name = 'North America';
-	var continent0Animals = [new Animal('Moose', continent1Name, 'Moose'), 
-							new Animal('Grizzly Bear', continent1Name, 'Grizzly'), 
-							new Animal('Big Horn', continent1Name, 'Bighorn')];
+	if (!game.created){
+		var continent0Name = 'North America';
+		var continent0Animals = [new Animal('Moose', continent1Name, 'Moose'), 
+								new Animal('Grizzly Bear', continent1Name, 'Grizzly'), 
+								new Animal('Big Horn', continent1Name, 'Bighorn')];
 
-	var continent1Name = 'Asia';
-	var continent1Animals = [new Animal('Indian Rhinoceros', continent1Name, 'Rhinoceros'), 
-							new Animal('Indian Elephant', continent1Name, 'Elephant'), 
-							new Animal('Bengal Tiger', continent1Name, 'Tiger')];
+		var continent1Name = 'Asia';
+		var continent1Animals = [new Animal('Indian Rhinoceros', continent1Name, 'Rhinoceros'), 
+								new Animal('Indian Elephant', continent1Name, 'Elephant'), 
+								new Animal('Bengal Tiger', continent1Name, 'Tiger')];
 
-	// Create two Continent objects
-	game.continent0 = new Continent(continent0Name, continent0Animals, game.leftCheckpoints);
-	game.continent1 = new Continent(continent1Name, continent1Animals, game.rightCheckpoints);
+		// Create two Continent objects
+		game.continent0 = new Continent(continent0Name, continent0Animals, game.leftCheckpoints);
+		game.continent1 = new Continent(continent1Name, continent1Animals, game.rightCheckpoints);
 
-	LinkContinentAnimals(continent0Animals, false);
-	LinkContinentAnimals(continent1Animals, true);
+		LinkContinentAnimals(continent0Animals, false);
+		LinkContinentAnimals(continent1Animals, true);
+	}
 
 	// Add names of continents to the maps
-	AddContinentName(game, continent0Name, false);
-	AddContinentName(game, continent1Name, true);
+	AddContinentName(game, game.continent0.name, false);
+	AddContinentName(game, game.continent1.name, true);
 
 	// Add the svg images of animals to the map
-	PositionAnimals(game, continent0Animals, false);
-	PositionAnimals(game, continent1Animals, true);
+	PositionAnimals(game, game.continent0.animals, false);
+	PositionAnimals(game, game.continent1.animals, true);
 
 	CreateSpinner(game);
 	
@@ -99,17 +107,15 @@ function Setup(game){
 	}
 
 	// Add the pictures on the edges of the board
-	AddAnimalImages(game, continent0Animals, false);
-	AddAnimalImages(game, continent1Animals, true);
+	AddAnimalImages(game, game.continent0.animals, false);
+	AddAnimalImages(game, game.continent1.animals, true);
 
 	game.continent0.player = game.player0;
 	game.continent1.player = game.player1;
 
 	AddPlayerPlaceHolder(game, false);
 	AddPlayerPlaceHolder(game, true);
-
-	// AddQuestionText(game.currentQuestion);
-	// AddAnswerText(game.currentAnswer);
+	
 	AddMessage(game.currentMessage);
 
 	game.created = true;
