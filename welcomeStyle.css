@@ -1,22 +1,33 @@
 body{
 	background-color: #8DE670;
+	background-size: height: auto, width: 100%;
 	font-family: Courier;
+	background-repeat: no-repeat;
 }
-#bigDiv{
+
+.Sections{
+	top-border:0;
+	
+	width:100%;
+	height: 100%;
+}
+	
+	
+	opacity: 0.7;
 	width: 100%;
 	height: 70%;
 }
-#Selection{
+#interface{
 	width: 100%;
 	height: 30%;
-	opacity: 0.7;
 	border-radius: 2em;
+	opacity: 0.7;
 }
 
 .continentContainer{
-	width: 24%;
+	width: 18%;
 	height: 100%;
-	float: left;
+	float: right;
 	background-color: white;
 	border-radius: 2em;
 	margin-right: .5%;
@@ -30,6 +41,7 @@ body{
 	border-radius: 2em;
 	color: white;
 }
+
 .header{
 	font-size: 2em;
 	height: 10%;
