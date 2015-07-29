@@ -120,7 +120,12 @@ function AnimalTransported(player, animal){
 	player.move2 = true;
 	player.move3 = true;
 	
-	PutAnimalInZoo(animal, player.right);
+	var zooAnimals = game.zoo0Animals;
+	if (player.right) zooAnimals = game.zoo1Animals;
+
+	zooAnimals.push(animal);
+
+	PutAnimalInZoo(animal, player.right, zooAnimals.length - 1);
 	animal.transported = true;
 	ShadowAnimalImage(animal);
 

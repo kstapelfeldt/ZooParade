@@ -161,22 +161,17 @@ function AnimalImageClickFunction(animal){
 }
 
 
-function PutAnimalInZoo(animal, right){
-
-	var zooAnimals = game.zoo0Animals;
-	if (right) zooAnimals = game.zoo1Animals;
+function PutAnimalInZoo(animal, right, position){
 
 	var zoo = game.zoo0;
 	if (right) zoo = game.zoo1;
-
-	zooAnimals.push(animal);
 
 	var zooImgWidth = GetMiddleWidth() * 0.3;
 	var zooImgHeight = GetMapHeight() * 0.17;
 
 	var image = zoo.image(animal.cageImgPath, zooImgWidth, zooImgHeight);
 
-	var zooAnimalX =  zooImgWidth * 0.57 + (zooAnimals.length - 1) * zooImgWidth;
+	var zooAnimalX =  zooImgWidth * 0.57 + (position) * zooImgWidth;
 
 	image.cx(zooAnimalX);
 
@@ -186,11 +181,8 @@ function PutAnimalInZoo(animal, right){
 
 function PutAnimalsInZoo(animals, right){
 	
-	var zoo = game.zoo0;
-	if (right) zoo = game.zoo1;
-
 	for (var i = 0; i < animals.length; i++){
-		PutAnimalInZoo(animals[i], right);
+		PutAnimalInZoo(animals[i], right, i);
 	}
 }
 
