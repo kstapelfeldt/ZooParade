@@ -13,9 +13,11 @@ function Game(){
 
 	this.spinner = SVG('spinner');	// SVG object for the Spinner section
 
+	// SVG objects for the zoo sections
 	this.zoo0 = SVG('zoo0');
 	this.zoo1 = SVG('zoo1');
 
+	// List of animals in the zoo
 	this.zoo0Animals = new Array();
 	this.zoo1Animals = new Array();
 
@@ -39,10 +41,11 @@ function Game(){
 	this.leftCapturePoints = capturePoints.slice();
 	this.rightCapturePoints = capturePoints.slice();
 
+	// Currently displayed text in Message, Question and answer sections
 	this.currentMessage = "Welcome to Zoo Parade!";
 	this.currentQuestion = "";
 	this.currentAnswer = "";
-
+	
 	this.gameOver = false;
 	this.winner = null;
 
@@ -55,7 +58,6 @@ function Game(){
 function StartGame(game){
 	Setup(game);
 }
-
 
 /* Sets up the game graphics */
 function Setup(game){
@@ -101,9 +103,10 @@ function Setup(game){
 
 	CreateSpinner(game);
 	
+	// Inintialize player if player not initialized yet
 	if (game.player0 == null && game.player1 == null){
-		game.player0 = new Player("Dan", game.continent0, game.leftMap, game.leftCheckpoints, game.leftCapturePoints, false);
-		game.player1 = new Player("Roleen", game.continent1, game.rightMap, game.rightCheckpoints, game.rightCapturePoints, true);
+		game.player0 = new Player("Sarah", game.continent0, game.leftMap, game.leftCheckpoints, game.leftCapturePoints, false);
+		game.player1 = new Player("Lydia", game.continent1, game.rightMap, game.rightCheckpoints, game.rightCapturePoints, true);
 	}
 
 	// Add the pictures on the edges of the board
@@ -113,14 +116,15 @@ function Setup(game){
 	game.continent0.player = game.player0;
 	game.continent1.player = game.player1;
 
+	// Add the player pins to the board
 	AddPlayerPlaceHolder(game, false);
 	AddPlayerPlaceHolder(game, true);
 	
+	// Display any message to be displayed in message board
 	AddMessage(game.currentMessage);
 
 	game.created = true;
 }
-
 
 /* Destroys the svg objects of the game */
 function Destroy(game){
@@ -130,7 +134,6 @@ function Destroy(game){
 	}
 	game.svgObjects = new Array();
 }
-
 
 /* Adds the red start arrows to the board */
 function AddStartArrows(game, right){
@@ -165,7 +168,9 @@ function AddStartArrows(game, right){
 	else game.leftStartPosition = {x: cx + GetMapWidth() * 0.001, y: cy};
 }
 
-
+/* Sets the continent attribute for every animal in animals
+ * Parameter types: (list of Animal, boolean)
+ */
 function LinkContinentAnimals(animals, right){
 	var continent = game.continent0;
 	if (right) continent = game.continent1;

@@ -1,9 +1,12 @@
+// Question Sets to be used by players in the game
 var player0QuestionSet = new QuestionSet();
 var player1QuestionSet = new QuestionSet();
 
+/* Updates the the player question set of the player when player
+ * chooses a new animal
+ * Parameter types: (Player, string)
+ */
 function UpdatePlayerAnimal(player, animalCSVPath){
-	
-	
 
 	var playerQuestionSet = player0QuestionSet;
 	if (player.right) playerQuestionSet = player1QuestionSet;
@@ -17,7 +20,7 @@ function UpdatePlayerAnimal(player, animalCSVPath){
 }
 
 /* Reads the csv string and stores the questions in the questions array
- * Parameter types: (String)
+ * Parameter types: (String, boolean)
  */
 function ProcessCSV(results, right){
 	
@@ -67,7 +70,7 @@ function ProcessCSV(results, right){
 /* Takes in the type of question desired.
  * Returns an array with a random object, with a question, of the requested 
  * question type that has not already been used.
- * Parameter types: (String)
+ * Parameter types: (String, boolean)
  * Return type: (array of object)
  */
 function GetNextQuestion(questionType, right){

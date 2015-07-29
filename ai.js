@@ -2,6 +2,10 @@
 
 var ai = true;
 
+/* Makes the move for the AI
+ * Note: This is called when ai is true and the 
+ * right player (player1) is playing
+ */
 function AIMove(){
 	totalAnimationTime = 1000;
 
@@ -51,6 +55,9 @@ function AIMove(){
 	}, totalAnimationTime);		
 }
 
+/* Chooses the path for the AI to move along when there are
+ * multiple paths
+ */
 function AIChoosePath(){
 
 	var player = game.player1;

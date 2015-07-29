@@ -94,7 +94,6 @@ function SetMinHeights(){
 	document.getElementById("spinnerSection").style.minHeight = minScreenHeight * panelHeightScale * spinnerSectionHeightDeviation;
 }
 
-
 /* Returns the width of the middle section of the board */
 function GetMiddleWidth() {
 	return document.getElementById("body").width * middleSectionWidthScale;

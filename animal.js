@@ -131,6 +131,11 @@ function AddAnimalImage(game, animal, path, imgWidth, imgHeight, x, y, right){
 	if (animal.selected) ShadowAnimalImage(animal);
 }
 
+
+/* Add shadow to the animal's image if the animal is
+ * selected or already transported
+ * Parameter types: (Animal)
+ */
 function ShadowAnimalImage(animal){
 	animal.shadow.attr({opacity: 0.5});
 	if (animal.transported) animal.shadow.attr({fill: '#000'});
@@ -143,7 +148,9 @@ function SetAnimalImageOnClick(animal){
 	});
 }
 
-
+/* Adds click function to the animal images
+ * Parameter types: (Animal)
+ */
 function AnimalImageClickFunction(animal){
 	var player = game.player0;
 	if (game.right) player = game.player1;
@@ -160,7 +167,9 @@ function AnimalImageClickFunction(animal){
 	}
 }
 
-
+/* Displays the animal image in the zoo section
+ * Parameter types: (Animal, boolean, int)
+ */
 function PutAnimalInZoo(animal, right, position){
 
 	var zoo = game.zoo0;
@@ -178,9 +187,11 @@ function PutAnimalInZoo(animal, right, position){
 	game.svgObjects.push(image);
 }
 
-
+/* Puts all the animals in animals list in the zoo section
+ * Note: this is called on resize
+ * Parameter types: (list of Animal, boolean)
+ */
 function PutAnimalsInZoo(animals, right){
-	
 	for (var i = 0; i < animals.length; i++){
 		PutAnimalInZoo(animals[i], right, i);
 	}
