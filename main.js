@@ -114,6 +114,7 @@ function AnimalTransported(player, animal){
 
 	player.placeHolder.animate(totalAnimationTime).move(startPosition.x + xDeviation, startPosition.y + yDeviation);
 	player.currentAnimal = null;
+	player.currentCheckpoint = null;
 	player.animalSelected = false;
 	player.captured = false;
 	player.move1 = true;

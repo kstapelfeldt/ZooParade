@@ -7,6 +7,7 @@ var ai = true;
  * right player (player1) is playing
  */
 function AIMove(){
+
 	totalAnimationTime = 1000;
 
 	setTimeout(function(){
@@ -16,7 +17,13 @@ function AIMove(){
 
 		if (player.currentAnimal == null){
 			// Choose an animal to capture
-			AnimalImageClickFunction(player.continent.animals[Math.floor(Math.random() * player.continent.animals.length)]);
+			var animals = new Array();
+			for (var i = 0; i < player.continent.animals.length; i++){
+				if (player.animalsCaptured.indexOf(player.continent.animals[i]) == -1)
+					animals.push(player.continent.animals[i]);
+			}
+
+			AnimalImageClickFunction(animals[Math.floor(Math.random() * animals.length)]);
 		} else if (player.move1 || player.move2 || player.move3 || (!player.currentCheckpoint.redS && !player.currentCheckpoint.greenS)){
 			var rand = Math.floor(Math.random() * 7);
 			rand = 1;

@@ -132,6 +132,7 @@ function AddPlayerPlaceHolder(game, right){
 	if (right) position = game.rightStartPosition;
 
 	if (player.currentCheckpoint != null) position = {x: player.currentCheckpoint.x, y: player.currentCheckpoint.y};
+	if (player.captured) position = {x: player.currentAnimal.image.cx(), y: player.currentAnimal.image.cy()};
 
 	player.placeHolder = map.image(imgSrc, GetMapWidth() * mapScale * playerPlaceHolderScale, 
 							GetMapHeight() * mapScale * playerPlaceHolderScale);

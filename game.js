@@ -104,7 +104,7 @@ function Setup(game){
 	CreateSpinner();
 	
 	// Inintialize player if player not initialized yet
-	if (!created){
+	if (game.player0 == null && game.player1 == null){
 		game.player0 = new Player("Sarah", game.continent0, game.leftMap, game.leftCheckpoints, game.leftCapturePoints, false);
 		game.player1 = new Player("Lydia", game.continent1, game.rightMap, game.rightCheckpoints, game.rightCapturePoints, true);
 	}
