@@ -8,9 +8,29 @@
 </head>
 
 <body>
-	<div id="information" class="Sections">Do stuff in here!</div>
+	<script>
+	function penis(){
+		alert("penis");
+	}
+	</script>
+	<div id="information">Do stuff in here!</div>
 
-	<div id="interface" class="Sections">
+	<div id="interface">
+		<div id="TextBox">
+			<div id="TextBoxHeader" class="header">Fill in your email</div>
+			<form>
+				First Name:<br>
+				<input type="text" name="firstname">
+				<br>
+				E-mail Address:<br>
+				<input type="text" name="email">
+			</form>
+
+			<rect id="spinButton" class="button" cursor="pointer" onclick="penis()"/>
+
+		</div>
+
+		<div id="chooseContinent" class="header">Choose a continent!</div>
 		<div class="continentContainer">
 			<div class="header">North America</div>
 			<div id="NorthAmerica" class="continent"></div>
