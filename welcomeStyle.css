@@ -1,14 +1,58 @@
 body{
+	min-height: 1000px;
+	min-width: 1800px;
 	background-color: #8DE670;
 	font-family: Courier;
+	opacity: .7%;
 }
 
 #information{
-	height: 70%;
+	height: 50%;
+}
+
+.front, .back{
+	height:100%;
+	width: 100%;
+	backface-visibility: hidden;
+}
+
+.front{
+	position: absolute;
+}
+
+.back{
+	position: absolute;
+	transform: rotateY(180deg);
+	background-color: #8DE670; 
+}
+
+#flipContainer {
+  	height: 50%;
+  	position: relative;
+  	perspective: 1000;
+  	z-index: 1;
+ }
+
+#f1_card{
+	height:100%;
+
+  	transform-style: preserve-3d;
+  	transition: all 1.0s ease-out;
+}
+
+#flipContainer:hover #f1_card{
+	transform: rotateY(-180deg);
 }
 
 #interface{
-	height: 30%;
+	height: 100%;
+}
+
+#Play{
+	height:100%;
+	background-image: url("Resources/cover.jpg");
+	background-size: 100%, contain;
+	background-repeat: no-repeat;
 }
 
 #TextBox{
@@ -27,6 +71,7 @@ body{
 	float: right;
 	width: 80%;
 }
+
 .button{
 	fill: #FFFF66;
 	pointer-events: all;
@@ -56,30 +101,33 @@ body{
 	background-position: center;
 	background-size: contain;
 	background-repeat: no-repeat;
-	opacity: 0.7;
+
 	height: 90%;
 }
 
 .continentContainer{
+	min-height: 90%;
 	width: 19%;
 	height: 90%;
 	float: right;
-	background-color: white;
+	background-color: #FFFF66;
 	border-radius: 2em;
 	margin-right: .5%;
 	margin-left: .5%;
-	opacity: 0.7;
+
 }
 
 .continentContainer:hover{
-	background-color: #000000;
 	cursor: pointer;
+	background-color: green;
 	border-radius: 2em;
-	opacity: 0.7;
+
 	color: white;
 }
 
 .header{
+	border-radius: 2em;
+	color: #4A2500;
 	font-size: 2em;
 	height: 10%;
 	text-align: center;
