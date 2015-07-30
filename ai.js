@@ -72,6 +72,9 @@ function AIChoosePath(){
 	var path;
 	var checkpoint;
 
+	var rejectedPath = -1;
+	var hazardPath = -1;
+
 	if (paths.length == 1){
 		checkpoint = paths[paths.length - 1];
 	} else {
@@ -81,20 +84,29 @@ function AIChoosePath(){
 				path = paths[i];
 				break;
 			} 
-			if (cp.hazard) Remove(paths, paths[i]);
+			if (cp.hazard) hazardPath = i;
 			else {
 				// Remove the path if player passes by the target animal
 				for (var j = 0; j < paths[i].length - 1; j++){
 					if (paths[i][j].animal == player.currentAnimal){
-						Remove(paths, paths[i]);
+						rejectedPath = i;
 						break;
 					}
 				}
 			}
 		}
 
+		var rPath;
+		if (rejectedPath != -1) var rPath = Remove(paths, paths[rejectedPath]);
+
+		var hPath;
+		if(hazardPath != -1) var hPath = Remove(paths, paths[hazardPath]);
+
 		if (path == null) path = paths[0];
 		checkpoint = path[path.length - 1];
+
+		if(rPath != null) paths.push(rPath);
+		if (hPath != null) paths.push(hPath);
 	}
 	
 	MovePlayer(player, checkpoint);
