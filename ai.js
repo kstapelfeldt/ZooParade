@@ -44,6 +44,8 @@ function AIMove(){
 				WrongAnswerMove();
 			}
 		} else if (player.currentCheckpoint.redS || player.currentCheckpoint.greenS){
+			// Disable the spin button for the player
+			document.getElementById("spinButtonGroup").setAttribute("onclick","");
 
 			// Spin the spinner
 			totalAnimationTime = spinnerSectionAnimationTime * 1.2;
@@ -55,11 +57,12 @@ function AIMove(){
 				setTimeout(function(){
 					totalAnimationTime = 0;
 					AIChoosePath();
+					document.getElementById("spinButtonGroup").setAttribute("onclick","Spin()");
 				}, totalAnimationTime);
 
 			}, totalAnimationTime);
 		}
-	}, totalAnimationTime);		
+	}, totalAnimationTime);
 }
 
 /* Chooses the path for the AI to move along when there are
@@ -76,7 +79,8 @@ function AIChoosePath(){
 	var hazardPath = -1;
 
 	if (paths.length == 1){
-		checkpoint = paths[paths.length - 1];
+		path = paths[0];
+		checkpoint = path[path.length - 1];
 	} else {
 		for (var i = 0; i < paths.length; i++){
 			var cp = paths[i][paths[i].length - 1];
@@ -102,7 +106,7 @@ function AIChoosePath(){
 		var hPath;
 		if(hazardPath != -1) var hPath = Remove(paths, paths[hazardPath]);
 
-		if (path == null) path = paths[0];
+		if (path == null) path = paths[Math.floor(Math.random() * paths.length)];
 		checkpoint = path[path.length - 1];
 
 		if(rPath != null) paths.push(rPath);
