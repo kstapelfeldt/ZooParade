@@ -156,8 +156,7 @@ function AnimalImageClickFunction(animal){
 	if (game.right) player = game.player1;
 
 	if (animal.continent.checkpoints[0].right == game.right) {
-		if (player.currentAnimal == null || player.capturedAnimals.indexOf(animal) == -1) {
-
+		if (player.currentAnimal == null && player.animalsCaptured.indexOf(animal) == -1) {
 			player.currentAnimal = animal;
 			player.animalSelected = true;
 			animal.selected = true;
