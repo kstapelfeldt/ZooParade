@@ -45,7 +45,7 @@ function Game(){
 	this.currentMessage = "Welcome to Zoo Parade!";
 	this.currentQuestion = "";
 	this.currentAnswer = "";
-	
+
 	this.gameOver = false;
 	this.winner = null;
 
@@ -101,10 +101,10 @@ function Setup(game){
 	PositionAnimals(game, game.continent0.animals, false);
 	PositionAnimals(game, game.continent1.animals, true);
 
-	CreateSpinner(game);
+	CreateSpinner();
 	
 	// Inintialize player if player not initialized yet
-	if (game.player0 == null && game.player1 == null){
+	if (!created){
 		game.player0 = new Player("Sarah", game.continent0, game.leftMap, game.leftCheckpoints, game.leftCapturePoints, false);
 		game.player1 = new Player("Lydia", game.continent1, game.rightMap, game.rightCheckpoints, game.rightCapturePoints, true);
 	}
