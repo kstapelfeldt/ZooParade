@@ -75,15 +75,13 @@ function Setup(game){
 
 	// Set continent names and continent animals
 	if (!game.created){
-		var continent0Name = 'North America';
-		var continent0Animals = [new Animal('Moose', continent1Name, 'Moose'), 
-								new Animal('Grizzly Bear', continent1Name, 'Grizzly'), 
-								new Animal('Big Horn', continent1Name, 'Bighorn')];
+		var continent0Animals = [new Animal(continent0AnimalNames[0], continent1Name, continent0AnimalShortNames[0]), 
+								new Animal(continent0AnimalNames[1], continent1Name, continent0AnimalShortNames[1]), 
+								new Animal(continent0AnimalNames[2], continent1Name, continent0AnimalShortNames[2])];
 
-		var continent1Name = 'Asia';
-		var continent1Animals = [new Animal('Indian Rhinoceros', continent1Name, 'Rhinoceros'), 
-								new Animal('Indian Elephant', continent1Name, 'Elephant'), 
-								new Animal('Bengal Tiger', continent1Name, 'Tiger')];
+		var continent1Animals = [new Animal(continent1AnimalNames[0], continent1Name, continent1AnimalShortNames[0]), 
+								new Animal(continent1AnimalNames[1], continent1Name, continent1AnimalShortNames[1]), 
+								new Animal(continent1AnimalNames[2], continent1Name, continent1AnimalShortNames[2])];
 
 		// Create two Continent objects
 		game.continent0 = new Continent(continent0Name, continent0Animals, game.leftCheckpoints);
@@ -105,8 +103,8 @@ function Setup(game){
 	
 	// Inintialize player if player not initialized yet
 	if (game.player0 == null && game.player1 == null){
-		game.player0 = new Player("Sarah", game.continent0, game.leftMap, game.leftCheckpoints, game.leftCapturePoints, false);
-		game.player1 = new Player("Lydia", game.continent1, game.rightMap, game.rightCheckpoints, game.rightCapturePoints, true);
+		game.player0 = new Player(player0Name, game.continent0, game.leftMap, game.leftCheckpoints, game.leftCapturePoints, false);
+		game.player1 = new Player(player1Name, game.continent1, game.rightMap, game.rightCheckpoints, game.rightCapturePoints, true);
 	}
 
 	// Add the pictures on the edges of the board

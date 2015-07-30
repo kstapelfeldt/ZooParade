@@ -1,3 +1,38 @@
+// Get the Player's continent and name
+var continent0Name = 'North America'; // $_POST["continentName"];
+var player0Name = 'Player0';		  // $_POST["playerName"];
+
+// Set Player's continent animal names
+var continent0Index = northAmericaIndex;
+if (continent0Name != "North America"){
+	if (continent0Name == "South America") continent0Index = southAmericaIndex;
+	else if (continent0Name == "Asia") continent0Index = asiaIndex;
+	else continent0Index = africaIndex;
+}
+var continent0AnimalNames = continentAnimalNames[continent0Index];
+var continent0AnimalShortNames = continentAnimalShortNames[continent0Index];
+
+
+// Remove the continent player chose from the list of continents
+Remove(continentNames, continent0Name);
+
+
+// Randomly choose a continent for the AI from the remaining continents
+var continent1Name = continentNames[Math.floor(Math.random() * continentNames.length)];
+var player1Name = "Player1";
+
+var continent1Index = northAmericaIndex;
+if (continent1Name != "North America"){
+	if (continent1Name == "South America") continent1Index = southAmericaIndex;
+	else if (continent1Name == "Asia") continent1Index = asiaIndex;
+	else continent1Index = africaIndex;
+}
+var continent1AnimalNames = continentAnimalNames[continent1Index];
+var continent1AnimalShortNames = continentAnimalShortNames[continent1Index];
+
+
+
+// Start a new Game
 var game = new Game();
 var totalAnimationTime = 0;
 var qAPair;
@@ -9,7 +44,6 @@ $(window).resize(function(){
 	Setup(game);
 	PutAnimalsInZoo(game.zoo0Animals, false);
 	PutAnimalsInZoo(game.zoo1Animals, true);
-
 });
 
 

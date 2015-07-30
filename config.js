@@ -1,3 +1,19 @@
+// Indices of the continents
+var northAmericaIndex = 0;
+var southAmericaIndex = 1;
+var asiaIndex = 2;
+var africaIndex = 3;
+
+var continentNames = ["North America", "South America", "Asia", "Africa"];
+var continentAnimalNames = [["Moose", "Grizzly Bear", "Big Horn"], 
+							 ["Jaguar", "Tapir", "Capuchin Monkey"], 
+							 ["Indian Rhinoceros", "Indian Elephant", "Bengal Tiger"], 
+							 ["Lion", "Giraffe", "Zebra"]];
+var continentAnimalShortNames = [["Moose", "Grizzly", "Bighorn"], 
+								  ["Jaguar", "Tapir", "Capuchin"], 
+								  ["Rhinoceros", "Elephant", "Tiger"], 
+								  ["Lion", "Giraffe", "Zebra"]];
+
 var binaryIndex = 0;
 var typeIndex = 1;
 var questionIndex = 2;
