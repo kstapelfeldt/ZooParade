@@ -316,9 +316,12 @@ function AddQuestionText(){
 function AddAnswerText(){
 
 	if (qAPair != null){
-		var answer = qAPair.answer;
+		var answerHeader = document.getElementById('answerHeader');
+		answerHeader.innerHTML = "Answer";
+		answerHeader.style.fontSize = GetMapWidth() * headerFontScale;
 
-		document.getElementById('answerHeader').style.fontSize = GetMapWidth() * headerFontScale;
+		var answer = qAPair.answer;
+		
 		var div = document.getElementById('answerContent');
 		div.style.fontSize = GetMapWidth() * textFontScale;
 		div.innerHTML = answer;
@@ -330,13 +333,16 @@ function AddAnswerText(){
 /* Adds the info text in the answer section of the game */
 function AddInfoText(){
 	if (qAPair != null){
+		var answerHeader = document.getElementById('answerHeader');
+		answerHeader.style.fontSize = GetMapWidth() * headerFontScale;
+		answerHeader.innerHTML = "Information";
+
 		var info = qAPair.info;
+
+		if (info == null || info == "") info = "There is no additional information available";
 
 		var player = game.player0;
 		if (game.right) player = game.player1;
-
-		if (player.currentAnimal == null) info = "Click <a href='http://google.ca'>here</a> to know more about the transportation";
-		else info = "Click <a href='http://google.ca'>here</a> to know more about " + player.currentAnimal.name;
 
 		var div = document.getElementById('answerContent');
 		div.innerHTML = '<div style="width:100%; height:80%;">'+ info + '</div>' + proceedButtonHTML;

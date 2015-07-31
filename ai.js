@@ -29,10 +29,9 @@ function AIMove(){
 
 			AnimalImageClickFunction(animals[Math.floor(Math.random() * animals.length)]);
 		} else if (player.move1 || player.move2 || player.move3 || (!player.currentCheckpoint.redS && !player.currentCheckpoint.greenS)){
-			var rand = Math.floor(Math.random() * 7);
-			rand = 1;
+			var rand = Math.floor(Math.random() * 9);
 
-			if (rand <= 5){
+			if (rand <= 7){
 				// Correct Answer Move
 				CorrectAnswerMove();
 
