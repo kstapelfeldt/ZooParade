@@ -165,7 +165,7 @@ function MovePlayer(player, checkpoint){
 	setTimeout(function(){
     	VisitCheckpoint(player, player.currentCheckpoint, false);
     	if (player.currentCheckpoint.hazard){
-    		player.steps = -1;
+    		player.steps = -2;
     		MovePlayer(player, player.visitedCheckpoints[player.visitedCheckpoints.length - 2]);
     	}
 	}, totalAnimationTime);
