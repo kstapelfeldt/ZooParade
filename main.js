@@ -6,7 +6,7 @@
 
 // Get the Player's continent and name
 var continent0Name = 'North America'; // $_POST["continentName"];
-var player0Name = 'Player0';		  // $_POST["playerName"];
+var player0Name = 'Roleen';		  // $_POST["playerName"];
 
 // Set Player's continent animal names
 var continent0Index = northAmericaIndex;
@@ -25,7 +25,7 @@ Remove(continentNames, continent0Name);
 
 // Randomly choose a continent for the AI from the remaining continents
 var continent1Name = continentNames[Math.floor(Math.random() * continentNames.length)];
-var player1Name = "Player1";
+var player1Name = "Watson Jr.";
 
 var continent1Index = northAmericaIndex;
 if (continent1Name != "North America"){
@@ -76,6 +76,7 @@ function AnimalSelected(player, animal){
 	player.animalSelected = true;
 	player.visitedCheckpoints = new Array();
 	player.currentCheckpoint = null;
+	player.fleeCount = 0;
 	AddMessage(message);
 	Proceed();
 }
@@ -83,6 +84,7 @@ function AnimalSelected(player, animal){
 /* Switches players and updates question and answers */
 function Proceed(){
 	if (totalAnimationTime == 0){
+
 		var player = game.player0;
 		if (game.right) player = game.player1;
 
@@ -104,7 +106,7 @@ function Proceed(){
 			UpdateQuestion();
 
 			var message = player.name +  "'s turn";
-			if (player.spin) {
+			if (player.spin && !game.gameOver) {
 				message += "<br/>Please spin the Spinner by clicking 'Spin'";
 				$('#spinnerSection').animate({scrollTop: GetPanelHeight()}, spinnerSectionAnimationTime);
 			}

@@ -30,6 +30,19 @@ function Flee(animal, animalCheckpoint){
 	game.svgObjects.splice(animalIndex, 1);
 
 	delete animal.svg[animalCheckpoint.index];
+
+	var player = game.player0;
+	if (game.right) player = game.player1;
+
+	var nextPlayer = game.player1;
+	if (game.right) nextPlayer = game.player0;
+
+	player.fleeCount++;
+
+	if (player.fleeCount == 2){
+		game.gameOver = true;
+		game.winner = nextPlayer;
+	}
 }
 
 

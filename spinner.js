@@ -75,8 +75,8 @@ function Spin(){
 		pin.animate(2000).rotate(magnitude * direction + angle + pinAngleDeviation, center.x , center.y);
 		prevAngle = angle + pinAngleDeviation;
 
-		player.steps = greenNumbers[index];
-		if (player.currentCheckpoint.redS) player.steps = redNumbers[index];
+		player.steps = 4;//greenNumbers[index];
+		if (player.currentCheckpoint.redS) player.steps = 6;//redNumbers[index];
 		player.spin = false;
 
 		setTimeout(function(){

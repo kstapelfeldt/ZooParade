@@ -169,7 +169,7 @@ function SelectedCheckpointClickFunction(checkpoint){
 				Proceed();
 				var message = nextPlayer.name + "'s turn";
 				if (nextPlayer.spin) message += "<br/>Please spin the Spinner by clicking 'Spin'";
-				AddMessage(message);
+				if (!game.gameOver) AddMessage(message);
 			}
 			else AddInfoText();
 		}, totalAnimationTime);

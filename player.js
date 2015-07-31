@@ -28,6 +28,8 @@ function Player(name, continent, map, checkpoints, capturePoints, right){
 	this.move1 = true;
 	this.move2 = true;
 	this.move3 = true;
+
+	this.fleeCount = 0;
 }
 
 
