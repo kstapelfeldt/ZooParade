@@ -1,3 +1,9 @@
+/* Author: Roleen Nunes
+ * Email: roleen.nunes@mail.utoronto.ca
+ *
+ * Game Class
+ */
+
 /* Initializes a Game Object */
 function Game(){
 

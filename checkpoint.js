@@ -1,4 +1,8 @@
-/* Checkpoint class */
+/* Author: Roleen Nunes
+ * Email: roleen.nunes@mail.utoronto.ca 
+ *
+ * Checkpoint class 
+ */
 
 /* Initializer for Checkpoint object
  * Parameter types : (float, float, bool, bool, bool, bool)

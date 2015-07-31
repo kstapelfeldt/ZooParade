@@ -1,3 +1,9 @@
+/* Author: Roleen Nunes
+ * Email: roleen.nunes@mail.utoronto.ca
+ *
+ * Zoo Parade Game's main class
+ */
+
 // Get the Player's continent and name
 var continent0Name = 'North America'; // $_POST["continentName"];
 var player0Name = 'Player0';		  // $_POST["playerName"];

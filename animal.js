@@ -1,4 +1,8 @@
-/* Animal Class */
+/* Author: Roleen Nunes
+ * Email: roleen.nunes@mail.utoronto.ca
+ *
+ * Animal Class 
+ */
 
 /* Initializer for Animal Object 
  * Parameter types : (string, string, string)

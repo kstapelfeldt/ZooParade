@@ -1,4 +1,8 @@
-/* Player Class */
+/* Author: Roleen Nunes
+ * Email: roleen.nunes@mail.utoronto.ca
+ * 
+ * Player Class
+ */
 
 /* Initializer for Player object
  * Parameter types : (string, Continent, SVG, list of Checkpoint, list of boolean, boolean)

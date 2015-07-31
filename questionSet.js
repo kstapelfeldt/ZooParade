@@ -1,4 +1,8 @@
-/* QuestionSet Class */
+/* Authors: Luis Eduardo Munoz Alvarado, Roleen Nunes
+ * Emails: luis.munozalvarado@mail.utoronto.ca, roleen.nunes@mail.utoronto.ca
+ *
+ * QuestionSet Class
+ */
 
 /* Initializer for a QuestionSet object */
 function QuestionSet(){

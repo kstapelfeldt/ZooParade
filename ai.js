@@ -1,4 +1,8 @@
-/* The game player AI for single player game */
+/* Author: Roleen Nunes
+ * Email: roleen.nunes@mail.utoronto.ca
+ *
+ * The game player AI for single player game 
+ */
 
 var ai = true;
 

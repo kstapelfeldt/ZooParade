@@ -1,3 +1,11 @@
+/* Author: Roleen Nunes
+ * Email: roleen.nunes@mail.utoronto.ca
+ *
+ * Contains all the style setting functions for 
+ * Zoo Parade Game
+ */
+
+
 /* Sets the size of the Yes and No buttons in the answer
  * section for the yes/no question answers
  */

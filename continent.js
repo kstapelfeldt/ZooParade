@@ -1,3 +1,10 @@
+/* Author: Roleen Nunes
+ * Email: roleen.nunes@mail.utoronto.ca
+ *
+ * Continent Class
+ */
+
+
 /* Initialzer for a Continent object
  * Parameter types : (string, list of Animal, list of Checkpoint)
  */

@@ -1,3 +1,10 @@
+/* Author: Roleen Nunes
+ * Email: roleen.nunes@mail.utoronto.ca
+ *
+ * Contains all the configurations for Zoo Parade Game
+ */
+
+
 // Indices of the continents
 var northAmericaIndex = 0;
 var southAmericaIndex = 1;

@@ -1,3 +1,9 @@
+/* Author: Roleen Nunes
+ * Email: roleen.nunes@mail.utoronto.ca
+ *
+ * Deals with the Spinner section of Zoo Parade Game
+ */
+
 var pin;
 var spinnerBoard;
 
