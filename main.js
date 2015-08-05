@@ -6,7 +6,7 @@
 
 // Get the Player's continent and name
 var continent0Name = 'North America'; // $_POST["continentName"];
-var player0Name = 'Roleen';		  // $_POST["playerName"];
+var player0Name = 'Loredana';		  // $_POST["playerName"];
 
 // Set Player's continent animal names
 var continent0Index = northAmericaIndex;

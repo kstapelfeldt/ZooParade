@@ -1,9 +1,10 @@
 <html>
 <head>
-	<title>Zoo Parade</title>
+	<title>Welcome Page</title>
 	
 	<script src="jquery.js"></script>
 	<script src="svg.js"></script>
+	<script src="Start.js"></script>
 	<link rel="stylesheet" type="text/css" href="welcomeStyle.css"/>
 </head>
 
@@ -13,40 +14,42 @@
 	<div id="flipContainer">	
 	<div id="f1_card">
 		<div class="front">
-			<div id="Play"  class="front">
+			<div id="Play" class="front">
+				<div id="button" onclick="Flip(f1_card)">Choose your options!</div>
 			</div>
 		</div>
 
 		<div class="back">
 			<div id="interface">
 				<div id="TextBox">
-					<div id="TextBoxHeader" class="header">Fill in your email</div>
-					<form>
-						First Name:<br>
-						<input type="text" name="firstname">
-						<br>
+					<div id="TextBoxHeader" class="header">Fill in your name!</div>
+					<form method="get">
+						<input type="text" id="myText" name="PlayerName" placeholder="First Name"><br>
+						<input type="submit" value="click me"></input>
+						<a class="tryitbtn" href="gameplay.html"><div class = "header">Start!!</div>
+						</a>
 					</form>
 				</div>
 
 				<div id="chooseContinent" class="header">Choose a continent!</div>
 				<div class="continentContainer">
 					<div class="header">North America</div>
-					<div id="NorthAmerica" class="continent"></div>
+					<div id="NorthAmerica" class="continent" onclick="SelectContinent(this)"></div>
 				</div>
 				
 				<div class="continentContainer">
 					<div class="header">South America</div>
-					<div id="SouthAmerica" class="continent"></div>
+					<div id="SouthAmerica" class="continent" onclick="SelectContinent(this)"></div>
 				</div>
 				
-				<div class="continentContainer">
+				<div class="continentContainer" >
 					<div class="header">Asia</div>
-					<div id="Asia" class="continent"></div>
+					<div id="Asia" class="continent" onclick="SelectContinent(this)"></div>
 				</div>
 				
-				<div class="continentContainer">
+				<div class="continentContainer" >
 					<div class="header">Africa</div>
-					<div id="Africa" class="continent"></div>
+					<div id="Africa" class="continent" onclick="SelectContinent(this)"></div>
 				</div>
 			</div>
 			

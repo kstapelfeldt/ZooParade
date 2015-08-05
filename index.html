@@ -1,71 +1,60 @@
-<!-- 
-Author: Roleen Nunes
-Email: roleen.nunes@mail.utoronto.ca
-
-Zoo Parade Game
--->
-
 <html>
 <head>
-	<title>Zoo Parade</title>
-	<link rel="stylesheet" type="text/css" href="style.css" />
-
-
+	<title>Welcome Page</title>
+	
 	<script src="jquery.js"></script>
 	<script src="svg.js"></script>
-	<script src="config.js"></script>
-	<script src="styleSettings.js"></script>
-	
-	<script src="question.js"></script>
-	<script src="questionSet.js"></script>
-	<script src="animal.js"></script>
-	<script src="player.js"></script>
-	<script src="checkpoint.js"></script>
-	<script src="continent.js"></script>
-	<script src="spinner.js"></script>
-	<script src="game.js"></script>
-	<script src="ai.js"></script>
-	
+	<script src="Start.js"></script>
+	<link rel="stylesheet" type="text/css" href="welcomeStyle.css"/>
 </head>
 
-<body id="body">
-	<svg id="leftMap"></svg>
-	<div id="center">
-		<div id="zoo">
-			<div id="zooHeader"><center>Zoo</center></div>
-			<svg id="zoo0"></svg>
-			<svg id="zoo1"></svg>
+<body>
+	<div id="information">Do stuff in here!</div>
+
+	<div id="flipContainer">	
+	<div id="f1_card">
+		<div class="front">
+			<div id="Play" class="front">
+				<div id="button" onclick="Flip(f1_card)">Choose your options!</div>
+			</div>
 		</div>
-		<div id="messageBox"><div id="messageBoxContent"></div></div>
-	</div>
-	<svg id="rightMap"></svg>
-	
-	<div id="question">
-		<center>
-			<font id="questionHeader">Question</font>
-			<div id="questionContent"></div>
-		</center>
-	</div>
-	<div id="spinnerSection">
-		<svg id="theGuy" width=100% height=100%></svg>
-		<svg id="spinner">
-			<g id="spinButtonGroup" class="button" cursor="pointer" onclick="Spin()">
-			  <rect id="spinButton" cursor="pointer" />
-			  <text id="spinButtonText">SPIN</text>
-			</g>
-		</svg>
-	</div>
 
-	<div id="answer">
-		<center>
-			<font id="answerHeader">Answer</font></center>
-			<div id="answerContent"></div>
-		</center>
+		<div class="back">
+			<div id="interface">
+				<div id="TextBox">
+					<div id="TextBoxHeader" class="header">Fill in your name!</div>
+					<form method="get">
+						<input type="text" id="myText" name="PlayerName" placeholder="First Name"><br>
+						<input type="submit" value="click me"></input>
+						<a class="tryitbtn" href="gameplay.html"><div class = "header">Start!!</div>
+						</a>
+					</form>
+				</div>
+
+				<div id="chooseContinent" class="header">Choose a continent!</div>
+				<div class="continentContainer">
+					<div class="header">North America</div>
+					<div id="NorthAmerica" class="continent" onclick="SelectContinent(this)"></div>
+				</div>
+				
+				<div class="continentContainer">
+					<div class="header">South America</div>
+					<div id="SouthAmerica" class="continent" onclick="SelectContinent(this)"></div>
+				</div>
+				
+				<div class="continentContainer" >
+					<div class="header">Asia</div>
+					<div id="Asia" class="continent" onclick="SelectContinent(this)"></div>
+				</div>
+				
+				<div class="continentContainer" >
+					<div class="header">Africa</div>
+					<div id="Africa" class="continent" onclick="SelectContinent(this)"></div>
+				</div>
+			</div>
+			
+		</div>
 	</div>
-	
-	<script src="qA.js"></script>
-	<script src="main.js"></script>
-
-
+	</div>
 </body>
 </html>

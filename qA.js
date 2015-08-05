@@ -4,7 +4,6 @@
  * Deals with the Questions and Answers for Zoo Parade Game
  */
 
-
 // Question Sets to be used by players in the game
 var player0QuestionSet = new QuestionSet();
 var player1QuestionSet = new QuestionSet();
