@@ -5,9 +5,10 @@
  */
 
 // Get the Player's continent and name
-var continent0Name = 'North America'; // $_POST["continentName"];
-var player0Name = 'Loredana';		  // $_POST["playerName"];
-
+var continent0Name = continentNames[Math.floor(Math.random() * continentNames.length)];// $_GET["continentName"];
+var player0Name = 'Zoo Director';	
+//if($_GET["continent"] != undefined)continent0Name = $_GET["continent"];
+//if($_GET["PlayerName"] != undefined)player0Name = $_GET["PlayerName"];
 // Set Player's continent animal names
 var continent0Index = northAmericaIndex;
 if (continent0Name != "North America"){

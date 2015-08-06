@@ -18,7 +18,7 @@ body{
 
 }
 
-.front, .back{
+#front, #back{
 	height:100%;
 	width: 100%;
 	border-left: 100px;
@@ -26,11 +26,14 @@ body{
 	backface-visibility: hidden;
 }
 
-.front{
+#front{
 	position: absolute;
+	background-image: url("Resources/cover.jpg");
+	background-size: 100%;
+	background-repeat: no-repeat;
 }
 
-.back{
+#back{
 	position: absolute;
 	transform: rotateY(180deg);
 	background-color: #8DE670; 
@@ -41,7 +44,7 @@ body{
   	position: relative;
 }
 
- #flipBtn{
+#flipBtn{
  	perspective: 1000;
   	z-index: 1;
 }
@@ -57,11 +60,8 @@ body{
 	height: 100%;
 }
 
-#Play{
-	height:100%;
-	background-image: url("Resources/cover.jpg");
-	background-size: 100% 100%;
-	background-repeat: no-repeat;
+a:link{
+	text-decoration: none;
 }
 
 #TextBox{
@@ -70,7 +70,7 @@ body{
 	float: left;
 }
 
-#button{
+.button{
 	margin: auto;
 	text-align: center;
 	width: 15%;
@@ -78,9 +78,11 @@ body{
 	border-radius: 1em;
 	background: #4A2500;
 	color: #FFFF66;
+	text-decoration: none;
+	margin-top:1%;
 }
 
-#button:hover{
+.button:hover{
     color: green;
     cursor: pointer;
 }
@@ -112,11 +114,19 @@ body{
 	background-image: url("Resources/SVG/SouthAmerica.svg");
 }
 
-.continent{
-	background-position: center;
-	background-size: contain;
-	background-repeat: no-repeat;
+/*
+  Hide radio button (the round disc)
+  we will use just the label to create pushbutton effect
+*/
+input[type=radio] {
+    display:none; 
+}
 
+.continent{
+	display:inherit;
+	background-position: center;
+	background-size: 100%;
+	background-repeat: no-repeat;
 	height: 90%;
 }
 

@@ -13,47 +13,56 @@
 
 	<div id="flipContainer">	
 	<div id="f1_card">
-		<div class="front">
-			<div id="Play" class="front">
-				<div id="button" onclick="Flip(f1_card)">Choose your options!</div>
-			</div>
+		<div id="front">
+			<div class="button" onclick="Flip(f1_card)">Choose your options!</div>
+			<a href="gameplay.html"><div class="button">Go To Play!</div></a>
 		</div>
 
-		<div class="back">
+		<div id="back">
 			<div id="interface">
-				<div id="TextBox">
-					<div id="TextBoxHeader" class="header">Fill in your name!</div>
-					<form method="get">
-						<input type="text" id="myText" name="PlayerName" placeholder="First Name"><br>
-						<input type="submit" value="click me"></input>
-						<a class="tryitbtn" href="gameplay.html"><div class = "header">Start!!</div>
-						</a>
-					</form>
-				</div>
+				<form action="gameplay.html">
+					<div id="TextBox">
+						<div id="TextBoxHeader" class="header">Fill in your name!</div>
+							<input type="text" id="myText" name="PlayerName" placeholder="First Name"></input><br>
+							<input class="header" type="submit" value="click me"></input>
+					</div>
 
-				<div id="chooseContinent" class="header">Choose a continent!</div>
-				<div class="continentContainer">
-					<div class="header">North America</div>
-					<div id="NorthAmerica" class="continent" onclick="SelectContinent(this)"></div>
-				</div>
-				
-				<div class="continentContainer">
-					<div class="header">South America</div>
-					<div id="SouthAmerica" class="continent" onclick="SelectContinent(this)"></div>
-				</div>
-				
-				<div class="continentContainer" >
-					<div class="header">Asia</div>
-					<div id="Asia" class="continent" onclick="SelectContinent(this)"></div>
-				</div>
-				
-				<div class="continentContainer" >
-					<div class="header">Africa</div>
-					<div id="Africa" class="continent" onclick="SelectContinent(this)"></div>
-				</div>
-			</div>
-			
-		</div>
+					<div id="chooseContinent" class="header">Choose a continent!</div>
+
+					<div class="continentContainer" id="cont0">
+						<div class="header">North America</div>
+						<input id="radio0" type="radio" name="continent" value="North America">
+							<label id="NorthAmerica" class="continent" for="radio0"
+							onclick="TurnGreen(cont0)"></label>
+						</input>
+					</div>
+					
+					<div class="continentContainer" id="cont1">
+						<div class="header">South America</div>
+						<input id="radio1" type="radio" name="continent" value="South America">
+							<label id="SouthAmerica" class="continent" for="radio1"
+							onclick="TurnGreen(cont1)"></label>
+						</input>
+					</div>
+					
+					<div class="continentContainer" id="cont2">
+						<div class="header">Asia</div>
+						<input id="radio2" type="radio" name="continent" value="Asia">
+							<label id="Asia" class="continent" for="radio2"
+							onclick="TurnGreen(cont2)"></label>
+						</input>
+					</div>
+					
+					<div class="continentContainer" id="cont3">
+						<div class="header">Africa</div>
+						<input id="radio3" type="radio" name="continent" value="Africa">
+							<label id="Africa" class="continent" for="radio3"
+							onclick="TurnGreen(cont3)"></label>
+						</input>
+					</div>
+				</form>
+			</div>	
+		</div>	
 	</div>
 	</div>
 </body>
