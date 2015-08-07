@@ -14,15 +14,6 @@ function SelectContinent(cont){
 	alert(continent);
 }
 
-function TurnGreen(cont){
-	alert();
-	cont.style.backgroundColor = "green";
-	/*for(i=0;i<cont.childNodes.length;i++){
-		if(cont.childNodes[i].nodeName == "LABEL")
-			cont.childNodes[i].
-	}*/
-}
-
 function Flip(id){
 	id.style.transform = "rotateY(180deg)"
 }

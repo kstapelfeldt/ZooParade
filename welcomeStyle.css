@@ -122,15 +122,20 @@ input[type=radio] {
     display:none; 
 }
 
+input[type="radio"]:checked + label {
+    background-color: green;
+}
+
 .continent{
+		height: 90%;
+}
+
+.continentContainer{
 	display:inherit;
 	background-position: center;
 	background-size: 100%;
 	background-repeat: no-repeat;
-	height: 90%;
-}
 
-.continentContainer{
 	min-height: 90%;
 	width: 19%;
 	height: 90%;
