@@ -4,11 +4,17 @@
  * Zoo Parade Game's main class
  */
 
-// Get the Player's continent and name
-var continent0Name = continentNames[Math.floor(Math.random() * continentNames.length)];// $_GET["continentName"];
-var player0Name = 'Zoo Director';	
-//if($_GET["continent"] != undefined)continent0Name = $_GET["continent"];
-//if($_GET["PlayerName"] != undefined)player0Name = $_GET["PlayerName"];
+// Get the Player's continent and name (read in in gameplay.php)
+var continent0Name = passedContinent;
+if (continent0Name == "") {
+	continent0Name = continentNames[Math.floor(Math.random() * continentNames.length)];
+}
+
+var player0Name = passedPlayerName;
+if (player0Name == "") {
+	player0Name = 'Zoo Director';
+}
+
 // Set Player's continent animal names
 var continent0Index = northAmericaIndex;
 if (continent0Name != "North America"){
@@ -19,14 +25,12 @@ if (continent0Name != "North America"){
 var continent0AnimalNames = continentAnimalNames[continent0Index];
 var continent0AnimalShortNames = continentAnimalShortNames[continent0Index];
 
-
 // Remove the continent player chose from the list of continents
 Remove(continentNames, continent0Name);
 
-
 // Randomly choose a continent for the AI from the remaining continents
 var continent1Name = continentNames[Math.floor(Math.random() * continentNames.length)];
-var player1Name = "Watson Jr.";
+var player1Name = "Computer";
 
 var continent1Index = northAmericaIndex;
 if (continent1Name != "North America"){
@@ -372,21 +376,3 @@ function Remove(list, element){
 	}
 	return element;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

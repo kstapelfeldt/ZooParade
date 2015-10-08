@@ -3,8 +3,8 @@ body{
 	margin-right: 0px;
 	margin-bottom: 0px;
 	margin-left: 0px;
-	min-height: 1000px;
-	min-width: 1800px;
+/*	min-height: 1000px;
+	min-width: 1800px;*/
 	background-color: #8DE670;
 	font-family: Courier;
 	opacity: .7%;
@@ -29,7 +29,7 @@ body{
 #front{
 	position: absolute;
 	background-image: url("Resources/cover.jpg");
-	background-size: 100%;
+	background-size: cover;
 	background-repeat: no-repeat;
 }
 
@@ -40,7 +40,7 @@ body{
 }
 
 #flipContainer {
-  	height: 80%;
+  	height: 77%;		/* Set at 77 to prevent scroll bars */
   	position: relative;
 }
 
@@ -67,13 +67,14 @@ a:link{
 #TextBox{
 	height: 100%;
 	width: 20%;
-	float: left;
+	float: right;
+	text-align: center;
 }
 
 .button{
 	margin: auto;
 	text-align: center;
-	width: 15%;
+	width: 30%;
 	padding: .5%;
 	border-radius: 1em;
 	background: #4A2500;
@@ -87,6 +88,13 @@ a:link{
     cursor: pointer;
 }
 
+#OptionButton{
+	width: 200px;
+	height: 75px;
+	font-size: 25px;
+	margin-top: 5%;
+}
+
 #TextBoxHeader{
 	width:100%;
 	height: 10%;
@@ -94,7 +102,8 @@ a:link{
 
 #chooseContinent{
 	text-align: center;
-	float: right;
+	float: left;
+	height: 10%;
 	width: 80%;
 }
 
@@ -136,10 +145,10 @@ input[type="radio"]:checked + label {
 	background-size: 100%;
 	background-repeat: no-repeat;
 
-	min-height: 90%;
+	/*min-height: 90%;*/
 	width: 19%;
 	height: 90%;
-	float: right;
+	float: left;
 	background-color: #FFFF66;
 	border-radius: 2em;
 	margin-right: .5%;
@@ -150,7 +159,6 @@ input[type="radio"]:checked + label {
 	cursor: pointer;
 	background-color: green;
 	border-radius: 2em;
-
 	color: white;
 }
 

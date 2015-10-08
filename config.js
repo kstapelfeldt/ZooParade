@@ -170,7 +170,9 @@ var continentNameY = 0.02;
 // Spinner variables
 var prevAngle = -147;
 var pinAngleDeviation = -147;
-var angles = [0, 0, 54, 54, 90, 126, 126, 180, 180, 234, 234, 306, 306, 270];
+//var angles = [0, 0, 54, 54, 90, 126, 126, 180, 180, 234, 234, 306, 306, 270];
+// LW - changed angles to allow better viewing of spinner numbers
+var angles = [15, 15, 69, 69, 97, 141, 141, 195, 195, 249, 249, 321, 321, 277];
 var redNumbers = [5, 5, 6, 6, 3, 4, 4, 5, 5, 4, 4, 6, 6, 3];
 var greenNumbers = [2, 2, 1, 1, 4, 3, 3, 2, 2, 3, 3, 1, 1, 4];
 
@@ -214,6 +216,3 @@ var zooHeaderFontScale = 0.12;
 
 var spinnerAnimationTime = 2000;
 var spinnerSectionAnimationTime = 1000;
-
-
-

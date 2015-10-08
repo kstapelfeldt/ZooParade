@@ -122,9 +122,3 @@ function FixSpinnerBoardPosition(){
 	spinnerBoard.cx(x);
 	spinnerBoard.cy(y);
 }
-
-
-
-
-
-

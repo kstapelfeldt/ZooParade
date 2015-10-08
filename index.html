@@ -12,60 +12,59 @@
 	<div id="information">Do stuff in here!</div>
 
 	<div id="flipContainer">	
-	<div id="f1_card">
-		<div id="front">
-			<div class="button" onclick="Flip(f1_card)">Choose your options!</div>
-			<a href="gameplay.html"><div class="button">Go To Play!</div></a>
-		</div>
+		<div id="f1_card">
+			<div id="front">
+				<div class="button" onclick="Flip(f1_card)">Choose Options</div>
+				<a href="gameplay.php"><div class="button">Play Now</div></a>
+			</div>
 
-		<div id="back">
-			<div id="interface">
-				<form action="gameplay.html">
-					<div id="TextBox">
-						<div id="TextBoxHeader" class="header">Fill in your name!</div>
-							<input type="text" id="myText" name="PlayerName" placeholder="First Name"></input><br>
-							<input class="header" type="submit" value="click me"></input>
-					</div>
-
-					<div id="chooseContinent" class="header">Choose a continent!</div>
-
-					<input id="radio0" type="radio" name="continent" value="North America">
-						<label id="NorthAmerica"  for="radio0" class="continentContainer">
-							<div class="continent">
-								<div class="header">North America</div>
-							</div>
-						</label>
-					</input>
-					
-					<input id="radio1" type="radio" name="continent" value="South America">
-						<label id="SouthAmerica"  for="radio1" class="continentContainer">
-							<div class="continent">
-								<div class="header">South America</div>
-							</div>
-						</label>
-					</input>
-					
-					<input id="radio2" type="radio" name="continent" value="Asia">
-						<label id="Asia"  for="radio2" class="continentContainer">
-							<div class="continent">
-								<div class="header">Asia</div>
-							</div>
-						</label>
-					</input>
-					
-					
-					<input id="radio3" type="radio" name="continent" value="Africa">
-						<label id="Africa"  for="radio3" class="continentContainer">
-							<div class="continent"id="cont3">
-								<div class="header">Africa</div>
-							</div>
-						</label>
-					</input>
-					
-				</form>
+			<div id="back">
+				<div id="interface">
+					<form action="gameplay.php" method="post">
+						<div id="chooseContinent" class="header">Select a Continent</div>
+						
+						<div id="TextBox">
+							<div id="TextBoxHeader" class="header">&nbsp<!--Type Your Name--></div>
+							<input type="text" id="myText" name="PlayerName" placeholder="Type Your Name" style="width: 200px;"></input>
+							<br>
+							<input id="OptionButton" class="button" type="submit" value="Play Now"></input>
+						</div>
+						
+						<input id="radio0" type="radio" name="continent" value="North America">
+							<label id="NorthAmerica"  for="radio0" class="continentContainer">
+								<div class="continent">
+									<div class="header">North America</div>
+								</div>
+							</label>
+						</input>
+						
+						<input id="radio1" type="radio" name="continent" value="South America">
+							<label id="SouthAmerica"  for="radio1" class="continentContainer">
+								<div class="continent">
+									<div class="header">South America</div>
+								</div>
+							</label>
+						</input>
+						
+						<input id="radio2" type="radio" name="continent" value="Asia">
+							<label id="Asia"  for="radio2" class="continentContainer">
+								<div class="continent">
+									<div class="header">Asia</div>
+								</div>
+							</label>
+						</input>
+						
+						<input id="radio3" type="radio" name="continent" value="Africa">
+							<label id="Africa"  for="radio3" class="continentContainer">
+								<div class="continent"id="cont3">
+									<div class="header">Africa</div>
+								</div>
+							</label>
+						</input>
+					</form>
+				</div>	
 			</div>	
-		</div>	
-	</div>
+		</div>
 	</div>
 </body>
 </html>

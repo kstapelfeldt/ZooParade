@@ -272,17 +272,3 @@ function MovePlayerAnimation(player, path, totalDistance, distances, xDeviation,
 	}
 	animationLoop();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

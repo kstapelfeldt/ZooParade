@@ -250,32 +250,3 @@ function SetCheckpointClickCircleId(checkpoint){
 	id = id + checkpoint.index.toString();
 	checkpoint.clickCircle.attr('id', id);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,4 +1,4 @@
-var continent;
+/*var continent;
 function CreateSubmit(){
 
 }
@@ -13,7 +13,7 @@ function SelectContinent(cont){
 	if(continent == "SouthAmerica") continent = "South America";
 	alert(continent);
 }
-
+*/
 function Flip(id){
 	id.style.transform = "rotateY(180deg)"
 }
