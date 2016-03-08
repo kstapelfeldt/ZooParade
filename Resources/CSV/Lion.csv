@@ -1,12 +1,12 @@
 Binary Question,QuestionType,Question,choices,right,info
-TRUE,1,Belongs to the cat family?,,TRUE,
-TRUE,1,Usually hunts a night?,,TRUE,
-FALSE,1,Eats?,Meat (carnivorous)/Vegetation (herbivorous)/Both (omnivorous),Meat (carnivorous),
-TRUE,2,A mud wallow?,,FALSE,
-TRUE,2,Freshly killed game?,,TRUE,
-TRUE,2,Distant roar?,,TRUE,
-TRUE,2,Broken Acaia brances?,,FALSE,
-TRUE,2,Vultures circling overhead?,,TRUE,
-TRUE,2,Leaves stripped from tree tops?,,FALSE,
-FALSE,3,Will you capture by:,Using a large box trap?/Using a lasso?,Using a large box trap?,
+TRUE,1,Belongs to the cat family?,,TRUE,<br>What was the experience of interwar animal traders in Africa?<br><br><a target="_blank" href="http://digitalscholarship.utsc.utoronto.ca/projects/animal-empire/content/white-man%E2%80%99s-conquest-1926">A White Man's Conquest (1926)</a>
+TRUE,1,Usually hunts at night?,,TRUE,<br>Would you like to visit a depression era zoo?<br><br><a target="_blank" href="http://digitalscholarship.utsc.utoronto.ca/projects/animal-empire/content/king-mountain-1930s">King of the Mountain (1930s)</a>
+FALSE,1,Eats?,Meat (carnivorous)/Vegetation (herbivorous)/Both (omnivorous),Meat (carnivorous),<br>Would you like to visit a safari park in the 1970s?  <br><br><a target="_blank" href="http://digitalscholarship.utsc.utoronto.ca/projects/animal-empire/content/safari-park-1959-1970s">Safari Park (1970)</a>
+TRUE,2,A mud wallow?,,FALSE,<br>Would you like to attend a chimpanzee show?  <br><br><a target="_blank" href="http://digitalscholarship.utsc.utoronto.ca/projects/animal-empire/content/see-performing-chimps-1930s-1970s">See the Performing Chimps!</a>
+TRUE,2,Freshly killed game?,,TRUE,<br>How were animals trained to be performers at the zoo?  <br><br><a target="_blank" href="http://digitalscholarship.utsc.utoronto.ca/projects/animal-empire/content/see-performing-chimps-1930s-1970s">See the Performing Chimps!</a>
+TRUE,2,Distant roar?,,TRUE,<br>Would you like to see a film about 1930s capture and expedition?  <br><br><a target="_blank" href="http://digitalscholarship.utsc.utoronto.ca/projects/animal-empire/content/congorilla-1930-1932">Congorilla (1930-32)</a>
+TRUE,2,Broken Acaia brances?,,FALSE,<br>What happened to African animals (like gorillas) when they were brought to America?  <br><br><a target="_blank" href="http://digitalscholarship.utsc.utoronto.ca/projects/animal-empire/content/congorilla-1930-1932">Congorilla (1930-32)</a>
+TRUE,2,Vultures circling overhead?,,TRUE,<br>Would you like to visit two gorillas captured in Africa on display in America?  <br><br><a target="_blank" href="http://digitalscholarship.utsc.utoronto.ca/projects/animal-empire/content/congorilla-1930-1932">Congorilla (1930-32)</a>
+TRUE,2,Leaves stripped from tree tops?,,FALSE,<br>Would you like to visit a zoo during WWII?  <br><br><a target="_blank" href="http://digitalscholarship.utsc.utoronto.ca/projects/animal-empire/content/visit-africa-bronx-1940s">Visit Africa in the Bronx (1940s)</a>
+FALSE,3,Will you capture by:,Using a large box trap?/Using a lasso?,Using a large box trap?,<br>Did zoo animals live only behind bars?  <br><br><a target="_blank" href="http://digitalscholarship.utsc.utoronto.ca/projects/animal-empire/content/visit-africa-bronx-1940s">Visit Africa in the Bronx (1940s)</a>
 FALSE,4,Stand transport to zoo:,By air?/By ship?/By rail?,By ship?,

@@ -344,7 +344,7 @@ function AddInfoText(){
 
 		var info = qAPair.info;
 
-		if (info == null || info == "") info = "There is no additional information available";
+		if (info == null || info == "") info = "<br>There is no additional information available.";
 
 		var player = game.player0;
 		if (game.right) player = game.player1;
