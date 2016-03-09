@@ -28,47 +28,56 @@ function UpdatePlayerAnimal(player, animalCSVPath){
 /* Reads the csv string and stores the questions in the questions array
  * Parameter types: (String, boolean)
  */
-function ProcessCSV(results, right){
-	
+function ProcessCSV(results, right)
+{	
 	var rows = results.split('\n');
-
 	var playerQuestionSet = player0QuestionSet;
 	if (right) playerQuestionSet = player1QuestionSet;
 
-	for (var i = 1; i < rows.length; i++){
-
+	for (var i = 1; i < rows.length; i++)
+	{
 		var row = rows[i].split(',');
-
-		if (row[binaryIndex] != "" && row[typeIndex] != "" && row[questionIndex] != "" && 
-			(row[choicesIndex] != "" || row[correctIndex] != "")){
-
+		if (row[binaryIndex] != "" && row[typeIndex] != "" && row[questionIndex] != "" && (row[choicesIndex] != "" || row[correctIndex] != ""))
+		{
 			var question = row[questionIndex];
-
 			var answer = "<br/>";
 
-			if (row[binaryIndex].trim() == "TRUE"){
-				if (row[correctIndex].trim() == "TRUE") answer = correctYesHTML;
-				else answer = correctNoHTML;
-			} else{
+			if (row[binaryIndex].trim() == "TRUE")
+			{
+				if (row[correctIndex].trim() == "TRUE") 
+					answer = correctYesHTML;
+				else 
+					answer = correctNoHTML;
+			} 
+			else
+			{
 				var choices = row[choicesIndex].split("/");
 				var correctAnswer = row[correctIndex].trim();
 				
-				for (var j = 0; j < choices.length; j++){
+				for (var j = 0; j < choices.length; j++)
+				{
 					var label = choices[j].trim();
 					var action = "WrongAnswerMove()";
-					if (label == correctAnswer) action = "CorrectAnswerMove()";
+					if (label == correctAnswer)
+						action = "CorrectAnswerMove()";
+					
 					answer += '<div class="mcqOption" cursor="pointer" onClick="' + action + '"><center>' + label + '</center></div><br/>';
 				}
 			}
 
 			var info = "";
-			if (row.length > infoIndex) info = row[infoIndex];
+			if (row.length > infoIndex) 
+					info = row[infoIndex];
 			var questionObject = new Question(question, answer, info);
 
-			if (row[typeIndex] == startQuestion) playerQuestionSet.start.push(questionObject);
-			else if (row[typeIndex] == onTrailQuestion) playerQuestionSet.onTrail.push(questionObject);
-			else if (row[typeIndex] == captureQuestion) playerQuestionSet.capture.push(questionObject);
-			else if (row[typeIndex] == transportQuestion) playerQuestionSet.transport.push(questionObject);
+			if (row[typeIndex] == startQuestion) 
+				playerQuestionSet.start.push(questionObject);
+			else if (row[typeIndex] == onTrailQuestion) 
+				playerQuestionSet.onTrail.push(questionObject);
+			else if (row[typeIndex] == captureQuestion) 
+				playerQuestionSet.capture.push(questionObject);
+			else if (row[typeIndex] == transportQuestion) 
+				playerQuestionSet.transport.push(questionObject);
 		}
 	}
 }
