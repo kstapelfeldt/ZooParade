@@ -5,7 +5,8 @@
  */
 
 /* Initializer for a QuestionSet object */
-function QuestionSet(){
+function QuestionSet()
+{
 	this.start = new Array();
 	this.onTrail = new Array();
 	this.capture = new Array();
@@ -23,18 +24,23 @@ function QuestionSet(){
  * Parameter Types: (QuestionSet, int)
  * Return Type: Question
  */
-function GetQuestion(questionSet, questionType){
-
+function GetQuestion(questionSet, questionType)
+{
 	var questions = questionSet.start;
 	var questionsUsed = questionSet.startUsed;
 
-	if (questionType == onTrailQuestion){
+	if (questionType == onTrailQuestion)
+	{
 		questions = questionSet.onTrail;
 		questionsUsed = questionSet.onTrailUsed;
-	} else if (questionType == captureQuestion){
+	}
+	else if (questionType == captureQuestion)
+	{
 		questions = questionSet.capture;
 		questionsUsed = questionSet.captureUsed;
-	} else if (questionType == transportQuestion){
+	}
+	else if (questionType == transportQuestion)
+	{
 		questions = questionSet.transport;
 		questionsUsed = questionSet.transportUsed;
 	}

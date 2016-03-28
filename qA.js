@@ -12,17 +12,32 @@ var player1QuestionSet = new QuestionSet();
  * chooses a new animal
  * Parameter types: (Player, string)
  */
-function UpdatePlayerAnimal(player, animalCSVPath){
-
+function UpdatePlayerAnimal(player, animalCSVPath)
+{
+	// Bug #6028 -- Question set needs to be properly cleared when a new animal is being chosen.
+	// Not ding so was resulting in previous animal questions being available for subsequent 
+	// questions.
+	/* Removed:
 	var playerQuestionSet = player0QuestionSet;
 	if (player.right) playerQuestionSet = player1QuestionSet;
+	*/
+	var playerQuestionSet;
+	if (player.right) 
+	{
+		player1QuestionSet = new QuestionSet();
+		playerQuestionSet = player1QuestionSet;
+	}
+	else
+	{
+		player0QuestionSet = new QuestionSet();
+		playerQuestionSet = player0QuestionSet;
+	}
 
-	playerQuestionSet = new QuestionSet();
+	// Bug #6028 removed
+	//playerQuestionSet = new QuestionSet();
 	
 	var fileContent = ReadFile(animalCSVPath);
-
 	ProcessCSV(fileContent, player.right);
-
 }
 
 /* Reads the csv string and stores the questions in the questions array
